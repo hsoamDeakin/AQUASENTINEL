@@ -3,6 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const connectDB = require('./db'); // Update the path accordingly
+
+// Load environment variables from .env file
+require('dotenv').config();
+
+// Connect to MongoDB
+connectDB();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
