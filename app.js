@@ -3,7 +3,6 @@ var express = require('express');
 const expressLayouts = require('express-ejs-layouts')
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 const connectDB = require('./db'); // Update the path accordingly
 
 // Load environment variables from .env file
@@ -27,11 +26,13 @@ app.set('layout extractScripts', true);
 
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// controllers 
+const dataController = require('./controllers/data');
 
 
 app.use('/', indexRouter);
