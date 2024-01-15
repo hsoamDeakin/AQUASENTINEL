@@ -32,7 +32,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // controllers 
-const dataController = require('./controllers/data');
+const kafkaController = require('./controllers/kafkaController')
+const dataController = require('./controllers/dataController')
 
 
 app.use('/', indexRouter);
