@@ -1,7 +1,6 @@
 const ip = require('ip')
 const { Kafka, CompressionTypes, logLevel } = require('kafkajs')
 const { connectDB, DataReading } = require('../db');
-const dataService = require('../services/dataService')
 const dataController = require('../controllers/dataController');
 
 
