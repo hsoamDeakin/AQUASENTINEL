@@ -3,13 +3,13 @@ var express = require('express');
 const expressLayouts = require('express-ejs-layouts')
 var path = require('path');
 var cookieParser = require('cookie-parser');
-const connectDB = require('./db'); // Update the path accordingly
+const db = require('./db'); // Update the path accordingly
 
 // Load environment variables from .env file
 require('dotenv').config();
 
 // Connect to MongoDB
-connectDB();
+db.connectDB();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
