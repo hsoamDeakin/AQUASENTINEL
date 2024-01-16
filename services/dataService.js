@@ -74,9 +74,49 @@ const generateRandomData = async () => {
   }
   return generatedData; 
 };
+const calculateWQIFromArray = (values) => {
+  const parameterWeights = {
+    'ph': 0.2,
+    'Organic_carbon': 0.2,
+    'Turbidity': 0.2,
+    'Solids': 0.2,
+    'Trihalomethanes': 0.2,
+  };
 
-module.exports = {  
-  generateRandomData,  
+  const normalizedValues = {};
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i];
+
+    // Specific normalization logic for each parameter
+    // You may need to adjust this based on the characteristics of your data
+    let normalizedValue;
+    if (i === 3) {
+      // Solids parameter, special treatment
+      normalizedValue = (value - 5000) / 5000 * 100;  // Adjust as needed
+    } else {
+      // For other parameters, use a generic linear scaling
+      normalizedValue = (value - (value - 2 * 5)) / (value + 2 * 5) * 100;  // Assuming a standard deviation of 5
+    }
+
+    const parameter = Object.keys(parameterWeights)[i];
+    normalizedValues[parameter] = normalizedValue;
+  }
+
+  // Calculate WQI by summing the weighted normalized values
+  let wqi = 0;
+  for (const parameter in normalizedValues) {
+    wqi += parameterWeights[parameter] * normalizedValues[parameter];
+  }
+
+  return wqi;
 };
+
+
+module.exports = {
+  generateRandomData,
+  calculateWQIFromArray,
+};
+
+
 
  

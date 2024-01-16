@@ -13,6 +13,7 @@ db.connectDB();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var streamingRouter = require('./routes/streaming');
 
 var app = express();
 
@@ -30,14 +31,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// controllers 
-const kafkaController = require('./controllers/kafkaController')
-const dataController = require('./controllers/dataController')
-
-
+ 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/streaming', streamingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

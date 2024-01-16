@@ -12,6 +12,12 @@ const generatedData = async () => {
     return generatedDataArray;
 }  
 
+const calculateWQI =  (values) => { 
+    const generatedDataArray = dataService.calculateWQIFromArray(values);
+    return generatedDataArray;
+}   
+
 module.exports = {
     generatedData,
+    calculateWQI
 };
