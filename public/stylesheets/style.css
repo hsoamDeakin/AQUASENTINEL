@@ -25,3 +25,19 @@ main {
   gap: 10px;
   grid-template-columns: 2fr 1fr;
 }
+
+/* Styling for buttons */
+button {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #4CAF50; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button#startConsumerButton {
+  background-color: #008CBA; /* Blue color for Consumer button */
+}
