@@ -2,6 +2,8 @@ const ip = require("ip");
 const { Kafka, CompressionTypes, logLevel } = require("kafkajs");
 const dataController = require("../controllers/dataController");
 
+const { connectDB, DataReading } = require('../db');
+
 
 const host = process.env.HOST_IP || ip.address();
 
@@ -86,6 +88,8 @@ const generateData = async () => {
 const receivedData = []; // Array to store received messages
 
 const startConsumer = async () => {
+  await connectDB(); // Connect to MongoDB
+
   await consumer.connect();
   await consumer.subscribe({ topic });
   await consumer.run({
@@ -94,6 +98,10 @@ const startConsumer = async () => {
         key: message.key.toString(),
         value: JSON.parse(message.value.toString()), // Assuming the value is a JSON string
       }; 
+      
+      // Save the received message to the MongoDB collection
+      await DataReading.create(receivedMessage);
+
       // Store the received message
       receivedData.push(receivedMessage);
     },

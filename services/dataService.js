@@ -2,9 +2,8 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const math = require('mathjs');
 
-// const filePath = './dataset/water_potability.csv';
-// const columnNames=['ph', 'Organic_carbon', 'Turbidity','Solids','Trihalomethanes']
-//const columnNames = process.env.columnNames;  
+const { connectDB, DataReading } = require('../db'); 
+
 const dataCount = process.env.dataCount; 
 const filePath = process.env.FILE_PATH;
 const columnNamesString = process.env.COLUMN_NAMES;
@@ -111,10 +110,23 @@ const calculateWQIFromArray = (values) => {
   return wqi;
 };
 
+const getAllDataFromReadings = async () => {
+ await connectDB(); // Connect to MongoDB
+
+  try {
+    // Retrieve data from the readings collection
+    const data = await DataReading.find({}).sort({ 'value.location.name': 1 });
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data from readings collection:', error);
+    throw error;
+  }
+}; 
 
 module.exports = {
   generateRandomData,
   calculateWQIFromArray,
+  getAllDataFromReadings
 };
 
 
