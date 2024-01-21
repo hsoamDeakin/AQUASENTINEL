@@ -17,7 +17,7 @@ const getAlldDataReadings = async () => {
     return allDataArray;
 }  
 
-const hggcalculateWQI =  (values) => { 
+const calculateWQI =  (values) => { 
     const generatedDataArray = dataService.calculateWQIFromArray(values);
     return generatedDataArray;
 }   
