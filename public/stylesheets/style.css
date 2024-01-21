@@ -41,3 +41,13 @@ button {
 button#startConsumerButton {
   background-color: #008CBA; /* Blue color for Consumer button */
 }
+
+.user-image-size {
+  height: 56px;
+  margin: 4px 0;
+}
+
+.navbar-size {
+  width: 95%;
+  margin: 0 auto;
+}

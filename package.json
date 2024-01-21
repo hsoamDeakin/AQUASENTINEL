@@ -21,6 +21,7 @@
     "ip": "^1.1.8",
     "jquery": "^3.6.0",
     "kafkajs": "^2.2.4",
+    "materialize-css": "^1.0.0-rc.2",
     "math-random": "^2.0.1",
     "mathjs": "^12.2.1",
     "mongoose": "^8.0.3",
