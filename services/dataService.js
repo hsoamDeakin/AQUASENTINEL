@@ -110,6 +110,18 @@ const calculateWQIFromArray = (values) => {
   return wqi;
 };
 
+// Function to get unique locations for dropdown
+const getUniqueLocations = async () => {
+  await connectDB();
+  try {
+    const locations = await DataReading.distinct('value.location.name');
+    return locations;
+  } catch (error) {
+    console.error('Error retrieving unique locations:', error);
+    throw error;
+  }
+};
+
 const getAllDataFromReadings = async () => {
  await connectDB(); // Connect to MongoDB
 
@@ -123,12 +135,54 @@ const getAllDataFromReadings = async () => {
   }
 }; 
 
-module.exports = {
-  generateRandomData,
-  calculateWQIFromArray,
-  getAllDataFromReadings
+// Function to get data by location
+const getDataByLocation = async (locationName) => {
+  await connectDB();
+  try {
+    const data = await DataReading.find({ 'value.location.name': locationName });
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data by location:', error);
+    throw error;
+  }
+};
+
+// Function to get data by time range
+const getDataByTimeRange = async (startTime, endTime) => {
+  await connectDB();
+  try {
+    const data = await DataReading.find({
+      'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
+    });
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data by time range:', error);
+    throw error;
+  }
+};
+
+// Function to get aggregated data for line chart
+const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
+  await connectDB();
+  try {
+    const data = await DataReading.aggregate([
+      { $match: { 'value.location.name': locationName, 'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) } } },
+      { $group: { _id: { $dateToString: { format: "%Y-%m-%d %H:%M:%S", date: "$value.timestamp" } }, avgValue: { $avg: `$value.data.${parameter}` } } },
+      { $sort: { '_id': 1 } }
+    ]);
+    return data;
+  } catch (error) {
+    console.error('Error retrieving aggregated data for chart:', error);
+    throw error;
+  }
 };
 
 
-
- 
+module.exports = {
+  generateRandomData,
+  calculateWQIFromArray,
+  getAllDataFromReadings,
+  getDataByLocation,
+  getDataByTimeRange,
+  getUniqueLocations,
+};
