@@ -1,0 +1,6 @@
+DB_URI="mongodb+srv://s213067525:Xq2BY9gMGb72lyyL@cluster0.ryplpya.mongodb.net/"
+dataCount=1000
+FILE_PATH=./dataset/water_potability.csv
+COLUMN_NAMES=ph,Organic_carbon,Turbidity,Solids,Trihalomethanes
+
+ 
