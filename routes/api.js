@@ -6,7 +6,7 @@ const dataController = require('../controllers/dataController');
 router.get('/generate-data', dataController.generatedData);
 
 // Endpoint to retrieve all data readings
-router.get('/all-data-readings', dataController.getAllDataReadings);
+router.get('/all-data-readings', dataController.getAlldDataReadings);
 
 // Endpoint to get unique locations for dropdowns in the frontend
 router.get('/locations', dataController.getUniqueLocations);

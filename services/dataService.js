@@ -110,18 +110,6 @@ const calculateWQIFromArray = (values) => {
   return wqi;
 };
 
-// Function to get unique locations for dropdown
-const getUniqueLocations = async () => {
-  await connectDB();
-  try {
-    const locations = await DataReading.distinct('value.location.name');
-    return locations;
-  } catch (error) {
-    console.error('Error retrieving unique locations:', error);
-    throw error;
-  }
-};
-
 const getAllDataFromReadings = async () => {
  await connectDB(); // Connect to MongoDB
 
@@ -134,6 +122,19 @@ const getAllDataFromReadings = async () => {
     throw error;
   }
 }; 
+ 
+
+// Function to get unique locations for dropdown
+const getUniqueLocations = async () => {
+  await connectDB();
+  try {
+    const locations = await DataReading.distinct('value.location.name');
+    return locations;
+  } catch (error) {
+    console.error('Error retrieving unique locations:', error);
+    throw error;
+  }
+};
 
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
