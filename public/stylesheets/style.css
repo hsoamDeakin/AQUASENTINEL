@@ -3,6 +3,7 @@ body {
   font-size: 26px;
 }
 
+
 .wrapper {
   width: 700px;
   margin: 0 auto;
@@ -10,9 +11,13 @@ body {
   padding: 10px;
 }
 
-header, footer {
+header{
   background-color: ghostwhite;
   padding: 20px;
+}
+
+footer {
+  padding: 1px;
 }
 
 main {
@@ -51,3 +56,38 @@ button#startConsumerButton {
   width: 95%;
   margin: 0 auto;
 }
+
+/* Images used */
+.img1 { background-image: url("public/images/img1.jpg"); } 
+.img2 { background-image: url("public/images/img2.jpg"); }
+.img3 { background-image: url("public/images/img3.jpg"); }
+.img4 { background-image: url("public/images/img4.jpg"); }
+.img5 { background-image: url("public/images/img5.jpg"); }
+
+    #borderLine {
+      border: 2px solid rgba(63, 105, 127, 0.589);
+      padding: 20px;
+      margin-right: 70px;
+      margin-left: 70px;
+    }
+
+ 
+    #RegistrationSection {
+      border: 2px solid rgba(63, 105, 127, 0.589);
+      padding: 10px;
+      background-color: rgba(63, 105, 127, 0.589);
+      margin-top: -20px;
+      margin-right: -20px;
+      margin-left: -20px;
+    }
+
+    .bg-image {
+      /* Full height */
+      height: 100%; 
+    
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AQUASENTINEL - REAL-TIME IOT WATER QUALITY MONITORING SYSTEM</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script> 
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script src="/scripts/main.js"></script>
+  </head>
+ 
+  <body>     
+    <nav>
+      <div class="nav-wrapper navbar-size">
+        <a href="#" class="brand-logo center"><img class="user-image-size" src="images/aquasentinel logo.png"></a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <li><a href="main.html">Home</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  <div class="bg-image img1"></div>
+  <div class="bg-image img2"></div>
+  <div class="bg-image img3"></div>
+  <div class="bg-image img4"></div>
+  <div class="bg-image img5"></div>
+  <div class="bg-text">
+    <div class="container">
+      <h1 class="text-center" style="margin-bottom: 60px; margin-top:50px; background-color: rgba(63, 105, 127, 0.589); border: 4px solid rgba(63, 105, 127, 0.589);"><strong>REGISTER</strong></h1>
+    </div>
+   
+    <main>
+    <div id="borderLine">
+      <p id="RegistrationSection"><b>Registration Form</b></p>
+      <form name="login" method="POST" action="/registration" onsubmit="return validateForm();">
+        <div class="container" style="margin-top: 60px;">
+          <div class="row">
+            <div class="col-sm-2 mb-3">
+              <label for="input-group" class="form-label"><b>Name:</b></label>
+            </div>
+            <div class="col-sm-10 mb-3">
+              <div class="input-group">
+                <span class="input-group-text">First Name</span>
+                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" required><span id="message"></span>
+                <span class="input-group-text">Last Name</span>
+                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" required><span id="message1"></span>
+              </div>
+            </div>
+            <label class="form-label col-sm-2 mb-3" for="stud_id"><b>User Name:</b></label>
+            <div class="col-sm-10 mb-3">
+              <input type="text" class="form-control" name="username" id="username" placeholder="Please enter a user name" required><span id="message2"></span>
+            </div>
+          </div>
+        </div>
+        <div class="container" style="margin-top: 20px;">
+          <div class="row">
+            <div class="col-sm-2 mb-3">
+              <label for="stud_name" class="form-label"><b>Password:</b></label>
+            </div>
+            <div class="col-sm-10 mb-3">
+              <input type="password" class="form-control" name="password" id="password" placeholder="Please enter a password" required><span id="message3"></span>
+            </div>
+          </div>
+        </div>
+        <input class="btn" type="submit" id="registrationbutton" value="Register" onclick="return validateForm()"
+         style="width: 120px; margin-left: 300px; margin-top:40px; margin-bottom: 30px; background-color: rgba(63, 105, 127, 0.589); border:2px solid rgba(63, 105, 127, 0.589); color:white">
+        <input class="btn" type="reset" id="resetbutton" value="Reset" style="width: 120px; margin-top:40px; margin-bottom: 30px; background-color: rgba(63, 105, 127, 0.589); border:2px solid rgba(63, 105, 127, 0.589); color:white;">
+      </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+   </div> 
+    </main>
+
+    
+    <footer class="bg-dark text-white text-center">
+      <strong> © Aquasentinel </strong>
+      <p class="text-center"><strong> EMAIL: </strong> info@aquasentinel.com </p>
+      <p class="text-center"> <strong> ADDRESS:</strong> 70 Elgar Road, Burwood, VIC, 3125</p>
+      <p class="text-center"> <strong>OFFICE PHONE:</strong> 0402 932 416</p>
+    </footer>
+    
+    
+</body>
+
+</html>
+  <script>
+  
+
+function validateForm() {
+
+
+    let firstName = document.getElementById("firstname").value;
+    let lastName = document.getElementById("lastname").value;
+    let username = document.getElementById("username").value;
+
+    if (firstName.length == 0) {
+        let message = document.getElementById("message");
+        message.innerHTML = "<em>You didn't enter your first name.</em>";
+        message.classList.add("text-danger");
+        return false;
+    }
+
+    if (lastName.length == 0) {
+        let message = document.getElementById("message1");
+        message.innerHTML = "<em>You didn't enter your last name.</em>";
+        message.classList.add("text-danger");
+        return false;
+    }
+
+    if (username.length == 0) {
+        let message = document.getElementById("message2");
+        message.innerHTML = "<em>You didn't enter a username.</em>";
+        message.classList.add("text-danger");
+        return false;
+    }
+
+    let password = document.getElementById("password").value;
+
+const minLength = 8;
+const minUpperChars = 1;
+const minLowerChars = 1;
+const minDigits = 1;
+
+// Updated regex to require at least one special character
+const specialCharRegex = /[!@#$%^&*]+/;
+
+// Check if the password meets the minimum length requirement
+if (password.length < minLength) {
+  let message = document.getElementById("message3");
+  message.innerHTML = "<em>Password must be at least 8 characters long.</em>";
+  message.classList.add("text-danger");
+  return false;
+}
+
+// Check if the password contains the required character types
+let charTypeCount = 0;
+if (/[A-Z]/.test(password)) charTypeCount++;
+if (/[a-z]/.test(password)) charTypeCount++;
+if (/[0-9]/.test(password)) charTypeCount++;
+if (specialCharRegex.test(password)) charTypeCount++;
+
+// Check if the password meets all the requirements
+if (
+  charTypeCount < minUpperChars + minLowerChars + minDigits + 1 // Require at least one special character
+) {
+  let message = document.getElementById("message3");
+  message.innerHTML =
+    "<em>Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.</em>";
+  message.classList.add("text-danger");
+  return false;
+}
+
+// Clear any previous error message
+let message = document.getElementById("message3");
+message.innerHTML = "<em>Password is valid.</em>";
+message.classList.remove("text-danger");
+message.classList.add("text-success");
+return true;
+}
+
+</script>
+</body>
+</html>
