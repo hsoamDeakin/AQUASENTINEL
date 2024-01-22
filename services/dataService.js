@@ -123,14 +123,16 @@ const getAllDataFromReadings = async () => {
   }
 };
 
-// Function to get data by location
-const getDataByLocation = async (locationName) => {
+// Function to get data by time range
+const getDataByTimeRange = async (startTime, endTime) => {
   await connectDB();
   try {
-    const data = await DataReading.find({ 'value.location.name': locationName });
+    const data = await DataReading.find({
+      'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
+    });
     return data;
   } catch (error) {
-    console.error('Error retrieving data by location:', error);
+    console.error('Error retrieving data by time range:', error);
     throw error;
   }
 };
@@ -139,7 +141,7 @@ module.exports = {
   generateRandomData,
   calculateWQIFromArray,
   getAllDataFromReadings,
-  getDataByLocation
+  getDataByTimeRange
 };
 
 
