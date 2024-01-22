@@ -91,3 +91,31 @@ button#startConsumerButton {
       background-size: cover;
     }
 
+    .visualisation-title {
+      background-color: white;
+      padding: 20px;
+      width: 70%;
+      margin:auto;
+      border: 2px solid black;
+    }
+
+    .divs {
+      padding: 40px;
+      width: 70%;
+      margin:auto;
+    }
+
+    .column {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .fsize {
+      font-size: 20px;
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
