@@ -57,6 +57,10 @@ button#startConsumerButton {
   margin: 0 auto;
 }
 
+#headerBelowNav{
+  margin-top: 80px;
+}
+
 /* Images used */
 .img1 { background-image: url("public/images/img1.jpg"); } 
 .img2 { background-image: url("public/images/img2.jpg"); }
@@ -65,10 +69,11 @@ button#startConsumerButton {
 .img5 { background-image: url("public/images/img5.jpg"); }
 
     #borderLine {
-      border: 2px solid rgba(63, 105, 127, 0.589);
+      border:solid 2px rgba(63, 105, 127, 0.589);
       padding: 20px;
       margin-right: 70px;
       margin-left: 70px;
+      margin-bottom: 80px;
     }
 
  
@@ -79,6 +84,58 @@ button#startConsumerButton {
       margin-top: -20px;
       margin-right: -20px;
       margin-left: -20px;
+      color: white;
+      font-weight: bold;
+    }
+
+    #firstNameSection{
+      margin-top: 60px;
+    }
+
+    #passwordSectionRegister{
+      margin-top: 20px;
+    }
+
+    #registrationbutton{
+      width: 120px; 
+      margin-left: 300px; 
+      margin-top:40px; 
+      margin-bottom: 30px; 
+      background-color: rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white"
+    }
+
+    #resetbutton{
+      width: 120px; 
+      margin-top:40px; 
+      margin-bottom: 30px; 
+      background-color: rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white;
+    }
+
+    #loginSection {
+      color: white;
+      font-weight: bold;
+    }
+
+    #userNameSection {
+      margin-top: 60px;
+    }
+
+    #passwordSection{
+      margin-top: 20px;
+    }
+
+    #loginbutton{
+      width: 120px; 
+      margin-left: 225px; 
+      margin-top:20px; 
+      margin-bottom: 20px; 
+      background-color:  rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white"
     }
 
     .bg-image {
@@ -130,3 +187,19 @@ button#startConsumerButton {
       padding: 100px;
       margin-bottom: 220px ;
     }
+
+    h1{
+      margin-bottom: 60px; 
+      margin-top:10px;  
+      background-color: rgba(63, 105, 127, 0.589); 
+      border: 1px solid rgba(63, 105, 127, 0.589); 
+      color: white;
+      text-align:center;
+      font-weight: bold;
+    }
+
+    #sectionAboveFooter{
+      margin-top: 100px;
+    }
+
+    
