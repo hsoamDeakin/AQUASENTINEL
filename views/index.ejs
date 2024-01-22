@@ -1,0 +1,37 @@
+<button id="startProducerButton">Start Producer</button>
+<button id="startConsumerButton">Start Consumer</button>
+
+<h2>Received Data</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Timestamp</th> 
+          <th>Location.name</th>
+          <th>Location.pos</th>
+          <th>pH</th>
+          <th>Organic Carbon</th>
+          <th>Turbidity</th>
+          <th>Solids</th>
+          <th>Trihalomethanes</th>
+          <th>WQI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% receivedData.forEach((data) => { %> 
+          <tr>
+            <td><%= data.key %></td>
+            <td><%= data.value.location.name %></td>
+            <td>[<%= data.value.location.lat %>, <%= data.value.location.lon %>]</td>
+            <td><%= data.value.data.ph.toFixed(2) %></td>
+            <td><%= data.value.data.Organic_carbon.toFixed(2) %></td>
+            <td><%= data.value.data.Turbidity.toFixed(2) %></td>
+            <td><%= data.value.data.Solids.toFixed(2) %></td>
+            <td><%= data.value.data.Trihalomethanes.toFixed(2) %></td>
+            <td><%= data.value.wqi.toFixed(2) %></td>
+            
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+
