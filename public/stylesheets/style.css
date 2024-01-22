@@ -119,3 +119,14 @@ button#startConsumerButton {
       justify-content: center;
       align-items: center;
     }
+
+    footer{
+      font-size: medium;
+      text-align: center;
+    }
+
+    #contactInfo {
+      margin: auto;
+      padding: 100px;
+      margin-bottom: 220px ;
+    }
