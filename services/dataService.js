@@ -123,10 +123,27 @@ const getAllDataFromReadings = async () => {
   }
 }; 
 
+// Controller function to get sorted data
+const getSortedData = async (sortBy, sortOrder) => {
+  try {
+    // Use the sortBy and sortOrder parameters to customize your query
+    const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
+    console.log(sortBy)
+    console.log(sortOrder)
+    //console.log(data)
+    return data;
+  } catch (error) {
+    console.error('Error retrieving sorted data:', error);
+    throw error;
+  }
+};
+
+
 module.exports = {
   generateRandomData,
   calculateWQIFromArray,
-  getAllDataFromReadings
+  getAllDataFromReadings,
+  getSortedData
 };
 
 

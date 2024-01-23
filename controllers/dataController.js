@@ -22,8 +22,14 @@ const calculateWQI =  (values) => {
     return generatedDataArray;
 }   
 
+
+const getSortedData = async (sortBy, sortOrder) => { 
+    const sortedDataArray = await dataService.getSortedData(sortBy,sortOrder);
+    return sortedDataArray;
+}  
 module.exports = {
     generatedData,
     calculateWQI,
-    getAlldDataReadings
+    getAlldDataReadings,
+    getSortedData
 };
