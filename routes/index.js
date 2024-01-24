@@ -12,4 +12,8 @@ router.get('/', async function(req, res, next) {
   res.render('index', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
 }); 
 
+router.get('/contact', async function(req, res, next) { 
+    res.render('contact', { title: 'Contact', currentPage: 'Contact'}); 
+}); 
+
 module.exports = router;

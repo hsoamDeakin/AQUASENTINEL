@@ -3,6 +3,7 @@ body {
   font-size: 26px;
 }
 
+
 .wrapper {
   width: 700px;
   margin: 0 auto;
@@ -10,9 +11,13 @@ body {
   padding: 10px;
 }
 
-header, footer {
+header{
   background-color: ghostwhite;
   padding: 20px;
+}
+
+footer {
+  padding: 1px;
 }
 
 main {
@@ -41,3 +46,160 @@ button {
 button#startConsumerButton {
   background-color: #008CBA; /* Blue color for Consumer button */
 }
+
+.user-image-size {
+  height: 56px;
+  margin: 4px 0;
+}
+
+.navbar-size {
+  width: 95%;
+  margin: 0 auto;
+}
+
+#headerBelowNav{
+  margin-top: 80px;
+}
+
+/* Images used */
+.img1 { background-image: url("public/images/img1.jpg"); } 
+.img2 { background-image: url("public/images/img2.jpg"); }
+.img3 { background-image: url("public/images/img3.jpg"); }
+.img4 { background-image: url("public/images/img4.jpg"); }
+.img5 { background-image: url("public/images/img5.jpg"); }
+
+    #borderLine {
+      border:solid 2px rgba(63, 105, 127, 0.589);
+      padding: 20px;
+      margin-right: 70px;
+      margin-left: 70px;
+      margin-bottom: 80px;
+    }
+
+ 
+    #RegistrationSection {
+      border: 2px solid rgba(63, 105, 127, 0.589);
+      padding: 10px;
+      background-color: rgba(63, 105, 127, 0.589);
+      margin-top: -20px;
+      margin-right: -20px;
+      margin-left: -20px;
+      color: white;
+      font-weight: bold;
+    }
+
+    #firstNameSection{
+      margin-top: 60px;
+    }
+
+    #passwordSectionRegister{
+      margin-top: 20px;
+    }
+
+    #registrationbutton{
+      width: 120px; 
+      margin-left: 300px; 
+      margin-top:40px; 
+      margin-bottom: 30px; 
+      background-color: rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white"
+    }
+
+    #resetbutton{
+      width: 120px; 
+      margin-top:40px; 
+      margin-bottom: 30px; 
+      background-color: rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white;
+    }
+
+    #loginSection {
+      color: white;
+      font-weight: bold;
+    }
+
+    #userNameSection {
+      margin-top: 60px;
+    }
+
+    #passwordSection{
+      margin-top: 20px;
+    }
+
+    #loginbutton{
+      width: 120px; 
+      margin-left: 225px; 
+      margin-top:20px; 
+      margin-bottom: 20px; 
+      background-color:  rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white"
+    }
+
+    .bg-image {
+      /* Full height */
+      height: 100%; 
+    
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .visualisation-title {
+      background-color: white;
+      padding: 20px;
+      width: 70%;
+      margin:auto;
+      border: 2px solid black;
+    }
+
+    .divs {
+      padding: 40px;
+      width: 70%;
+      margin:auto;
+    }
+
+    .column {
+      flex: 1;
+      padding: 10px;
+    }
+
+    .fsize {
+      font-size: 20px;
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    footer{
+      font-size: medium;
+      text-align: center;
+    }
+
+    #contactInfo {
+      margin: auto;
+      padding: 100px;
+      margin-bottom: 220px ;
+    }
+
+    h1{
+      margin-bottom: 60px; 
+      margin-top:10px;  
+      background-color: rgba(63, 105, 127, 0.589); 
+      border: 1px solid rgba(63, 105, 127, 0.589); 
+      color: white;
+      text-align:center;
+      font-weight: bold;
+    }
+
+    #sectionAboveFooter{
+      margin-top: 100px;
+    }
+
+    

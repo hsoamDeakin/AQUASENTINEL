@@ -1,37 +1,23 @@
-<button id="startProducerButton">Start Producer</button>
-<button id="startConsumerButton">Start Consumer</button>
+<main>
+  <div class="divs">
+    <p class="fsize"> Aquasentinel is an interactive and innovative solution designed to collect, analyze
+      and visualize water quality data in real-time. Through the data collected,
+      users will be able to receive real time updates on water sources around them.
+  </div>
 
-<h2>Received Data</h2>
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Timestamp</th> 
-          <th>Location.name</th>
-          <th>Location.pos</th>
-          <th>pH</th>
-          <th>Organic Carbon</th>
-          <th>Turbidity</th>
-          <th>Solids</th>
-          <th>Trihalomethanes</th>
-          <th>WQI</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% receivedData.forEach((data) => { %> 
-          <tr>
-            <td><%= data.key %></td>
-            <td><%= data.value.location.name %></td>
-            <td>[<%= data.value.location.lat %>, <%= data.value.location.lon %>]</td>
-            <td><%= data.value.data.ph.toFixed(2) %></td>
-            <td><%= data.value.data.Organic_carbon.toFixed(2) %></td>
-            <td><%= data.value.data.Turbidity.toFixed(2) %></td>
-            <td><%= data.value.data.Solids.toFixed(2) %></td>
-            <td><%= data.value.data.Trihalomethanes.toFixed(2) %></td>
-            <td><%= data.value.wqi.toFixed(2) %></td>
-            
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
+  <div class="flex-container">
+    <img class="center" src="images/aquasentinel logo.png" alt="Aquasentinel logo" width="500" height="500">
+  </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="column flex-container">
+        <a class="waves-effect waves-light btn-large" href="/user/login">Login</a>
+      </div>
+      <div class="column flex-container">
+        <a class="waves-effect waves-light btn-large" href="/user/register">Register</a>
+      </div>
+    </div>
 
+  </div>
+</main>

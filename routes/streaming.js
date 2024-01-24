@@ -35,6 +35,10 @@ router.get("/start-consumer", async function (req, res, next) {
 });
 
 /* GET home page. */
-router.get("/", function (req, res, next) {});
+router.get("/", function (req, res, next) {
+
+  res.render('streaming', { title: 'streaming', currentPage: 'Streaming'}); 
+
+});
 
 module.exports = router;
