@@ -4,6 +4,7 @@ const expressLayouts = require('express-ejs-layouts')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const db = require('./db'); // Update the path accordingly
+var apiRouter = require('./routes/api');
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -36,9 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/streaming', streamingRouter);
-app.use('/visulisation', visulisationRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
