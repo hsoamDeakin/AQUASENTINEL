@@ -63,5 +63,9 @@ module.exports = {
     generatedData,
     calculateWQI,
     getAlldDataReadings,
-    getSortedData
+    getSortedData,
+    getUniqueLocations,
+    getDataByLocation,
+    getDataByTimeRange
+
 };
