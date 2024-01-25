@@ -123,6 +123,30 @@ const getAllDataFromReadings = async () => {
   }
 }; 
 
+const getUniqueLocations = async () => {
+  await connectDB();
+  try {
+      // Fetch all data
+      const allData = await DataReading.find({}, 'value.location.name -_id'); // Fetch only the location names
+
+      // Create a set to store unique location names
+      const uniqueLocations = new Set();
+
+      // Extract unique location names
+      allData.forEach(data => {
+          if (data.value && data.value.location && data.value.location.name) {
+              uniqueLocations.add(data.value.location.name);
+          }
+      });
+
+      // Convert the set to an array and sort it
+      return Array.from(uniqueLocations).sort();
+  } catch (error) {
+      console.error('Error retrieving unique locations:', error);
+      throw error;
+  }
+};
+
 // Controller function to get sorted data
 const getSortedData = async (sortBy, sortOrder) => {
   try {
@@ -172,7 +196,7 @@ const getDataByTimeRange = async (startTime, endTime) => {
 };
 
 // Function to get aggregated data for line chart
-const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
+/*const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
   await connectDB();
   try {
     const data = await DataReading.aggregate([
@@ -191,11 +215,12 @@ const getAggregatedDataForChart = async (locationName, parameter, startTime, end
     throw error;
   }
 };
-
+*/
 
 module.exports = {
   generateRandomData,
   calculateWQIFromArray,
   getAllDataFromReadings,
+  getUniqueLocations,
   getSortedData,
 };
