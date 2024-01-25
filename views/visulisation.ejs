@@ -8,18 +8,10 @@
       Location filters:
     </h4>
 
-    <% 
-    let uniqueLocations = new Set();
-    receivedData.forEach(data => {
-    if (data.value && data.value.location && data.value.location.name) {
-        uniqueLocations.add(data.value.location.name);
-    }
-    });
-    uniqueLocations = Array.from(uniqueLocations);
-    %>
 
-    <% uniqueLocations.forEach((locationName) => { %>
-        <button type="button"><%= locationName %></button>
+
+    <% uniqueLocations.forEach((locations) => { %>
+        <button type="button" data-location="<%= locations %>"><%= locations %></button>
     <% }); %>
 
   </div>

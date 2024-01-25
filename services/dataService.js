@@ -128,13 +128,36 @@ const getAllDataFromReadings = async () => {
 const getUniqueLocations = async () => {
   await connectDB();
   try {
+      // Fetch all data
+      const allData = await DataReading.find({}, 'value.location.name -_id'); // Only fetch the location names
+      const uniqueLocations = new Set();
+
+      // Extract unique location names
+      allData.forEach(data => {
+          if (data.value && data.value.location && data.value.location.name) {
+              uniqueLocations.add(data.value.location.name);
+          }
+      });
+
+      return Array.from(uniqueLocations);
+  } catch (error) {
+      console.error('Error retrieving unique locations:', error);
+      throw error;
+  }
+};
+/* 
+const getUniqueLocations = async () => {
+  await connectDB();
+  try {
     const locations = await DataReading.distinct('value.location.name');
     return locations;
   } catch (error) {
     console.error('Error retrieving unique locations:', error);
     throw error;
   }
-};
+}; 
+*/
+
 
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
