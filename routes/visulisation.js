@@ -8,11 +8,8 @@ const dataController  = require('../controllers/dataController');
 router.get('/', async function(req, res, next) { 
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
   const allDataReadings = await dataController.getAlldDataReadings();
-  const allUniqueReadings = await dataController.getUniqueLocations();
   //console.log(allDataReadings)
-  console.log(allUniqueReadings)
-  res.render('visulisation', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, 
-                              uniqueLocations:allUniqueReadings}); 
+  res.render('visulisation', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
 }); 
 
 router.get('/data-table', async function(req, res, next) { 
