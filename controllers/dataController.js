@@ -55,11 +55,18 @@ const getDataByTimeRange = async (req, res) => {
     }
 };
 
+
+const getSortedData = async (sortBy, sortOrder) => { 
+    const sortedDataArray = await dataService.getSortedData(sortBy,sortOrder);
+    return sortedDataArray;
+}  
 module.exports = {
     generatedData,
     calculateWQI,
     getAlldDataReadings,
-    getUniqueLocations, 
+    getSortedData,
+    getUniqueLocations,
     getDataByLocation,
     getDataByTimeRange
+
 };

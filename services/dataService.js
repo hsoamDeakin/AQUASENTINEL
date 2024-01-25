@@ -122,11 +122,9 @@ const getAllDataFromReadings = async () => {
     throw error;
   }
 }; 
- 
 
-// Function to get unique locations for dropdown
-const getUniqueLocations = async () => {
-  await connectDB();
+// Controller function to get sorted data
+const getSortedData = async (sortBy, sortOrder) => {
   try {
       // Fetch all data
       const allData = await DataReading.find({}, 'value.location.name -_id'); // Only fetch the location names
@@ -145,18 +143,6 @@ const getUniqueLocations = async () => {
       throw error;
   }
 };
-/* 
-const getUniqueLocations = async () => {
-  await connectDB();
-  try {
-    const locations = await DataReading.distinct('value.location.name');
-    return locations;
-  } catch (error) {
-    console.error('Error retrieving unique locations:', error);
-    throw error;
-  }
-}; 
-*/
 
 
 // Function to get data by location
@@ -194,9 +180,14 @@ const getAggregatedDataForChart = async (locationName, parameter, startTime, end
       { $group: { _id: { $dateToString: { format: "%Y-%m-%d %H:%M:%S", date: "$value.timestamp" } }, avgValue: { $avg: `$value.data.${parameter}` } } },
       { $sort: { '_id': 1 } }
     ]);
+    // Use the sortBy and sortOrder parameters to customize your query
+    const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
+    console.log(sortBy)
+    console.log(sortOrder)
+    //console.log(data)
     return data;
   } catch (error) {
-    console.error('Error retrieving aggregated data for chart:', error);
+    console.error('Error retrieving sorted data:', error);
     throw error;
   }
 };
@@ -206,7 +197,5 @@ module.exports = {
   generateRandomData,
   calculateWQIFromArray,
   getAllDataFromReadings,
-  getDataByLocation,
-  getDataByTimeRange,
-  getUniqueLocations,
+  getSortedData,
 };
