@@ -3,6 +3,55 @@
   <div class="container" id="headerBelowNav">
     <h1>VISUALISATION</h1>
   </div> 
+
+  <div class="divs">
+    <h4>
+      Location filters:
+    </h4>
+
+
+
+    <% uniqueLocations.forEach((locations) => { %>
+        <button type="button" data-location="<%= locations %>"><%= locations %></button>
+    <% }); %>
+
+  </div>
+
+  <div class="divs">
+      
+      <h2>Data Table</h2>    
+      <div id="visualisation1">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Timestamp</th> 
+              <th>Location.name</th>
+              <th>Location.pos</th>
+              <th>pH</th>
+              <th>Organic Carbon</th>
+              <th>Turbidity</th>
+              <th>Solids</th>
+              <th>Trihalomethanes</th>
+              <th>WQI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% receivedData.forEach((data) => { %> 
+              <tr>
+                <td><%= data.key %></td>
+                <td><%= data.value.location.name %></td>
+                <td>[<%= data.value.location.lat %>, <%= data.value.location.lon %>]</td>
+                <td><%= data.value.data.ph.toFixed(2) %></td>
+                <td><%= data.value.data.Organic_carbon.toFixed(2) %></td>
+                <td><%= data.value.data.Turbidity.toFixed(2) %></td>
+                <td><%= data.value.data.Solids.toFixed(2) %></td>
+                <td><%= data.value.data.Trihalomethanes.toFixed(2) %></td>
+                <td><%= data.value.wqi.toFixed(2) %></td>
+                
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
     
     <div class="container">
     <div class="row">

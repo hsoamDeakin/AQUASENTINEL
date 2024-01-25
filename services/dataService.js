@@ -126,6 +126,60 @@ const getAllDataFromReadings = async () => {
 // Controller function to get sorted data
 const getSortedData = async (sortBy, sortOrder) => {
   try {
+      // Fetch all data
+      const allData = await DataReading.find({}, 'value.location.name -_id'); // Only fetch the location names
+      const uniqueLocations = new Set();
+
+      // Extract unique location names
+      allData.forEach(data => {
+          if (data.value && data.value.location && data.value.location.name) {
+              uniqueLocations.add(data.value.location.name);
+          }
+      });
+
+      return Array.from(uniqueLocations);
+  } catch (error) {
+      console.error('Error retrieving unique locations:', error);
+      throw error;
+  }
+};
+
+
+// Function to get data by location
+const getDataByLocation = async (locationName) => {
+  await connectDB();
+  try {
+    const data = await DataReading.find({ 'value.location.name': locationName });
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data by location:', error);
+    throw error;
+  }
+};
+
+// Function to get data by time range
+const getDataByTimeRange = async (startTime, endTime) => {
+  await connectDB();
+  try {
+    const data = await DataReading.find({
+      'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
+    });
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data by time range:', error);
+    throw error;
+  }
+};
+
+// Function to get aggregated data for line chart
+const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
+  await connectDB();
+  try {
+    const data = await DataReading.aggregate([
+      { $match: { 'value.location.name': locationName, 'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) } } },
+      { $group: { _id: { $dateToString: { format: "%Y-%m-%d %H:%M:%S", date: "$value.timestamp" } }, avgValue: { $avg: `$value.data.${parameter}` } } },
+      { $sort: { '_id': 1 } }
+    ]);
     // Use the sortBy and sortOrder parameters to customize your query
     const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
     console.log(sortBy)
