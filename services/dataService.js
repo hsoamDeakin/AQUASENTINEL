@@ -150,24 +150,17 @@ const getUniqueLocations = async () => {
 // Controller function to get sorted data
 const getSortedData = async (sortBy, sortOrder) => {
   try {
-      // Fetch all data
-      const allData = await DataReading.find({}, 'value.location.name -_id'); // Only fetch the location names
-      const uniqueLocations = new Set();
-
-      // Extract unique location names
-      allData.forEach(data => {
-          if (data.value && data.value.location && data.value.location.name) {
-              uniqueLocations.add(data.value.location.name);
-          }
-      });
-
-      return Array.from(uniqueLocations);
+    // Use the sortBy and sortOrder parameters to customize your query
+    const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
+    console.log(sortBy)
+    console.log(sortOrder)
+    //console.log(data)
+    return data;
   } catch (error) {
-      console.error('Error retrieving unique locations:', error);
-      throw error;
+    console.error('Error retrieving sorted data:', error);
+    throw error;
   }
 };
-
 
 // Function to get data by location
 const getDataByLocation = async (locationName) => {

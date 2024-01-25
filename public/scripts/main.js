@@ -45,6 +45,8 @@ $(function () {
     }
     // Make an AJAX request to get sorted data
     $.get('/visulisation/sort-data', { sortColumn, sortDirection }, function(sortedData) {
+      console.log(sortColumn)
+      console.log(sortedData)
       // Update the table with the sorted data    
       updateTable(sortedData);
     });

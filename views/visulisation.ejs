@@ -4,90 +4,25 @@
     <h1>VISUALISATION</h1>
   </div> 
 
-  <div class="divs">
+  
+<div class="container"> 
+  <div class="row">
     <h4>
       Location filters:
-    </h4>
-
-
+    </h4> 
 
     <% uniqueLocations.forEach((locations) => { %>
         <button type="button" data-location="<%= locations %>"><%= locations %></button>
     <% }); %>
-
-  </div>
-
-  <div class="divs">
-      
-      <h2>Data Table</h2>    
-      <div id="visualisation1">
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Timestamp</th> 
-              <th>Location.name</th>
-              <th>Location.pos</th>
-              <th>pH</th>
-              <th>Organic Carbon</th>
-              <th>Turbidity</th>
-              <th>Solids</th>
-              <th>Trihalomethanes</th>
-              <th>WQI</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% receivedData.forEach((data) => { %> 
-              <tr>
-                <td><%= data.key %></td>
-                <td><%= data.value.location.name %></td>
-                <td>[<%= data.value.location.lat %>, <%= data.value.location.lon %>]</td>
-                <td><%= data.value.data.ph.toFixed(2) %></td>
-                <td><%= data.value.data.Organic_carbon.toFixed(2) %></td>
-                <td><%= data.value.data.Turbidity.toFixed(2) %></td>
-                <td><%= data.value.data.Solids.toFixed(2) %></td>
-                <td><%= data.value.data.Trihalomethanes.toFixed(2) %></td>
-                <td><%= data.value.wqi.toFixed(2) %></td>
-                
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+  </div> 
+  </div>  
     
-    <div class="container">
-    <div class="row">
-      <label class="col-form-label col-sm-2 mb-5" for="form-check">Filters:</label> 
-      <div class="col-sm-10 mb-5">
-      <div class="form-check form-check-inline">
-      <input type="checkbox" class="form-check-input" name="filterByLocation" id="filterByLocation" value="filterByLocation">
-      <label for="filterByLocation" class="form-check-label">Filter By Location</label> 
-    </div>
-      <div class="form-check form-check-inline">
-      <input type="checkbox" class="form-check-input" name="filterByDate" id="filterByDate" value="filterByDate">
-      <label for="filterByDate" class="form-check-label">Filter By Date</label>
-      </div>
-    </div>
-  </div>
-</div> 
-
-    <div class="container">
-    <div class="row">
-      <div class="input-group">
-      <label for="form-select" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select a location:</small></label> 
-      <div class="col-sm-9 mb-3 mt-2"> 
-      <select class="form-select" aria-label="selectLocation" required>
-      <option selected>Please select a location</option>
-      <option value="location1"><em>Loation 1</em></option>
-      <option value="location2"><em>Loation 2</em></option>
-      <option value="location3"><em>Loation 3</em></option>
-      <option value="location4"><em>Loation 4</em></option>
-      <option value="location5"><em>Loation 5</em></option>
-      <option value="location6"><em>Loation 6</em></option>
-      </select> 
-    </div> 
-    </div>
-    </div> 
-
-    <div class="row">
+    
+  <div class="container"> 
+  <div class="row">
+    <h4>
+      Date filters:
+    </h4> 
   <label for="dateInput" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select a start date:</small></label>
   <div class="col-sm-9 mb-3 mt-2"> 
   <input type="date" id="dateInput" name="startDate">
@@ -100,15 +35,14 @@
   <input type="date" id="endDate" name="selectedEndDate">
   </div>
     </div>
-  <div class="row">
-    <a class="waves-effect waves-light btn-large" id="submitFilters">Submit</a>
-    </div>
+    <div class="container"> 
+      <div class="row">
+        <button type="button" class="btn btn-primary btn-lg btn-block" id="submitFilters">Submit</button> 
+     </div>
   </div>
   
 
-    <div class="divs">        
-        </div>
-    <div class="divs" id="sectionAboveFooter">
+     <div class="row">
         <div id="visualisation1">
           <table border="1">
             <thead>

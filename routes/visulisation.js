@@ -10,9 +10,7 @@ router.get('/', async function(req, res, next) {
   const allDataReadings = await dataController.getAlldDataReadings();
   const allUniqueReadings = await dataController.getUniqueLocations();
   //console.log(allDataReadings)
-  console.log(allUniqueReadings)
-  res.render('visulisation', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, 
-                              uniqueLocations:allUniqueReadings}); 
+  res.render('visulisation', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, uniqueLocations:allUniqueReadings}); 
 }); 
 
 router.get('/data-table', async function(req, res, next) { 
@@ -30,7 +28,7 @@ router.get('/chart', async function(req, res, next) {
 }); 
 // Server-side route
 router.get('/sort-data', async function(req, res, next) {
- 
+
   const sortBy = req.query.sortColumn || 'key'; // Default to sorting by 'key'
   const sortOrder = req.query.sortDirection || 'asc'; // Default to ascending order
 
@@ -39,5 +37,4 @@ router.get('/sort-data', async function(req, res, next) {
 
   res.json(sortedData);
 });
-
 module.exports = router;
