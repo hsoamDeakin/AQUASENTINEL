@@ -25,6 +25,7 @@ const calculateWQI =  (values) => {
 const getUniqueLocations = async (req, res) => {
     try {
         const locations = await dataService.getUniqueLocations();
+        return locations;
     } catch (error) {
         console.error('Error retrieving unique locations:', error);
         throw error;
