@@ -10,7 +10,7 @@ const generatedData = async () => {
     return generatedDataArray;
 }  
 
-const getAlldDataReadings = async () => { 
+const getAlldDataReadings = async (req, res) => { 
     const allDataArray = await dataService.getAllDataFromReadings();
     return allDataArray;
 }  
@@ -60,6 +60,13 @@ const getSortedData = async (sortBy, sortOrder) => {
     const sortedDataArray = await dataService.getSortedData(sortBy,sortOrder);
     return sortedDataArray;
 }  
+
+const getAverageWQI = async () => { 
+    const groupLocationByWQI = await dataService.getAverageWQI(); 
+    return groupLocationByWQI;
+}  
+ 
+
 module.exports = {
     generatedData,
     calculateWQI,
@@ -67,6 +74,7 @@ module.exports = {
     getSortedData,
     getUniqueLocations,
     getDataByLocation,
-    getDataByTimeRange
+    getDataByTimeRange,
+    getAverageWQI
 
 };

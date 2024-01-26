@@ -17,8 +17,16 @@ router.get('/data-table', async function(req, res, next) {
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
   const allDataReadings = await dataController.getAlldDataReadings();
   //console.log(allDataReadings)
-  res.render('visulisation', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
+  res.render('visualisation_table', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
 }); 
+
+router.get('/visualisation_test_d3', async function(req, res, next) { 
+  // Assuming getAlldDataReadings returns a Promise that resolves with the data
+  const allDataReadings = await dataController.getAlldDataReadings();
+  //console.log(allDataReadings)
+  res.render('visualisation_test_d3', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
+}); 
+
 
 router.get('/chart', async function(req, res, next) { 
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
@@ -37,4 +45,10 @@ router.get('/sort-data', async function(req, res, next) {
 
   res.json(sortedData);
 });
+
+// Server-side route
+router.get('/data-by-location-avg', async function(req, res, next) {  
+  res.json( await dataController.getAverageWQI());
+});
+
 module.exports = router;

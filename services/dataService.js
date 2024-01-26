@@ -162,6 +162,28 @@ const getSortedData = async (sortBy, sortOrder) => {
   }
 };
 
+// Function to calculate the average WQI for each location
+const getAverageWQI = async () => {
+  try {
+    // Ensure connection to the database
+    await connectDB();
+    // Group data by location and calculate average WQI
+    const averageWQI = await DataReading.aggregate([
+      {
+        $group: {
+          _id: '$value.location.name',
+          averageWQI: { $avg: '$value.wqi' }
+        }
+      }
+    ]);
+
+    return averageWQI;
+  } catch (error) {
+    console.error('Error calculating average WQI:', error);
+    throw error;
+  }
+}; 
+ 
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
   await connectDB();
@@ -216,4 +238,5 @@ module.exports = {
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
+  getAverageWQI
 };

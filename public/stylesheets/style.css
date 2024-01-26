@@ -246,5 +246,16 @@ button#startConsumerButton {
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
     }
-
-    
+    .sortable {
+      font-size: 75%;
+      text-orientation: upright ;
+    }
+     /* Styles for the SVG element */
+     #shape1 {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      height: 100%;
+    }
