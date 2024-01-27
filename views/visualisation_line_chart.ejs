@@ -1,0 +1,112 @@
+<main>
+    <div class="container" id="headerBelowNav">
+      <h1>Water Quality Index Over Time</h1>
+    </div>  
+    <div class="container divs">
+        <div class="row">
+            <div class="column flex-container">
+                <!-- Dropdown for selecting location -->
+                <select id="locationSelector" class="waves-effect waves-light btn-large">
+                  <option value="Docklands">Docklands</option>
+                  <option value="Flinders Street Station">Flinders Street Station</option>
+                  <option value="Melbourne Central">Melbourne Central</option>
+                  <option value="Queen Victoria Market">Queen Victoria Market</option>
+                  <option value="St Kilda Beach">St Kilda Beach</option>
+                  <option value="Chinatown">Chinatown</option>
+                  <option value="Fitzroy Gardens">Fitzroy Gardens</option>
+                  <option value="National Gallery of Victoria">National Gallery of Victoria</option>
+                  <option value="Royal Botanic Gardens">Royal Botanic Gardens</option>
+                  <option value="State Library of Victoria">State Library of Victoria</option>
+                </select>
+                <!-- Input for selecting date range -->
+                <input type="date" id="startDate">
+                <input type="date" id="endDate">
+                <!-- Button to trigger chart rendering -->
+                <a id="show_chart" class="waves-effect waves-light btn-large">Show Chart</a>
+            </div>
+        </div>
+    </div>
+    <div class="container divs">
+        <div class="row"> 
+            <svg id="wqiChart" viewBox="0 0 800 600"></svg> 
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch and render the line chart
+        function renderChart(location, startDate, endDate) {
+        fetch(`/api/data-by-location-and-time?location=${location}&startTime=${startDate}&endTime=${endDate}`)
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing svg content
+                d3.select("#wqiChart").selectAll("*").remove();
+
+                // Set the dimensions and margins of the graph
+                var margin = {top: 10, right: 30, bottom: 30, left: 60},
+                    width = 760 - margin.left - margin.right,
+                    height = 500 - margin.top - margin.bottom;
+
+                // Append the svg object to the body of the page
+                var svg = d3.select("#wqiChart")
+                  .attr("width", width + margin.left + margin.right)
+                  .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                // Format the data
+                var parsedData = data.map(function(d) {
+                    return { date: d3.isoParse(d.timestamp), value: +d.wqi };
+                });
+
+                // Add X axis (date)
+                var x = d3.scaleTime()
+                  .domain(d3.extent(parsedData, function(d) { return d.date; }))
+                  .range([ 0, width ]);
+                svg.append("g")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(d3.axisBottom(x));
+
+                // Add Y axis
+                var y = d3.scaleLinear()
+                  .domain([0, d3.max(parsedData, function(d) { return +d.value; })])
+                  .range([ height, 0 ]);
+                svg.append("g")
+                  .call(d3.axisLeft(y));
+
+                // Add the line
+                svg.append("path")
+                  .datum(parsedData)
+                  .attr("fill", "none")
+                  .attr("stroke", "steelblue")
+                  .attr("stroke-width", 1.5)
+                  .attr("d", d3.line()
+                    .x(function(d) { return x(d.date) })
+                    .y(function(d) { return y(d.value) })
+                    )
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+        // // Populate location dropdown from the server
+        // fetch('/api/locations')
+        //     .then(response => response.json())
+        //     .then(locations => {
+        //         console.log(locations);
+        //         const locationSelect = document.getElementById('locationSelector');
+        //         locations.forEach(location => {
+        //             const option = document.createElement('option');
+        //             option.value = location._id; // Changed from location to location._id
+        //             option.text = location._id;  // Changed from location to location._id
+        //             locationSelect.appendChild(option);
+        //        });
+        //    });
+
+        // Add event listener to the show chart button
+        document.getElementById('show_chart').addEventListener('click', function() {
+            const location = document.getElementById('locationSelector').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            renderChart(location, startDate, endDate);
+        });
+    </script>
+</main>

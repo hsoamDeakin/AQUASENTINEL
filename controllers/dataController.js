@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 const dataService = require('../services/dataService')
-
+const { DataReading } = require('../db');
 
 const generatedData = async () => { 
     const generatedDataArray = await dataService.generateRandomData();
@@ -24,11 +24,11 @@ const calculateWQI =  (values) => {
 // Controller function to get unique locations for dropdown
 const getUniqueLocations = async (req, res) => {
     try {
-        const locations = await dataService.getUniqueLocations();
-        return locations;
+        const uniqueLocations = await dataService.fetchUniqueLocations();
+        res.json(uniqueLocations);
     } catch (error) {
         console.error('Error retrieving unique locations:', error);
-        throw error;
+        res.status(500).send(error.message);
     }
 };
 
@@ -55,6 +55,18 @@ const getDataByTimeRange = async (req, res) => {
     }
 };
 
+// Controller function to get data by both time and location
+const getDataByLocationAndTime = async (req, res) => {
+    try {
+        const location = req.query.location;
+        const startTime = req.query.startTime;
+        const endTime = req.query.endTime;
+        const data = await dataService.getDataByLocationAndTime(location, startTime, endTime);
+        res.json(data);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
 
 const getSortedData = async (sortBy, sortOrder) => { 
     const sortedDataArray = await dataService.getSortedData(sortBy,sortOrder);
@@ -75,6 +87,6 @@ module.exports = {
     getUniqueLocations,
     getDataByLocation,
     getDataByTimeRange,
-    getAverageWQI
-
+    getAverageWQI,
+    getDataByLocationAndTime
 };

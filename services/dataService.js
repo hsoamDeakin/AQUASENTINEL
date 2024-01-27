@@ -73,6 +73,8 @@ const generateRandomData = async () => {
   }
   return generatedData; 
 };
+
+// Function to calculate the WQI from an array of values
 const calculateWQIFromArray = (values) => {
   const parameterWeights = {
     'ph': 0.2,
@@ -87,7 +89,6 @@ const calculateWQIFromArray = (values) => {
     const value = values[i];
 
     // Specific normalization logic for each parameter
-    // You may need to adjust this based on the characteristics of your data
     let normalizedValue;
     if (i === 3) {
       // Solids parameter, special treatment
@@ -123,27 +124,45 @@ const getAllDataFromReadings = async () => {
   }
 }; 
 
-const getUniqueLocations = async () => {
+// Function to get data by location and time range
+const getDataByLocationAndTime = async (locationName, startTime, endTime) => {
   await connectDB();
   try {
+    // Query to find data within the specified time range and location
+    const data = await DataReading.find({
+      'value.location.name': locationName,
+      'value.timestamp': { 
+        $gte: new Date(startTime), 
+        $lte: new Date(endTime) 
+      }
+    }).sort({ 'value.timestamp': 1 }); // Sorting by timestamp
+
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data by location and time range:', error);
+    throw error;
+  }
+};
+
+// Function to get unique locations
+const getUniqueLocations = async () => {
+  try {
       // Fetch all data
-      const allData = await DataReading.find({}, 'value.location.name -_id'); // Fetch only the location names
-
-      // Create a set to store unique location names
-      const uniqueLocations = new Set();
-
-      // Extract unique location names
-      allData.forEach(data => {
-          if (data.value && data.value.location && data.value.location.name) {
-              uniqueLocations.add(data.value.location.name);
-          }
-      });
-
-      // Convert the set to an array and sort it
-      return Array.from(uniqueLocations).sort();
+      const allData = await DataReading.distinct('value.location.name');
+      // Sort and return the unique location names
+      return allData.sort();
   } catch (error) {
       console.error('Error retrieving unique locations:', error);
       throw error;
+  }
+};
+
+const fetchUniqueLocations = async () => {
+  try {
+    const uniqueLocations = await DataReading.distinct('value.location.name');
+    return uniqueLocations.sort();
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -186,51 +205,28 @@ const getAverageWQI = async () => {
  
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
-  await connectDB();
   try {
-    const data = await DataReading.find({ 'value.location.name': locationName });
-    return data;
+      const data = await DataReading.find({ 'value.location.name': locationName });
+      return data;
   } catch (error) {
-    console.error('Error retrieving data by location:', error);
-    throw error;
+      console.error('Error retrieving data by location:', error);
+      throw error;
   }
 };
 
 // Function to get data by time range
 const getDataByTimeRange = async (startTime, endTime) => {
-  await connectDB();
   try {
-    const data = await DataReading.find({
-      'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
-    });
-    return data;
+      const data = await DataReading.find({
+          'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
+      });
+      return data;
   } catch (error) {
-    console.error('Error retrieving data by time range:', error);
-    throw error;
+      console.error('Error retrieving data by time range:', error);
+      throw error;
   }
 };
 
-// Function to get aggregated data for line chart
-/*const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
-  await connectDB();
-  try {
-    const data = await DataReading.aggregate([
-      { $match: { 'value.location.name': locationName, 'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) } } },
-      { $group: { _id: { $dateToString: { format: "%Y-%m-%d %H:%M:%S", date: "$value.timestamp" } }, avgValue: { $avg: `$value.data.${parameter}` } } },
-      { $sort: { '_id': 1 } }
-    ]);
-    // Use the sortBy and sortOrder parameters to customize your query
-    const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
-    console.log(sortBy)
-    console.log(sortOrder)
-    //console.log(data)
-    return data;
-  } catch (error) {
-    console.error('Error retrieving sorted data:', error);
-    throw error;
-  }
-};
-*/
 
 module.exports = {
   generateRandomData,
@@ -238,5 +234,9 @@ module.exports = {
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
-  getAverageWQI
+  getAverageWQI,
+  getDataByLocationAndTime,
+  getDataByLocation,
+  getDataByTimeRange,
+  fetchUniqueLocations
 };

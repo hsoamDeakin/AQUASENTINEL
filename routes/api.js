@@ -20,5 +20,7 @@ router.get('/data-by-time-range', dataController.getDataByTimeRange);
 // Endpoint to get data within a specific time range
 router.get('/data-by-location-avg', dataController.getAverageWQI);
 
+// Endpoint to get data within location and time range
+router.get('/data-by-location-and-time', dataController.getDataByLocationAndTime);
 
 module.exports = router;

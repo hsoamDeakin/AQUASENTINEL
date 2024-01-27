@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
  
 const dataController  = require('../controllers/dataController'); 
+const dataService = require('../services/dataService');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) { 
@@ -27,6 +28,19 @@ router.get('/visualisation_test_d3', async function(req, res, next) {
   res.render('visualisation_test_d3', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
 }); 
 
+// GET WQI Over Time visualization page
+router.get('/visualisation_line_chart', async function(req, res, next) { 
+  try {
+    const uniqueLocations = await dataService.fetchUniqueLocations();
+    res.render('visualisation_line_chart', { 
+      title: 'WQI Over Time', 
+      uniqueLocations: uniqueLocations 
+    });
+  } catch (error) {
+    console.error('Error retrieving unique locations for visualization:', error);
+    res.status(500).render('error', { error: error });
+  }
+});
 
 router.get('/chart', async function(req, res, next) { 
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
