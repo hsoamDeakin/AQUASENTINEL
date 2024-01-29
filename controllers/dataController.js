@@ -35,13 +35,23 @@ const getUniqueLocations = async (req, res) => {
 // Controller function to get data by location
 const getDataByLocation = async (req, res) => {
     try {
-        const locationName = req.query.location; // Get 'location' query parameter from the request
+        const locationName = req.query.location;
+        console.log(`Fetching data for location: ${locationName}`); // Log the location name
+
+        if (!locationName) {
+            return res.status(400).send('Location is required');
+        }
+
         const data = await dataService.getDataByLocation(locationName);
-        res.json(data); // Respond with the filtered data
+        console.log(`Data retrieved: ${data.length} records`); // Log the number of records retrieved
+
+        res.json(data);
     } catch (error) {
+        console.error('Error retrieving data by location:', error);
         res.status(500).send(error.message);
     }
 };
+
 
 // Controller function to get data by time range
 const getDataByTimeRange = async (req, res) => {

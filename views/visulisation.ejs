@@ -10,14 +10,12 @@
     <h4>
       Location filters:
     </h4> 
-
     <% uniqueLocations.forEach((locations) => { %>
         <button type="button" data-location="<%= locations %>"><%= locations %></button>
     <% }); %>
   </div> 
+  
   </div>  
-    
-    
   <div class="container"> 
   <div class="row">
     <h4>
@@ -40,8 +38,6 @@
         <button type="button" class="btn btn-primary btn-lg btn-block" id="submitFilters">Submit</button> 
      </div>
   </div>
-  
-
      <div class="row">
         <div id="visualisation1">
           <table border="1">
@@ -81,3 +77,36 @@
         </div>
     </div>
 </main>  
+
+<script>
+  document.querySelectorAll('[data-location]').forEach(button => {
+    button.addEventListener('click', function() {
+      const location = this.getAttribute('data-location');
+      fetch(`/api/data-by-location?location=${encodeURIComponent(location)}`)
+        .then(response => response.json())
+        .then(data => {
+          updateTable(data);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  });
+
+  function updateTable(data) {
+    const tableBody = document.querySelector('#visualisation1 tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+    data.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${row.key}</td>
+                      <td>${row.value.location.name}</td>
+                      <td>[${row.value.location.lat}, ${row.value.location.lon}]</td>
+                      <td>${row.value.data.ph.toFixed(2)}</td>
+                      <td>${row.value.data.Organic_carbon.toFixed(2)}</td>
+                      <td>${row.value.data.Turbidity.toFixed(2)}</td>
+                      <td>${row.value.data.Solids.toFixed(2)}</td>
+                      <td>${row.value.data.Trihalomethanes.toFixed(2)}</td>
+                      <td>${row.value.wqi.toFixed(2)}</td>`;
+      tableBody.appendChild(tr);
+    });
+  }
+</script>
+

@@ -186,7 +186,6 @@ const getAverageWQI = async () => {
  
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
-  await connectDB();
   try {
     const data = await DataReading.find({ 'value.location.name': locationName });
     return data;
@@ -238,5 +237,6 @@ module.exports = {
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
-  getAverageWQI
+  getAverageWQI,
+  getDataByLocation
 };
