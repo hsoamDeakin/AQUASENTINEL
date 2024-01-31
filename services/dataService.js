@@ -123,30 +123,6 @@ const getAllDataFromReadings = async () => {
   }
 }; 
 
-const getUniqueLocations = async () => {
-  await connectDB();
-  try {
-      // Fetch all data
-      const allData = await DataReading.find({}, 'value.location.name -_id'); // Fetch only the location names
-
-      // Create a set to store unique location names
-      const uniqueLocations = new Set();
-
-      // Extract unique location names
-      allData.forEach(data => {
-          if (data.value && data.value.location && data.value.location.name) {
-              uniqueLocations.add(data.value.location.name);
-          }
-      });
-
-      // Convert the set to an array and sort it
-      return Array.from(uniqueLocations).sort();
-  } catch (error) {
-      console.error('Error retrieving unique locations:', error);
-      throw error;
-  }
-};
-
 // Controller function to get sorted data
 const getSortedData = async (sortBy, sortOrder) => {
   try {
@@ -184,31 +160,92 @@ const getAverageWQI = async () => {
   }
 }; 
  
-// Function to get data by location
-const getDataByLocation = async (locationName) => {
+// Function to get filtered data 
+const getDataByTimeRangeAndLocation = async (queryParameters) => {
   await connectDB();
   try {
-    const data = await DataReading.find({ 'value.location.name': locationName });
+    let query = {};
+    if (queryParameters.startTime && queryParameters.endTime) {
+      query.key = {
+        $gte: new Date(queryParameters.startTime).toISOString(),
+        $lte: new Date(queryParameters.endTime).toISOString()
+      };
+    }
+    if (queryParameters.location) {
+      query['value.location.name'] = queryParameters.location;
+    }
+    
+    const data = await DataReading.find(query).sort({ 'key': 1 }).lean();
     return data;
   } catch (error) {
-    console.error('Error retrieving data by location:', error);
+    console.error('Error retrieving data by time range and location:', error);
     throw error;
   }
 };
 
-// Function to get data by time range
-const getDataByTimeRange = async (startTime, endTime) => {
+
+const getUniqueLocations = async () => {
   await connectDB();
   try {
-    const data = await DataReading.find({
-      'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
-    });
-    return data;
+      // Fetch all data
+      const allData = await DataReading.find({}, 'value.location.name -_id'); // Fetch only the location names
+
+      // Create a set to store unique location names
+      const uniqueLocations = new Set();
+
+      // Extract unique location names
+      allData.forEach(data => {
+          if (data.value && data.value.location && data.value.location.name) {
+              uniqueLocations.add(data.value.location.name);
+          }
+      });
+
+      // Convert the set to an array and sort it
+      return Array.from(uniqueLocations).sort();
   } catch (error) {
-    console.error('Error retrieving data by time range:', error);
-    throw error;
+      console.error('Error retrieving unique locations:', error);
+      throw error;
   }
 };
+
+
+module.exports = {
+  generateRandomData,
+  calculateWQIFromArray,
+  getAllDataFromReadings,
+  getSortedData,
+  getAverageWQI,
+  getUniqueLocations,
+  getDataByTimeRangeAndLocation
+};
+
+
+
+// // Function to get data by location
+// const getDataByLocation = async (locationName) => {
+//   await connectDB();
+//   try {
+//     const data = await DataReading.find({ 'value.location.name': locationName });
+//     return data;
+//   } catch (error) {
+//     console.error('Error retrieving data by location:', error);
+//     throw error;
+//   }
+// };
+
+// // Function to get data by time range
+// const getDataByTimeRange = async (startTime, endTime) => {
+//   await connectDB();
+//   try {
+//     const data = await DataReading.find({
+//       'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
+//     });
+//     return data;
+//   } catch (error) {
+//     console.error('Error retrieving data by time range:', error);
+//     throw error;
+//   }
+// };
 
 // Function to get aggregated data for line chart
 /*const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
@@ -232,11 +269,3 @@ const getDataByTimeRange = async (startTime, endTime) => {
 };
 */
 
-module.exports = {
-  generateRandomData,
-  calculateWQIFromArray,
-  getAllDataFromReadings,
-  getUniqueLocations,
-  getSortedData,
-  getAverageWQI
-};

@@ -16,7 +16,7 @@ var usersRouter = require('./routes/users');
 var streamingRouter = require('./routes/streaming');
 var visulisationRouter = require('./routes/visulisation');
 var apiRouter = require('./routes/api');
-
+var wqiChartRouter = require('./routes/wqiChart');
 
 var app = express();
 
@@ -40,6 +40,7 @@ app.use('/user', usersRouter);
 app.use('/streaming', streamingRouter);
 app.use('/visulisation', visulisationRouter);
 app.use('/api', apiRouter);
+app.use('/wqi-chart', wqiChartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

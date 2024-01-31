@@ -4,7 +4,6 @@ require('dotenv').config();
 
 const dataService = require('../services/dataService')
 
-
 const generatedData = async () => { 
     const generatedDataArray = await dataService.generateRandomData();
     return generatedDataArray;

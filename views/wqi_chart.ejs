@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1>Water Quality Index Over Time</h1>
+            <svg id="wqiChart"></svg>
+        </div>
+
+        <script src="/javascripts/wqiChartLogic.js"></script>
+    </main>
+    <!-- Location dropdown -->
+    <select id="locationSelect">
+        <option value="">Select a location</option>
+        <!-- Options will be populated dynamically -->
+    </select>
+
+    <!-- Date range inputs -->
+    <input type="date" id="startDate" placeholder="Start Date">
+    <input type="date" id="endDate" placeholder="End Date">
+
+    <button id="filterButton">Filter Data</button>
+
+    <script>
+        // Populate the dropdown with locations
+        fetch('/api/locations')
+            .then(response => response.json())
+            .then(locations => {
+                const select = document.getElementById('locationSelect');
+                locations.forEach(location => {
+                    const option = new Option(location, location);
+                    select.add(option);
+                });
+            });
+
+        // Add event listener to the filter button
+        document.getElementById('filterButton').addEventListener('click', function () {
+            const location = document.getElementById('locationSelect').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            // Construct the query string
+            let queryString = '?';
+            if (location) queryString += `location=${location}&`;
+            if (startDate) queryString += `startTime=${startDate}&`;
+            if (endDate) queryString += `endTime=${endDate}`;
+
+            // Fetch the filtered data and update the chart
+            fetch(`/api/data-by-time-range${queryString}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update the chart with the new data
+                    updateChart(data);
+                });
+        });
+
+        function updateChart(filteredData) {
+            // Your logic to update the chart goes here
+            // Similar to what you have in wqiChartLogic.js
+        }
+    </script>
+</body>
+
+</html>
