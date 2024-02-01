@@ -1,0 +1,61 @@
+<div class="container" id="headerBelowNav">
+    <h1>MY PROFILE</h1>
+</div>
+  <div id="borderLine">
+    <p id="borderHeaderSection">View User Details</p>
+    <form name="userDetails" method="get" action="/specificUser">
+      <div class="container" id="userDetailsSection">
+        <div class="row">
+          <label class="form-label col-sm-3" for="userId"><b>Enter Your User ID:</b></label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="userId" name="userId" placeholder="Your User ID" required>
+          </div>
+        </div>
+      </div>
+      <input class="btn" type="submit" id="myProfileButton" value="View User">
+    </form>
+        </div>        
+        <div id="borderLine">
+          <p id="borderHeaderSection">Update User Details</p>
+          <form name="updateData" method="post" action="/updateData">
+            <div class="container" id="userDetailsSection">
+              <div class="row">
+                <label class="form-label col-sm-3" for="userId"><b>Enter Your User ID:</b></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="userId" name="userId" placeholder="Your User ID" required>
+                </div>
+                <label class="form-label col-sm-3" for="updateFirstname"><b>Updated First Name:</b></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="updateFirstname" name="updateFirstname" placeholder="Your New First Name" required>
+                </div>
+                <label class="form-label col-sm-3" for="updateLastname"><b>Updated Last Name:</b></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="updateLastname" name="updateLastname" placeholder="Your New Last Name" required>
+                </div>
+                <label class="form-label col-sm-3" for="updateUsername"><b>Updated User Name:</b></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="updateUsername" name="updateUsername" placeholder="Your New User Name" required>
+                </div>
+                <label class="form-label col-sm-3" for="updatePassword"><b>Updated Password</b></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="updatePassword" name="updatePassword" placeholder="Your New Password" required>
+                </div>
+              </div>
+            </div>
+            <input class="btn" type="submit" id="myProfileButton" value="Update User">
+          </form>
+              </div>
+              <div id="borderLine">
+                <p id="borderHeaderSection">Delete User Details</p>
+                <form name="deleteUser" method="post" action="/deleteUser">
+                  <div class="container" id="userDetailsSection">
+                    <div class="row">
+                      <label class="form-label col-sm-3" for="userId"><b>Enter Your User ID:</b></label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="userId" name="userId" placeholder="Your User ID" required>
+                      </div>
+                    </div>
+                  </div>
+                  <input class="btn" type="submit" id="myProfileButton" value="Delete User">
+                </form>
+                    </div> 

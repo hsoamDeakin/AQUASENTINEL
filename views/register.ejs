@@ -1,54 +1,43 @@
 <main>
-    <div class="bg-image img1"></div>
-    <div class="bg-image img2"></div>
-    <div class="bg-image img3"></div>
-    <div class="bg-image img4"></div>
-    <div class="bg-image img5"></div>
-    <div class="bg-text">
-      <div class="container">
-        <h1 class="text-center" style="margin-bottom: 60px; margin-top:50px; background-color: rgba(63, 105, 127, 0.589); border: 4px solid rgba(63, 105, 127, 0.589);"><strong>REGISTER</strong></h1>
-      </div>
-      <div id="borderLine">
-        <p id="RegistrationSection"><b>Registration Form</b></p>
-        <form name="login" method="POST" action="/registration" onsubmit="return validateForm();">
-          <div class="container" style="margin-top: 60px;">
-            <div class="row">
-  
-              <label class="form-label col-sm-2 mb-3" for="stud_id"><b>First Name</b></label>
-              <div class="col-sm-10 mb-3">
-                <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Your first name" required><span id="message2"></span>
-              </div>
-              <label class="form-label col-sm-2 mb-3" for="stud_id"><b>Last Name</b></label>
-              <div class="col-sm-10 mb-3">
-                <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Your last name" required><span id="message2"></span>
-              </div>
-  
-  
-              <label class="form-label col-sm-2 mb-3" for="stud_id"><b>User Name:</b></label>
-              <div class="col-sm-10 mb-3">
-                <input type="text" class="form-control" name="username" id="username" placeholder="Please enter a user name" required><span id="message2"></span>
-              </div>
-            </div>
+  <div class="container" id="headerBelowNav">
+    <h1>REGISTER</h1>
+  </div>
+  <div id="borderLine">
+    <p id="borderHeaderSection">Registration Form</p>
+    <form name="register" method="POST" action="/registration" onsubmit="return validateForm();">
+      <div class="container" id="firstNameSection">
+        <div class="row">
+          <label class="form-label col-sm-2 mb-3" for="stud_id"><b>First Name</b></label>
+          <div class="col-sm-10 mb-3">
+            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Your first name" required><span id="message2"></span>
           </div>
-          <div class="container" style="margin-top: 20px;">
-            <div class="row">
-              <div class="col-sm-2 mb-3">
-                <label for="stud_name" class="form-label"><b>Password:</b></label>
-              </div>
-              <div class="col-sm-10 mb-3">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Please enter a password" required><span id="message3"></span>
-              </div>
-            </div>
+          <label class="form-label col-sm-2 mb-3" for="stud_id"><b>Last Name</b></label>
+          <div class="col-sm-10 mb-3">
+            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Your last name" required><span id="message2"></span>
           </div>
-          <input class="btn" type="submit" id="registrationbutton" value="Register" onclick="return validateForm()"
-           style="width: 120px; margin-left: 300px; margin-top:40px; margin-bottom: 30px; background-color: rgba(63, 105, 127, 0.589); border:2px solid rgba(63, 105, 127, 0.589); color:white">
-          <input class="btn" type="reset" id="resetbutton" value="Reset" style="width: 120px; margin-top:40px; margin-bottom: 30px; background-color: rgba(63, 105, 127, 0.589); border:2px solid rgba(63, 105, 127, 0.589); color:white;">
-        </form>
-            </div>
+          <label class="form-label col-sm-2 mb-3" for="stud_id"><b>User Name:</b></label>
+          <div class="col-sm-10 mb-3">
+            <input type="text" class="form-control" name="username" id="username" placeholder="Please enter a user name" required><span id="message2"></span>
           </div>
         </div>
       </div>
-  
+      <div class="container" id="passwordSectionRegister">
+        <div class="row">
+          <div class="col-sm-2 mb-3">
+            <label for="stud_name" class="form-label"><b>Password:</b></label>
+          </div>
+          <div class="col-sm-10 mb-3">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Please enter a password" required><span id="message3"></span>
+          </div>
+        </div>
       </div>
-     </div> 
+      <input class="btn" type="submit" id="registrationbutton" value="Register" onclick="return validateForm()">
+      <input class="btn" type="reset" id="resetbutton" value="Reset">
+    </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+ </div>
       </main>
