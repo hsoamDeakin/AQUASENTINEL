@@ -58,12 +58,8 @@ async function verifyToken(req, res, next) {
     } catch (error) {
         console.error('Error in verifyToken middleware:', error);
         return res.status(500).json({ message: 'Internal Server Error' });
-    } finally {
-        // Ensure to close the connection when the middleware completes
-        await mongoose.connection.close();
     }
 }
-
 
   const requireLogin = (req, res, next) => {
     if (req.session.userId) {
