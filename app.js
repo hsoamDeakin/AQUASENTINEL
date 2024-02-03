@@ -13,7 +13,9 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 // Connect to MongoDB
-db.connectDB();
+db.connectDB('AQUASENTINEL');
+db.connectDB('userDB');
+
 
 var indexRouter = require('./routes/index');
 var userRoutes = require('./routes/userRoutes');

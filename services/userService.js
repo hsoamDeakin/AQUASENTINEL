@@ -67,7 +67,7 @@ async function loginUser(inputUsername, inputPassword) {
 }
 
 async function getSpecificUser(userId) {
-    await connectDB();
+    await connectDB('userDB');
     try {
         const collection = mongoose.connection.db.collection('Register');
         return await collection.findOne({ userId });
@@ -77,7 +77,7 @@ async function getSpecificUser(userId) {
 }
 
 async function updateUserData(userId, updateFirstname, updateLastname, updateUsername, updatePassword) {
-    await connectDB();
+    await connectDB('userDB');
     try {
         const collection = mongoose.connection.db.collection('Register');
         return await collection.updateOne(
@@ -97,7 +97,7 @@ async function updateUserData(userId, updateFirstname, updateLastname, updateUse
 }
 
 async function deleteUser(userId) {
-    await connectDB();
+    await connectDB('userDB');
     try {
         const collection = mongoose.connection.db.collection('Register');
         return await collection.deleteOne({ userId });
