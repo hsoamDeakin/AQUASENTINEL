@@ -238,5 +238,8 @@ module.exports = {
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
-  getAverageWQI
+  getAverageWQI,
+  getDataByLocation,
+  getDataByTimeRange,
 };
+
