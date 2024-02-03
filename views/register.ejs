@@ -1,39 +1,68 @@
-<main>
-  <div class="container" id="headerBelowNav">
-    <h1>REGISTER</h1>
-  </div>
+<main> 
   <div id="borderLine">
     <p id="borderHeaderSection">Registration Form</p>
-    <form name="register" method="POST" action="/registration" onsubmit="return validateForm();">
-      <div class="container" id="firstNameSection">
+    <form name="register" method="POST" action="/user/register" onsubmit="return validateForm();">
+      <div class="container" id="registrationForm">
+        <!-- First Name -->
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <label class="form-label" for="firstname"><b>First Name</b></label>
+            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Your first name" required>
+            <span id="message2"></span>
+          </div>
+        </div>
+    
+        <!-- Last Name -->
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <label class="form-label" for="lastname"><b>Last Name</b></label>
+            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Your last name" required>
+            <span id="message2"></span>
+          </div>
+        </div>
+    
+        <!-- User Name -->
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <label class="form-label" for="username"><b>User Name:</b></label>
+            <input type="text" class="form-control" name="username" id="username" placeholder="Please enter a user name" required>
+            <span id="message2"></span>
+          </div>
+        </div>
+    
+        <!-- Role Selection -->
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <label class="form-label" for="role"><b>Role:</b></label>
+            <select class="form-select" name="role" id="role" required>
+              <option value="">Select Role</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+    
+        <!-- Password -->
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <label class="form-label" for="password"><b>Password:</b></label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Please enter a password" required>
+            <span id="message3"></span>
+          </div>
+        </div>
+    
+        <!-- Submit and Reset Buttons -->
         <div class="row">
-          <label class="form-label col-sm-2 mb-3" for="stud_id"><b>First Name</b></label>
-          <div class="col-sm-10 mb-3">
-            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="Your first name" required><span id="message2"></span>
+          <div class="col-sm-6">
+            <input class="btn btn-primary btn-lg" type="submit" id="registrationbutton" value="Register" onclick="return validateForm()">
           </div>
-          <label class="form-label col-sm-2 mb-3" for="stud_id"><b>Last Name</b></label>
-          <div class="col-sm-10 mb-3">
-            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Your last name" required><span id="message2"></span>
-          </div>
-          <label class="form-label col-sm-2 mb-3" for="stud_id"><b>User Name:</b></label>
-          <div class="col-sm-10 mb-3">
-            <input type="text" class="form-control" name="username" id="username" placeholder="Please enter a user name" required><span id="message2"></span>
+          <div class="col-sm-6">
+            <input class="btn btn-secondary btn-lg" type="reset" id="resetbutton" value="Reset">
           </div>
         </div>
       </div>
-      <div class="container" id="passwordSectionRegister">
-        <div class="row">
-          <div class="col-sm-2 mb-3">
-            <label for="stud_name" class="form-label"><b>Password:</b></label>
-          </div>
-          <div class="col-sm-10 mb-3">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Please enter a password" required><span id="message3"></span>
-          </div>
-        </div>
-      </div>
-      <input class="btn" type="submit" id="registrationbutton" value="Register" onclick="return validateForm()">
-      <input class="btn" type="reset" id="resetbutton" value="Reset">
     </form>
+    
         </div>
       </div>
     </div>

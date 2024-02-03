@@ -18,7 +18,7 @@ db.connectDB('userDB');
 
 
 var indexRouter = require('./routes/index');
-var userRoutes = require('./routes/userRoutes');
+var userRoutes = require('./routes/user');
 var streamingRouter = require('./routes/streaming');
 var visulisationRouter = require('./routes/visulisation');
 var apiRouter = require('./routes/api');
@@ -41,6 +41,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
  
+// Middleware to initialize session
+app.use(session({
+  secret: 'key', // Change this to your actual secret key
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Middleware to set session secret
+app.use((req, res, next) => {
+  req.session.sessionSecret = 'key'; // Set your actual secret key here
+  next();
+});
+
+
 app.use('/', indexRouter);
 app.use('/user', userRoutes); //Mount user routes
 app.use('/streaming', streamingRouter);

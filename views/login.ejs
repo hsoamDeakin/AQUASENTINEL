@@ -1,10 +1,7 @@
 <main>
-    <div class="container" id="headerBelowNav">
-        <h1>LOGIN</h1>
-    </div>
     <div id="borderLine">
-        <p id="borderHeaderSection"> Login Section </p>
-        <form name="login" method="POST" action="/login" onsubmit="return validateForm();">
+        <p id="borderHeaderSection"> Login </p>
+        <form name="login" method="POST" action="/user/login" onsubmit="return validateForm();">
             <div class="container" id="userNameSection">
                 <div class="row">
                     <label class="form-label col-sm-2 mb-3" for="stud_id"><b>User Name:</b></label>
@@ -23,7 +20,11 @@
                     </div>
                 </div>
             </div>
-            <input class="btn" type="submit" id="loginbutton" value="Login" onclick="return validateForm()">
+            <div class="container" id="passwordSection">
+                <div class="row">
+                    <input class="btn" type="submit" id="loginbutton" value="Login" onclick="return validateForm()">
+                </div>
+            </div>
         </form>
     </div>
     </div>
