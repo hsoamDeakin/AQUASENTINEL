@@ -9,10 +9,6 @@ const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
 
-
-// Generate a random 32-byte (256-bit) hex string
-const longTermSecretKey = crypto.randomBytes(32).toString('hex');
-
 // Connection URI
 const uri = 'mongodb://127.0.0.1:27017';
 

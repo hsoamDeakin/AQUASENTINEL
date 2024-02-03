@@ -40,4 +40,75 @@
   </div>
   </div>
  </div>
+ <script>
+  function validateForm() {
+      let firstName = document.getElementById("firstname").value;
+      let lastName = document.getElementById("lastname").value;
+      let username = document.getElementById("username").value;
+  
+      if (firstName.length == 0) {
+          let message = document.getElementById("message");
+          message.innerHTML = "<em>You didn't enter your first name.</em>";
+          message.classList.add("text-danger");
+          return false;
+      }
+  
+      if (lastName.length == 0) {
+          let message = document.getElementById("message1");
+          message.innerHTML = "<em>You didn't enter your last name.</em>";
+          message.classList.add("text-danger");
+          return false;
+      }
+  
+      if (username.length == 0) {
+          let message = document.getElementById("message2");
+          message.innerHTML = "<em>You didn't enter a username.</em>";
+          message.classList.add("text-danger");
+          return false;
+      }
+  
+      let password = document.getElementById("password").value;
+  const minLength = 8;
+  const minUpperChars = 1;
+  const minLowerChars = 1;
+  const minDigits = 1;
+  
+  // Updated regex to require at least one special character
+  const specialCharRegex = /[!@#$%^&*]+/;
+  
+  // Check if the password meets the minimum length requirement
+  if (password.length < minLength) {
+    let message = document.getElementById("message3");
+    message.innerHTML = "<em>Password must be at least 8 characters long.</em>";
+    message.classList.add("text-danger");
+    return false;
+  }
+  
+  // Check if the password contains the required character types
+  let charTypeCount = 0;
+  if (/[A-Z]/.test(password)) charTypeCount++;
+  if (/[a-z]/.test(password)) charTypeCount++;
+  if (/[0-9]/.test(password)) charTypeCount++;
+  if (specialCharRegex.test(password)) charTypeCount++;
+  
+  // Check if the password meets all the requirements
+  if (
+    charTypeCount < minUpperChars + minLowerChars + minDigits + 1 // Require at least one special character
+  ) {
+    let message = document.getElementById("message3");
+    message.innerHTML =
+      "<em>Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.</em>";
+    message.classList.add("text-danger");
+    return false;
+  }
+  
+  // Clear any previous error message
+  let message = document.getElementById("message3");
+  message.innerHTML = "<em>Password is valid.</em>";
+  message.classList.remove("text-danger");
+  message.classList.add("text-success");
+  return true;
+  }
+  
+  </script>
       </main>

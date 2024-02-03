@@ -27,4 +27,26 @@
         </form>
     </div>
     </div>
+    <script>
+        function validateForm() {
+          let username = document.getElementById("username").value;
+          let password = document.getElementById("password").value;
+      
+          if (username.length == 0) {
+              let message = document.getElementById("message");
+              message.innerHTML = "<em>You didn't enter your username.</em>";
+              message.classList.add("text-danger");
+              return false;
+          }
+      
+          if (password.length == 0) {
+              let message = document.getElementById("message1");
+              message.innerHTML = "<em>You didn't enter your password.</em>";
+              message.classList.add("text-danger");
+              return false;
+          }else{
+            return true;
+          }
+        }
+        </script>
   </main>

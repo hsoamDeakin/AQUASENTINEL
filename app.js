@@ -4,6 +4,10 @@ const expressLayouts = require('express-ejs-layouts')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const db = require('./db'); // Update the path accordingly
+const session = require('express-session');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+
 
 // Load environment variables from .env file
 require('dotenv').config();
@@ -12,7 +16,7 @@ require('dotenv').config();
 db.connectDB();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRoutes = require('./routes/userRoutes');
 var streamingRouter = require('./routes/streaming');
 var visulisationRouter = require('./routes/visulisation');
 var apiRouter = require('./routes/api');
@@ -36,15 +40,31 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
  
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
+app.use('/user', userRoutes); //Mount user routes
 app.use('/streaming', streamingRouter);
 app.use('/visulisation', visulisationRouter);
 app.use('/api', apiRouter);
 
+ const setSessionSecret = (req, res, next) => {
+  const sessionSecret = crypto.randomBytes(32).toString('hex');
+  req.session.sessionSecret = sessionSecret;
+  req.sessionOptions = req.sessionOptions || {};
+  req.sessionOptions.secret = sessionSecret;
+  next();
+}; 
+
+app.use(session({
+  secret: '62254e08f1826f0a4fe93be2bb4f1ce7a4809c69bfa525bc74ea6e1294ecc96d',
+  resave: true,
+  saveUninitialized: true
+}));
+
+app.use(['/login', '/myprofile'], setSessionSecret);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
-});
+ next(createError(404));
+}); 
 
 // error handler
 app.use(function(err, req, res, next) {
