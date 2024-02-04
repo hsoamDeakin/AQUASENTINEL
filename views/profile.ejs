@@ -6,15 +6,15 @@
               <div class="row"> 
                 <label class="form-label col-sm-3" for="updateFirstname"><b>User Id:</b></label>
                 <div class="col-sm-9">
-                  <input type="text" disabled class="form-control" id="username" name="updateFirstname" value="<%= user.username %>">
+                  <input type="text" disabled class="form-control" id="username" name="username" value="<%= user.username %>">
                 </div>
                 <label class="form-label col-sm-3" for="updateFirstname"><b>First Name:</b></label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="firstname" name="updateFirstname" value="<%= user.firstname %>" placeholder="Your New First Name" required>
+                  <input type="text" class="form-control" id="firstname" name="firstname" value="<%= user.firstname %>" placeholder="Your New First Name" required>
                 </div>
                 <label class="form-label col-sm-3" for="updateLastname"><b>Last Name:</b></label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="lastname" name="updateLastname"  value="<%= user.lastname %>"  placeholder="Your New Last Name" required>
+                  <input type="text" class="form-control" id="lastname" name="lastname"  value="<%= user.lastname %>"  placeholder="Your New Last Name" required>
                 </div>  
                 <label class="form-label col-sm-3" for="updatePassword"><b>Updated Password</b></label>
                 <div class="col-sm-9">
@@ -33,12 +33,12 @@
               </div>
               <div id="borderLine">
                 <p id="borderHeaderSection">Delete User Details</p>
-                <form name="deleteUser" method="post" action="/deleteUser">
+                <form name="deleteUser" method="post" action="/user/deleteUser">
                   <div class="container" id="userDetailsSection">
                     <div class="row"> 
                       <label class="form-label col-sm-3" for="updateFirstname"><b>Enter Your User ID:</b></label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="userId" name="userId" placeholder="Your User ID" required>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Your User ID" required>
                       </div> 
                     </div>
                     <div class="row justify-content-center"> <!-- Center the row content -->

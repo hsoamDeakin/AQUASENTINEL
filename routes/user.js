@@ -5,9 +5,14 @@ const userController = require('../controllers/userController');
 const router = express.Router();
 
 /* GET registeration page. */
-router.get('/register', userController.verifyUserSession, async function(req, res, next) { 
+router.get('/register', async function(req, res, next) { 
     //console.log(allDataReadings)
-    res.render('register', { title: 'Register', currentPage: 'Register'}); 
+     // Connect to the 'userDB' database
+     if (req.session.user_id) {
+       res.redirect('/');
+       } 
+      else 
+        res.render('register', { title: 'Register', currentPage: 'Register'}); 
   }); 
 
   // add user 
@@ -42,8 +47,9 @@ router.get('/profile', userController.verifyUserSession, async function(req, res
   res.render('profile', { title: 'Profile', currentPage: 'Profile', user:req.session.user}); 
 }); 
 
-router.post('/updateUser', userController.updateUserData);
-router.post('/deleteUser', userController.deleteUser);
+router.post('/updateUser', userController.verifyUserSession, userController.updateUserData);
+
+router.post('/deleteUser', userController.verifyUserSession, userController.deleteUser);
 
 module.exports = router;
 

@@ -15,9 +15,11 @@ async function verifyUserSession(req, res, next) {
       console.log("logged user");
       // Attach the user information to the request object
       req.session.user = user;
-      console.log(user);
+      console.log(user); 
       next();
-    } else res.render("login", { title: "Login", currentPage: "Login" });
+    } 
+    else 
+      res.render("login", { title: "Login", currentPage: "Login" });
   } catch (error) {
     console.error("Error in verifyToken middleware:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -116,21 +118,15 @@ const getUserByID = async function (userID) {
 async function registerUser(req, res) {
   const userInfo = req.body;
   console.log(userInfo);
-  try {
+  try { 
+    
     const insertedUser = await userService.registerUser(
       userInfo.firstname,
       userInfo.lastname,
       userInfo.username,
       userInfo.password,
       userInfo.role
-    );
-    let message = `<div class="container">
-              <div class="text-center">
-                  <h1>REGISTRATION CONFIRMATION</h1>
-                  <h3> Hi ${insertedUser.firstname} ${insertedUser.lastname}, you successfully registered to our webpage! </h3>
-                  <h3>Here's your unique User ID: ${insertedUser.userId}<h3>
-              </div>
-          </div>`;
+    ); 
 
     console.log("Registration successful.");
     // Combine first and last names into a single property
@@ -145,12 +141,11 @@ async function registerUser(req, res) {
       role: insertedUser.role,
     };
 
-    res.render("index", {
-      title: "Index",
-      currentPage: "Home",
-      message: "Starting App...",
-      user: responseObj,
-    });
+    req.session.user_id = insertedUser._id; 
+    console.log("Login successful");
+    req.session.user = insertedUser;
+    res.redirect("/"); 
+     
     // res.status(200).send({firstname: insertedUser.firstname, lastname: insertedUser.lastname,
     //                       username: insertedUser.username, role: insertedUser.role,});
   } catch (err) {
@@ -188,31 +183,31 @@ async function getSpecificUser(req, res) {
 async function updateUserData(req, res) {
   try {
     const updatedUserData = req.body;
-    const userId = req.session.userId; // Assuming userId is stored in session
-
+    const userId = req.session.user_id; // Assuming userId is stored in session
+    // Find the user by userId
+    await db.connectDB(); 
+    const user = await db.User.findById(userId); 
+    console.log('saving...')
+    console.log(updatedUserData); 
     // Conditionally construct the update object
-    const updateObject = {};
     if (updatedUserData.password) {
       // Include password field only if it's not empty
-      updateObject.password = updatedUserData.password;
+      const hashedPassword = await userService.hashPassword(updatedUserData.password);
+      user.password = hashedPassword;
     }
     // Include other fields for update
     if (updatedUserData.firstname) {
-      updateObject.firstname = updatedUserData.firstname;
+      user.firstname = updatedUserData.firstname;
     }
     if (updatedUserData.lastname) {
-      updateObject.lastname = updatedUserData.lastname;
+      user.lastname = updatedUserData.lastname;
     } 
 
-    // Update the user in the database
-    const updatedUser = await db.User.findOneAndUpdate(
-      { userId: userId },
-      updateObject,
-      { new: true }
-    );
-
+    // Save the updated user
+    await user.save();   
+    
     // Update req.session.user with the updated data
-    req.session.user = updatedUser;
+    req.session.user = user;
 
     // Redirect to some other route after updating the user data
     res.redirect("/user/profile");
@@ -224,23 +219,28 @@ async function updateUserData(req, res) {
 }
 
 async function deleteUser(req, res) {
-  const userId = req.body.userId;
-
   try {
-    const result = await userService.deleteUser(userId);
-
-    if (result.deletedCount === 0) {
-      console.log("User not found");
-      return res.status(404).send("User not found");
+    const updatedUserData = req.body;
+    const userId = req.session.user_id; // Assuming userId is stored in session
+    // Find the user by userId
+    await db.connectDB(); 
+    const user = await db.User.findById(userId);   
+    // Include other fields for update
+    if (updatedUserData.username && updatedUserData.username == user.username) {  
+      // Remove the user document 
+      // Redirect to some other route after updating the user data
+      await db.User.deleteOne({ _id: userId });
+      res.redirect("/user/logout");
     }
+    else 
+      res.redirect("/user/profile");
 
-    res.status(200).send("User deleted successfully");
   } catch (error) {
-    console.error("Error deleting user:", error);
+    // Handle error
+    console.error("Error updating user data:", error);
     res.status(500).send("Internal Server Error");
   }
 }
-
 module.exports = {
   verifyToken,
   requireLogin,

@@ -23,7 +23,7 @@ async function hashPassword(inputPassword) {
  * @param {string} role - The role of the user (e.g., "Admin", "User").
  * @returns {Promise<{ userId: string }>} A promise that resolves to an object containing the userId of the registered user.
  * @throws {Error} Throws an error if an error occurs during registration.
- */
+ */ 
 
 async function registerUser(
   inputFirstname,
@@ -180,4 +180,5 @@ module.exports = {
   getSpecificUser,
   updateUserData,
   deleteUser,
+  hashPassword,
 };
