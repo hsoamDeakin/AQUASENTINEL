@@ -73,6 +73,7 @@ button#startConsumerButton {
 }
 
     #borderLine {
+      margin-top: 80px;
       border:solid 2px rgba(63, 105, 127, 0.589);
       padding: 20px;
       margin-right: 70px;
@@ -138,7 +139,8 @@ button#startConsumerButton {
     }
 
     #loginbutton{
-      margin-left: 225px; 
+      width:min-content;
+      margin-left: 150px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -166,6 +168,8 @@ button#startConsumerButton {
     }
 
     .fsize {
+      margin-top: 30px;
+      margin-bottom: 30px;
       font-size: 20px;
     }
 
@@ -254,6 +258,7 @@ button#startConsumerButton {
     cursor: pointer;
     }
 
+<<<<<<< HEAD
     /* Style for the submenu */
 .submenu {
   display: none;
@@ -271,3 +276,13 @@ button#startConsumerButton {
 .nav-wrapper .left > li:hover .submenu {
   display: block;
 }
+=======
+   #aboveTheFooter{
+    margin-bottom: 200px;
+    }
+
+   #logoMain{
+    margin-bottom: 80px;
+   }
+
+>>>>>>> 9e12b7d (changes)
