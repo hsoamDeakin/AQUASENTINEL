@@ -7,7 +7,7 @@ require('dotenv').config();
 const dbName = process.env.DB_NAME; // Specify the desired database name
 
 const dataReadingSchema = new mongoose.Schema({
-  key: String,
+  key: Date,
   value: {
     location: {
       name: String,
@@ -25,7 +25,7 @@ const dataReadingSchema = new mongoose.Schema({
   },
 });
 
-const dataCollectionName = 'readings'; // Specify the desired collection name
+const dataCollectionName = 'newmodels'; // Specify the desired collection name
 const DataReading = mongoose.model('DataReading', dataReadingSchema, dataCollectionName);
 
 // Define schema for users

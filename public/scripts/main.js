@@ -8,12 +8,11 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('select');
   var instances = M.FormSelect.init(elems);
-});
+}); 
+
+$(function () { 
 
 
-
-$(function () {
- 
 
   $("#show_chart").on("click", function () {
     $.ajax({
@@ -164,7 +163,42 @@ g.append("g")
       }
     );
   });
+   
+  // get data by location 
+  $('#locationFilterDropdown').on('change', function(e) {
+    var selectedLocation = $(this).val();    
+    console.log('Selected location:', selectedLocation);
+    e.preventDefault(); // Prevent the default link behavior
+   
+    // Make an AJAX request to get sorted data
+    $.get(
+      "/visulisation/data-by-location",
+      { selectedLocation },
+      function (data) {
+        //console.log(data);      
+        // Update the table with the sorted data
+        updateTable(data);
+      }
+    );
+  });
+  // get data by date range 
+  $('#submitFilters').on('click', function(e) {
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
 
+    e.preventDefault(); // Prevent the default link behavior
+   
+    // Make an AJAX request to get sorted data
+    $.get(
+      "/visulisation/data-by-date-range",
+      { startDate, endDate  },
+      function (data) {
+        console.log(data);      
+        // Update the table with the sorted data
+        updateTable(data);
+      }
+    );
+  });
   // Function to update the table with new data
   function updateTable(data) {
     const tbody = $("table tbody");
