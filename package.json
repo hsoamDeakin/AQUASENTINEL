@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha --reporter spec"
+    "test": "mocha -r esm"
   },
   "dependencies": {
     "axios": "^1.6.5",
@@ -39,6 +39,7 @@
     "sinon": "^17.0.1"
   },
   "devDependencies": {
+    "esm": "^3.2.25",
     "nodemon": "^3.0.2"
   }
 }
