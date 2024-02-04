@@ -19,17 +19,25 @@
             <a href="#" class="brand-logo center"><img class="user-image-size" src="images/aquasentinel logo.png"></a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
               <li><a href="/">Home</a></li>
-              <li><a href="/visulisation">Visualisation</a></li>
-              <li><a href="/visulisation/data-table">Visualisation - Table</a></li>
-              <li><a href="/visulisation/visualisation_test_d3">Visualisation - Test d3js</a></li>
-              <li><a href="/streaming">Streaming</a></li>              
-             </ul>
-             <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li>
+                <a class="dropdown-trigger" href="#!" data-target="dropdown1">Visualisation<i class="material-icons right">arrow_drop_down</i></a>
+                <!-- Submenu -->
+                <ul id="dropdown1" class="dropdown-content">
+                  <li><a href="/visulisation">Visualisation - Filters</a></li>
+                  <li><a href="/visulisation/data-table">Visualisation - Table</a></li>
+                  <li><a href="/visulisation/visualisation_test_d3">Visualisation - Test d3js</a></li>
+                </ul>
+              </li>
+              <li><a href="/streaming">Streaming</a></li> 
+            </ul>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="/user/profile">Profile</a></li>
               <li><a href="/user/logout">Logout</a></li>
             </ul>
           </div>
-        </nav>   
+        </nav>
+         
+       
       <% } else { %>
         <nav>
           <div class="nav-wrapper navbar-size">

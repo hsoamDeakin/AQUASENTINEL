@@ -86,8 +86,7 @@ button#startConsumerButton {
       background-color: rgba(63, 105, 127, 0.589);
       margin-top: -20px;
       margin-right: -20px;
-      margin-left: -20px;
-      margin-bottom: 80px;
+      margin-left: -20px; 
       color: white;
       font-weight: bold;
     }
@@ -147,8 +146,7 @@ button#startConsumerButton {
       color:white;
     }
 
-    #submitFilters{
-      margin-left: 125px; 
+    #submitFilters{ 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -255,3 +253,21 @@ button#startConsumerButton {
     border-radius: 5px;
     cursor: pointer;
     }
+
+    /* Style for the submenu */
+.submenu {
+  display: none;
+  position: absolute;
+  background-color: #fff; /* Set the background color */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Add a box shadow */
+}
+
+/* Style for the submenu items */
+.submenu li {
+  padding: 10px;
+}
+
+/* Show the submenu when hovering over the parent item */
+.nav-wrapper .left > li:hover .submenu {
+  display: block;
+}

@@ -1,71 +1,34 @@
-<main>
-  <div class="container" id="headerBelowNav">
-    <h1>VISUALISATION</h1>
-  </div> 
+<main> 
   <div id="borderLine">
-  <div class="row">
-    <p id="borderHeaderSection">
-      Location filters:
-    </p> 
-    <% uniqueLocations.forEach((locations) => { %>
-        <button type="button" id="locationFilterButtons" data-location="<%= locations %>"><%= locations %></button>
-    <% }); %>
-  </div> 
-  </div>  
-  <div id="borderLine">
-  <div class="row">
-    <p id="borderHeaderSection"> Date filters: </p> 
-  <label for="dateInput" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select a start date:</small></label>
-  <div class="col-sm-9 mb-3 mt-2"> 
-  <input type="date" id="dateInput" name="startDate">
-  </div>
-    </div>
-    <div class="row">
-  <label for="endDate" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select an end date:</small></label>
-  <div class="col-sm-9 mb-3 mt-2"> 
-  <input type="date" id="endDate" name="selectedEndDate">
-  </div>
-    </div>
-    <div class="container"> 
-      <div class="row">
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="submitFilters">Submit</button> 
-     </div>
-  </div>
-  </div>
-  <div id="borderLine">
-     <div class="row">
-        <div id="visualisation1">
-          <table border="1">
-              <thead id="borderHeaderSection">
-                <tr>
-                  <th><a href="#" class="sortable" data-column="key">Timestamp</a></th>
-                  <th><a href="#" class="sortable" data-column="value.location.name">Location [name]</a></th>
-                  <th><a href="#" class="sortable" data-column="value.location.lat">Location [pos]</a></th>
-                  <th><a href="#" class="sortable" data-column="value.data.ph">pH</a></th>
-                  <th><a href="#" class="sortable" data-column="value.data.Organic_carbon">Organic Carbon</a></th>
-                  <th><a href="#" class="sortable" data-column="value.data.Turbidity">Turbidity</a></th>
-                  <th><a href="#" class="sortable" data-column="value.data.Solids">Solids</a></th>
-                  <th><a href="#" class="sortable" data-column="value.data.Trihalomethanes">Trihalomethanes</a></th>
-                  <th><a href="#" class="sortable" data-column="value.wqi">WQI</a></th>
-                </tr>
-              </thead>
-            <tbody>
-              <% receivedData.forEach((data) => { %> 
-                <tr>
-                  <td><%= data.key %></td>
-                  <td><%= data.value.location.name %></td>
-                  <td>[<%= data.value.location.lat %>, <%= data.value.location.lon %>]</td>
-                  <td><%= data.value.data.ph.toFixed(2) %></td>
-                  <td><%= data.value.data.Organic_carbon.toFixed(2) %></td>
-                  <td><%= data.value.data.Turbidity.toFixed(2) %></td>
-                  <td><%= data.value.data.Solids.toFixed(2) %></td>
-                  <td><%= data.value.data.Trihalomethanes.toFixed(2) %></td>
-                  <td><%= data.value.wqi.toFixed(2) %></td> 
-                </tr>
-              <% }); %>
-            </tbody>
-          </table>
+    
+      <p id="borderHeaderSection">
+        Date filters:
+      </p> 
+     
+      <div class="row">  
+      <div class="input-field col s12">
+        <select id="locationFilterDropdown">
+          <option value="" disabled selected>Choose a location</option>
+          <% uniqueLocations.forEach((location) => { %>
+            <option value="<%= location %>"><%= location %></option>
+          <% }); %>
+        </select>
+       </div>
+       </div>
+       <div class="row">  
+        <label for="dateInput" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select a start date:</small></label>
+        <div class="col-sm-9 mb-3 mt-2"> 
+        <input type="date" id="dateInput" name="startDate">
         </div>
-    </div>
-  </div>
+       </div> 
+       <div class="row">
+        <label for="endDate" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select an end date:</small></label>
+        <div class="col-sm-9 mb-3 mt-2"> 
+        <input type="date" id="endDate" name="selectedEndDate">
+        </div>
+        </div> 
+        <div class="row">
+          <button type="button" class="btn btn-primary" id="submitFilters">Submit</button> 
+         </div>
+        </div>   
 </main>  
