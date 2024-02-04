@@ -58,6 +58,18 @@ const getDataByTimeRange = async (req, res) => {
     }
 };
 
+// Controller function to get data by time range
+const getDataByLocationAvgWQI = async (req, res) => {
+    try {
+       
+        const locationName = req.query.selectedLocation; // Get 'location' query parameter from the request
+        const data = await dataService.getDataByLocationAvgWQI(locationName); 
+        return data; // Respond with the filtered data
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+ 
 
 const getSortedData = async (sortBy, sortOrder) => { 
     const sortedDataArray = await dataService.getSortedData(sortBy,sortOrder);
@@ -78,6 +90,7 @@ module.exports = {
     getUniqueLocations,
     getDataByLocation,
     getDataByTimeRange,
-    getAverageWQI
+    getAverageWQI,
+    getDataByLocationAvgWQI
 
 };

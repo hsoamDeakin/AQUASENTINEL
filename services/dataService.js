@@ -77,11 +77,11 @@ const generateRandomData = async () => {
 };
 const calculateWQIFromArray = (values) => {
   const parameterWeights = {
-    ph: 0.2,
-    Organic_carbon: 0.2,
-    Turbidity: 0.2,
-    Solids: 0.2,
-    Trihalomethanes: 0.2,
+    ph: 0.7,
+    Organic_carbon: 0.1,
+    Turbidity: 0.1,
+    Solids: 0.05,
+    Trihalomethanes: 0.05,
   };
 
   const normalizedValues = {};
@@ -199,7 +199,49 @@ const getDataByLocation = async (locationName) => {
     throw error;
   }
 };
-
+// Function to get data by location and calculate average WQI per year, month, and day
+const getDataByLocationAvgWQI = async (locationName) => {
+  await db.connectDB(); // Connect to MongoDB
+  try {
+    const data = await db.DataReading.aggregate([
+      {
+        $match: {
+          "value.location.name": locationName
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$key" }, // Extract year from key
+            month: { $month: "$key" }, // Extract month from key
+            day: { $dayOfMonth: "$key" } // Extract day from key
+          },
+          averageWQI: { $avg: "$value.wqi" } // Calculate average WQI for each year, month, and day
+        }
+      },
+      {
+        $sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1 } // Sort by year, month, and day in ascending order
+      },
+      {
+        $project: {
+          _id: {
+            $dateFromParts: {
+              year: "$_id.year",
+              month: "$_id.month",
+              day: "$_id.day"
+            }
+          },
+          averageWQI: 1
+        }
+      }
+    ]);
+    return data;
+  } catch (error) {
+    console.error("Error retrieving data by location:", error);
+    throw error;
+  }
+};
+ 
 // Function to get data by time range
 const getDataByTimeRange = async (startDate, endDate) => {
 
@@ -211,7 +253,7 @@ const getDataByTimeRange = async (startDate, endDate) => {
   try { 
     const data = await db.DataReading.find({
       key : { $gte: startDateObj, $lte: endDateObj },
-    });   
+    });    
     return data;
   } catch (error) {
     console.error("Error retrieving data by time range:", error);
@@ -268,30 +310,7 @@ async function migrateData() {
   }
 }
 
-
-
-// Function to get aggregated data for line chart
-/*const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
-  await connectDB();
-  try {
-    const data = await DataReading.aggregate([
-      { $match: { 'value.location.name': locationName, 'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) } } },
-      { $group: { _id: { $dateToString: { format: "%Y-%m-%d %H:%M:%S", date: "$value.timestamp" } }, avgValue: { $avg: `$value.data.${parameter}` } } },
-      { $sort: { '_id': 1 } }
-    ]);
-    // Use the sortBy and sortOrder parameters to customize your query
-    const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
-    console.log(sortBy)
-    console.log(sortOrder)
-    //console.log(data)
-    return data;
-  } catch (error) {
-    console.error('Error retrieving sorted data:', error);
-    throw error;
-  }
-};
-*/
-
+ 
 module.exports = {
   generateRandomData,
   calculateWQIFromArray,
@@ -301,5 +320,6 @@ module.exports = {
   getAverageWQI,
   getDataByLocation,
   getDataByTimeRange,
-  migrateData
+  migrateData,
+  getDataByLocationAvgWQI
 };
