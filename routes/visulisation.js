@@ -51,4 +51,13 @@ router.get('/data-by-location-avg', async function(req, res, next) {
   res.json( await dataController.getAverageWQI());
 });
 
+// Server-side route
+router.get('/data-by-location', async function(req, res, next) {  
+  res.json( await dataController.getDataByLocation(req, res));
+});
+
+router.get('/data-by-date-range', async function(req, res, next) {  
+  res.json( await dataController.getDataByTimeRange(req, res));
+});
+
 module.exports = router;

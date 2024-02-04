@@ -1,20 +1,20 @@
-const fs = require('fs');
-const csv = require('csv-parser');
-const math = require('mathjs');
+const fs = require("fs");
+const csv = require("csv-parser");
+const math = require("mathjs");
 
-const { connectDB, DataReading } = require('../db'); 
+const { connectDB, DataReading } = require("../db");
 
-const dataCount = process.env.dataCount; 
+const dataCount = process.env.dataCount;
 const filePath = process.env.FILE_PATH;
 const columnNamesString = process.env.COLUMN_NAMES;
-const columnNames = columnNamesString.split(',');
+const columnNames = columnNamesString.split(",");
 
 const getColumnValues = () => {
   return new Promise((resolve, reject) => {
     const values = {};
     fs.createReadStream(filePath)
       .pipe(csv())
-      .on('data', (row) => {
+      .on("data", (row) => {
         columnNames.forEach((columnName) => {
           const value = parseFloat(row[columnName]);
           if (!isNaN(value)) {
@@ -23,63 +23,65 @@ const getColumnValues = () => {
           }
         });
       })
-      .on('end', () => {
+      .on("end", () => {
         resolve(values);
       })
-      .on('error', (error) => {
+      .on("error", (error) => {
         reject(error);
       });
   });
 };
 
 function generateRandomNormal(mean, stdDev) {
-    // Box-Muller transform to generate two independent standard normal variables
-    const u1 = 1 - Math.random(); // (0, 1] -> (0, 1)
-    const u2 = 1 - Math.random(); // (0, 1] -> (0, 1)
-    
-    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-    // const z1 = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
-  
-    // Scale and shift to get the desired mean and standard deviation
-    const randomValue = mean + stdDev * z0;
-  
-    return randomValue;
+  // Box-Muller transform to generate two independent standard normal variables
+  const u1 = 1 - Math.random(); // (0, 1] -> (0, 1)
+  const u2 = 1 - Math.random(); // (0, 1] -> (0, 1)
+
+  const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  // const z1 = Math.sqrt(-2.0 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+
+  // Scale and shift to get the desired mean and standard deviation
+  const randomValue = mean + stdDev * z0;
+
+  return randomValue;
 }
-  
+
 // Function to generate random data based on a normal distribution for each column
 const generateRandomData = async () => {
   // Get column values from the CSV file
-  const columnValues = await getColumnValues(filePath, columnNames);   
+  const columnValues = await getColumnValues(filePath, columnNames);
   const generatedData = [];
-  for (let i = 0; i < dataCount; i++) {        
-  const dataEntry = [];
+  for (let i = 0; i < dataCount; i++) {
+    const dataEntry = [];
 
-  Object.keys(columnValues).forEach((columnName) => {
-    console.log(columnName);
-    const values = columnValues[columnName];
+    Object.keys(columnValues).forEach((columnName) => {
+      console.log(columnName);
+      const values = columnValues[columnName];
 
-    // Calculate mean and standard deviation for each column
-    const mean = math.mean(values);
-    const stdDev = math.std(values);    
+      // Calculate mean and standard deviation for each column
+      const mean = math.mean(values);
+      const stdDev = math.std(values);
 
-    console.log(`Column: ${columnName}, Mean: ${mean}, Standard Deviation: ${stdDev}`);
+      console.log(
+        `Column: ${columnName}, Mean: ${mean}, Standard Deviation: ${stdDev}`
+      );
 
-    // Generate a random number from a normal distribution
-        const value = generateRandomNormal( mean, stdDev );
-        dataEntry.push(value);
+      // Generate a random number from a normal distribution
+      const value = generateRandomNormal(mean, stdDev);
+      dataEntry.push(value);
     });
     // console.log(value);value
     generatedData.push(dataEntry);
   }
-  return generatedData; 
+  return generatedData;
 };
 const calculateWQIFromArray = (values) => {
   const parameterWeights = {
-    'ph': 0.2,
-    'Organic_carbon': 0.2,
-    'Turbidity': 0.2,
-    'Solids': 0.2,
-    'Trihalomethanes': 0.2,
+    ph: 0.2,
+    Organic_carbon: 0.2,
+    Turbidity: 0.2,
+    Solids: 0.2,
+    Trihalomethanes: 0.2,
   };
 
   const normalizedValues = {};
@@ -91,10 +93,10 @@ const calculateWQIFromArray = (values) => {
     let normalizedValue;
     if (i === 3) {
       // Solids parameter, special treatment
-      normalizedValue = (value - 5000) / 5000 * 100;  // Adjust as needed
+      normalizedValue = ((value - 5000) / 5000) * 100; // Adjust as needed
     } else {
       // For other parameters, use a generic linear scaling
-      normalizedValue = (value - (value - 2 * 5)) / (value + 2 * 5) * 100;  // Assuming a standard deviation of 5
+      normalizedValue = ((value - (value - 2 * 5)) / (value + 2 * 5)) * 100; // Assuming a standard deviation of 5
     }
 
     const parameter = Object.keys(parameterWeights)[i];
@@ -111,39 +113,39 @@ const calculateWQIFromArray = (values) => {
 };
 
 const getAllDataFromReadings = async () => {
- await connectDB(); // Connect to MongoDB
+  await connectDB(); // Connect to MongoDB
 
   try {
     // Retrieve data from the readings collection
-    const data = await DataReading.find({}).sort({ 'value.location.name': 1 });
+    const data = await DataReading.find({}).sort({ "value.location.name": 1 });
     return data;
   } catch (error) {
-    console.error('Error retrieving data from readings collection:', error);
+    console.error("Error retrieving data from readings collection:", error);
     throw error;
   }
-}; 
+};
 
 const getUniqueLocations = async () => {
-  await connectDB(); // Connect to MongoDB 
+  await connectDB(); // Connect to MongoDB
   try {
-      // Fetch all data
-      const allData = await DataReading.find({}, 'value.location.name -_id'); // Fetch only the location names
+    // Fetch all data
+    const allData = await DataReading.find({}, "value.location.name -_id"); // Fetch only the location names
 
-      // Create a set to store unique location names
-      const uniqueLocations = new Set();
+    // Create a set to store unique location names
+    const uniqueLocations = new Set();
 
-      // Extract unique location names
-      allData.forEach(data => {
-          if (data.value && data.value.location && data.value.location.name) {
-              uniqueLocations.add(data.value.location.name);
-          }
-      });
+    // Extract unique location names
+    allData.forEach((data) => {
+      if (data.value && data.value.location && data.value.location.name) {
+        uniqueLocations.add(data.value.location.name);
+      }
+    });
 
-      // Convert the set to an array and sort it
-      return Array.from(uniqueLocations).sort();
+    // Convert the set to an array and sort it
+    return Array.from(uniqueLocations).sort();
   } catch (error) {
-      console.error('Error retrieving unique locations:', error);
-      throw error;
+    console.error("Error retrieving unique locations:", error);
+    throw error;
   }
 };
 
@@ -152,12 +154,12 @@ const getSortedData = async (sortBy, sortOrder) => {
   try {
     // Use the sortBy and sortOrder parameters to customize your query
     const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
-    console.log(sortBy)
-    console.log(sortOrder)
+    console.log(sortBy);
+    console.log(sortOrder);
     //console.log(data)
     return data;
   } catch (error) {
-    console.error('Error retrieving sorted data:', error);
+    console.error("Error retrieving sorted data:", error);
     throw error;
   }
 };
@@ -171,41 +173,58 @@ const getAverageWQI = async () => {
     const averageWQI = await DataReading.aggregate([
       {
         $group: {
-          _id: '$value.location.name',
-          averageWQI: { $avg: '$value.wqi' }
-        }
-      }
+          _id: "$value.location.name",
+          averageWQI: { $avg: "$value.wqi" },
+        },
+      },
     ]);
 
     return averageWQI;
   } catch (error) {
-    console.error('Error calculating average WQI:', error);
+    console.error("Error calculating average WQI:", error);
     throw error;
   }
-}; 
- 
+};
+
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
   await connectDB(); // Connect to MongoDB
   try {
-    const data = await DataReading.find({ 'value.location.name': locationName });
+    const data = await DataReading.find({
+      "value.location.name": locationName,
+    });
     return data;
   } catch (error) {
-    console.error('Error retrieving data by location:', error);
+    console.error("Error retrieving data by location:", error);
     throw error;
   }
 };
 
 // Function to get data by time range
-const getDataByTimeRange = async (startTime, endTime) => {
+const getDataByTimeRange = async (startDate, endDate) => {
+
+  // Convert the start and end dates to date objects
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
+
+  // Extract the date part (YYYY-MM-DD) from the start and end date objects
+  const startDateString = startDateObj.toISOString().split("T")[0];
+  const endDateString = endDateObj.toISOString().split("T")[0];
+
+  // Convert the date strings back to date objects (without time and milliseconds)
+  const isoStartDate = new Date(startDateString);
+  const isoEndDate = new Date(endDateString);
+
   await connectDB(); // Connect to MongoDB
   try {
     const data = await DataReading.find({
-      'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
-    });
+      key: { $gt: new Date('2024-01-04')},
+    });  
+
+    console.log(data);
     return data;
   } catch (error) {
-    console.error('Error retrieving data by time range:', error);
+    console.error("Error retrieving data by time range:", error);
     throw error;
   }
 };
@@ -242,4 +261,3 @@ module.exports = {
   getDataByLocation,
   getDataByTimeRange,
 };
-
