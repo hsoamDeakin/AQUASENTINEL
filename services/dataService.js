@@ -124,7 +124,7 @@ const getAllDataFromReadings = async () => {
 }; 
 
 const getUniqueLocations = async () => {
-  await connectDB();
+  await connectDB(); // Connect to MongoDB 
   try {
       // Fetch all data
       const allData = await DataReading.find({}, 'value.location.name -_id'); // Fetch only the location names
@@ -166,7 +166,7 @@ const getSortedData = async (sortBy, sortOrder) => {
 const getAverageWQI = async () => {
   try {
     // Ensure connection to the database
-    await connectDB();
+    await connectDB(); // Connect to MongoDB
     // Group data by location and calculate average WQI
     const averageWQI = await DataReading.aggregate([
       {
@@ -186,7 +186,7 @@ const getAverageWQI = async () => {
  
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
-  await connectDB();
+  await connectDB(); // Connect to MongoDB
   try {
     const data = await DataReading.find({ 'value.location.name': locationName });
     return data;
@@ -198,7 +198,7 @@ const getDataByLocation = async (locationName) => {
 
 // Function to get data by time range
 const getDataByTimeRange = async (startTime, endTime) => {
-  await connectDB();
+  await connectDB(); // Connect to MongoDB
   try {
     const data = await DataReading.find({
       'value.timestamp': { $gte: new Date(startTime), $lte: new Date(endTime) }
@@ -238,5 +238,8 @@ module.exports = {
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
-  getAverageWQI
+  getAverageWQI,
+  getDataByLocation,
+  getDataByTimeRange,
 };
+

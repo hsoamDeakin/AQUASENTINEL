@@ -1,34 +1,25 @@
- 
 <main>
   <div class="container" id="headerBelowNav">
     <h1>VISUALISATION</h1>
   </div> 
-
-  
-<div class="container"> 
+  <div id="borderLine">
   <div class="row">
-    <h4>
+    <p id="borderHeaderSection">
       Location filters:
-    </h4> 
-
+    </p> 
     <% uniqueLocations.forEach((locations) => { %>
-        <button type="button" data-location="<%= locations %>"><%= locations %></button>
+        <button type="button" id="locationFilterButtons" data-location="<%= locations %>"><%= locations %></button>
     <% }); %>
   </div> 
   </div>  
-    
-    
-  <div class="container"> 
+  <div id="borderLine">
   <div class="row">
-    <h4>
-      Date filters:
-    </h4> 
+    <p id="borderHeaderSection"> Date filters: </p> 
   <label for="dateInput" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select a start date:</small></label>
   <div class="col-sm-9 mb-3 mt-2"> 
   <input type="date" id="dateInput" name="startDate">
   </div>
     </div>
-
     <div class="row">
   <label for="endDate" class="col-sm-3 mb-3 mt-2 col-form-label"><small>Select an end date:</small></label>
   <div class="col-sm-9 mb-3 mt-2"> 
@@ -40,13 +31,12 @@
         <button type="button" class="btn btn-primary btn-lg btn-block" id="submitFilters">Submit</button> 
      </div>
   </div>
-  
-
+  </div>
+  <div id="borderLine">
      <div class="row">
         <div id="visualisation1">
           <table border="1">
-            <thead>
-              <thead>
+              <thead id="borderHeaderSection">
                 <tr>
                   <th><a href="#" class="sortable" data-column="key">Timestamp</a></th>
                   <th><a href="#" class="sortable" data-column="value.location.name">Location [name]</a></th>
@@ -59,8 +49,6 @@
                   <th><a href="#" class="sortable" data-column="value.wqi">WQI</a></th>
                 </tr>
               </thead>
-              
-            </thead>
             <tbody>
               <% receivedData.forEach((data) => { %> 
                 <tr>
@@ -72,12 +60,12 @@
                   <td><%= data.value.data.Turbidity.toFixed(2) %></td>
                   <td><%= data.value.data.Solids.toFixed(2) %></td>
                   <td><%= data.value.data.Trihalomethanes.toFixed(2) %></td>
-                  <td><%= data.value.wqi.toFixed(2) %></td>
-                  
+                  <td><%= data.value.wqi.toFixed(2) %></td> 
                 </tr>
               <% }); %>
             </tbody>
           </table>
         </div>
     </div>
+  </div>
 </main>  

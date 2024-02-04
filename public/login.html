@@ -10,7 +10,6 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script src="/scripts/main.js"></script>
   </head>
   <body>     
     <nav>
@@ -21,23 +20,16 @@
           <li><a href="visualisations.html">Visualisation</a></li>
           <li><a href="register.html">Register</a></li>
           <li><a href="login.html">Login</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
         </ul>
       </div>
     </nav>
     <main>
-      <div class="bg-image img1"></div>
-      <div class="bg-image img2"></div>
-      <div class="bg-image img3"></div>
-      <div class="bg-image img4"></div>
-      <div class="bg-image img5"></div>
-      <div class="bg-text">
         <div class="container" id="headerBelowNav">
             <h1>LOGIN</h1>
         </div>
         <div id="borderLine">
-            <p id="loginSection"> Login Section </p>
-            <form name="login" method="POST" action="/loginInfo" onsubmit="return validateForm();">
+            <p id="borderHeaderSection"> Login Section </p>
+            <form name="login" method="POST" action="/login" onsubmit="return validateForm();">
                 <div class="container" id="userNameSection">
                     <div class="row">
                         <label class="form-label col-sm-2 mb-3" for="stud_id"><b>User Name:</b></label>

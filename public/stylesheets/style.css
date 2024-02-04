@@ -3,7 +3,6 @@ body {
   font-size: 26px;
 }
 
-
 .wrapper {
   width: 700px;
   margin: 0 auto;
@@ -17,7 +16,9 @@ header{
 }
 
 footer {
-  padding: 1px;
+  font-size: medium;
+  text-align: center;
+  background-color: #ee6e73;
 }
 
 main {
@@ -33,12 +34,22 @@ main {
 
 /* Styling for buttons */
 button {
-  font-size: 20px;
+  font-size: 30px;
   padding: 10px 20px;
   margin: 10px;
-  background-color: #4CAF50; /* Green color */
-  color: white;
-  border: none;
+  width: 200px; 
+  background-color: rgba(63, 105, 127, 0.589); 
+  border:2px solid rgba(63, 105, 127, 0.589); 
+  color:white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#locationFilterButtons {
+  font-size: 20px;
+  background-color: rgba(63, 105, 127, 0.589); 
+  border:5px solid rgba(63, 105, 127, 0.589); 
+  color:white;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -61,13 +72,6 @@ button#startConsumerButton {
   margin-top: 80px;
 }
 
-/* Images used */
-.img1 { background-image: url("public/images/img1.jpg"); } 
-.img2 { background-image: url("public/images/img2.jpg"); }
-.img3 { background-image: url("public/images/img3.jpg"); }
-.img4 { background-image: url("public/images/img4.jpg"); }
-.img5 { background-image: url("public/images/img5.jpg"); }
-
     #borderLine {
       border:solid 2px rgba(63, 105, 127, 0.589);
       padding: 20px;
@@ -76,14 +80,14 @@ button#startConsumerButton {
       margin-bottom: 80px;
     }
 
- 
-    #RegistrationSection {
+    #borderHeaderSection {
       border: 2px solid rgba(63, 105, 127, 0.589);
       padding: 10px;
       background-color: rgba(63, 105, 127, 0.589);
       margin-top: -20px;
       margin-right: -20px;
       margin-left: -20px;
+      margin-bottom: 80px;
       color: white;
       font-weight: bold;
     }
@@ -92,22 +96,16 @@ button#startConsumerButton {
       margin-top: 60px;
     }
 
+    #userDetailsSection{
+      margin-top: 60px;
+    }
+
     #passwordSectionRegister{
       margin-top: 20px;
     }
 
     #registrationbutton{
-      width: 120px; 
       margin-left: 300px; 
-      margin-top:40px; 
-      margin-bottom: 30px; 
-      background-color: rgba(63, 105, 127, 0.589); 
-      border:2px solid rgba(63, 105, 127, 0.589); 
-      color:white"
-    }
-
-    #resetbutton{
-      width: 120px; 
       margin-top:40px; 
       margin-bottom: 30px; 
       background-color: rgba(63, 105, 127, 0.589); 
@@ -115,15 +113,21 @@ button#startConsumerButton {
       color:white;
     }
 
-    #loginSection {
-      border: 2px solid rgba(63, 105, 127, 0.589);
-      padding: 10px;
-      background-color: rgba(63, 105, 127, 0.589);
-      margin-top: -20px;
-      margin-right: -20px;
-      margin-left: -20px;
-      color: white;
-      font-weight: bold;
+    #myProfileButton{
+      margin-left: 200px; 
+      margin-top:40px; 
+      margin-bottom: 30px; 
+      background-color: rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white;
+    }
+
+    #resetbutton{
+      margin-top:40px; 
+      margin-bottom: 30px; 
+      background-color: rgba(63, 105, 127, 0.589); 
+      border:2px solid rgba(63, 105, 127, 0.589); 
+      color:white;
     }
 
     #userNameSection {
@@ -135,7 +139,6 @@ button#startConsumerButton {
     }
 
     #loginbutton{
-      width: 120px; 
       margin-left: 225px; 
       margin-top:20px; 
       margin-bottom: 20px; 
@@ -145,31 +148,12 @@ button#startConsumerButton {
     }
 
     #submitFilters{
-      width: 120px; 
-      margin-left: 250px; 
+      margin-left: 125px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
-    }
-
-    .bg-image {
-      /* Full height */
-      height: 100%; 
-    
-      /* Center and scale the image nicely */
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-
-    .visualisation-title {
-      background-color: white;
-      padding: 20px;
-      width: 70%;
-      margin:auto;
-      border: 2px solid black;
     }
 
     .divs {
@@ -196,7 +180,7 @@ button#startConsumerButton {
     footer{
       font-size: medium;
       text-align: center;
-      background-color: #ee6e73;
+      background-color: #e56f73;
     }
 
     #contactInfo {
@@ -220,35 +204,35 @@ button#startConsumerButton {
     }
 
     #storeData{
-      width: 120px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
     }
 
     #collectData{
-      width: 120px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
     }
 
     #loginButtonMain{
-      width: 120px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
+      margin-top: 50px;
     }
 
     #registerButtonMain{
-      width: 120px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
+      margin-top: 50px;
     }
+
     .sortable {
       font-size: 75%;
       text-orientation: upright ;
+      color: white;
     }
      /* Styles for the SVG element */
      #shape1 {
@@ -258,4 +242,16 @@ button#startConsumerButton {
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       width: 100%;
       height: 100%;
+    }
+
+   #show_chart {
+    font-size: 18px;
+    text-align: center;
+    padding:1px;
+    width: 150px; 
+    background-color: rgba(63, 105, 127, 0.589); 
+    border:2px solid rgba(63, 105, 127, 0.589); 
+    color:white;
+    border-radius: 5px;
+    cursor: pointer;
     }

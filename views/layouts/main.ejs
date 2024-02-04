@@ -11,28 +11,43 @@
     <link rel='stylesheet' href='/stylesheets/materialize.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   </head> 
-
-  <body>   
-    <nav>
-      <div class="nav-wrapper navbar-size">
-       
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-          <li><a href="/">Home</a></li>
-          <li><a href="/visulisation">Visualization</a></li>
-          <li><a href="/visulisation/data-table">Visualization - table</a></li>
-          <li><a href="/visulisation/visualisation_test_d3">Visualization - test d3js</a></li>
-          <li><a href="/user/register">Register</a></li>
-          <li><a href="/user/login">Login</a></li>
-          <li><a href="/streaming">Streaming</a></li> 
-          <li><a href="/contact">Contact Us</a></li>
-
-        </ul>
-      </div>
-    </nav>
+  <body>    
+      <% if (user) { %>
+        <nav>
+          <div class="nav-wrapper navbar-size">
+            <a href="#" class="brand-logo center"><img class="user-image-size" src="images/aquasentinel logo.png"></a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+              <li><a href="/">Home</a></li>
+              <li><a href="/visulisation">Visualisation</a></li>
+              <li><a href="/visulisation/data-table">Visualisation - Table</a></li>
+              <li><a href="/visulisation/visualisation_test_d3">Visualisation - Test d3js</a></li>
+              <li><a href="/streaming">Streaming</a></li>              
+             </ul>
+             <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="/user/profile">Profile</a></li>
+              <li><a href="/user/logout">Logout</a></li>
+            </ul>
+          </div>
+        </nav>   
+      <% } else { %>
+        <nav>
+          <div class="nav-wrapper navbar-size">
+            <a href="#" class="brand-logo center"><img class="user-image-size" src="images/aquasentinel logo.png"></a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down"> 
+              <li><a href="/user/register">Register</a></li>
+              <li><a href="/user/login">Login</a></li>
+            </ul>
+          </div>
+        </nav>   
+      <% } %>
     <%- body %>
+    <footer class="text-white text-center">
+      <strong><i><br>© 2024 Aquasentinel</i></strong><br>
+         <p><strong> EMAIL: </strong> info@aquasentinel.com <br>
+         <strong>ADDRESS:</strong> 70 Elgar Road, Burwood, VIC, 3125<br> 
+         <strong>OFFICE PHONE:</strong> 0402 932 416</p><br>
+     </footer>  
 </body>
-
 </html>
  

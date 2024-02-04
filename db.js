@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Specify the database name  
+const dbName = process.env.DB_NAME; // Specify the desired database name
+
 const dataReadingSchema = new mongoose.Schema({
   key: String,
   value: {
@@ -21,25 +24,37 @@ const dataReadingSchema = new mongoose.Schema({
     wqi: Number,
   },
 });
-// Specify the database name and collection name
-const dbName = 'AQUASENTINEL'; // Specify the desired database name
-const collectionName = 'readings'; // Specify the desired collection name
 
-const DataReading = mongoose.model('DataReading', dataReadingSchema, collectionName);
+const dataCollectionName = 'readings'; // Specify the desired collection name
+const DataReading = mongoose.model('DataReading', dataReadingSchema, dataCollectionName);
+
+// Define schema for users
+const userSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  firstname: { type: String, required: true },
+  lastname: { type: String, required: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  role: { type: String, default: "Admin" } // New property with default value
+
+});
+
+const userCollectionName = 'users'; // Specify the desired collection name for users
+// Create model for user collection
+const User = mongoose.model('User', userSchema, userCollectionName);
 
 const connectDB = async () => {
   try {
     const dbURI = process.env.DB_URI;
-
     await mongoose.connect(dbURI, {
       useNewUrlParser: true,
       dbName: dbName,
     });
 
-    console.log(`Connected to MongoDB - Database: ${dbName}, Collection: ${collectionName}`);
+    console.log(`Connected to MongoDB - Database: ${dbName}`);
   } catch (error) {
     console.error('MongoDB connection error:', error);
   }
 };
 
-module.exports = { connectDB, DataReading };
+module.exports = { connectDB, DataReading, User };
