@@ -51,11 +51,7 @@ const getDataByTimeRange = async (req, res) => {
        
         const startDate = req.query.startDate; // Get 'startTime' query parameter from the request
         const endDate = req.query.endDate; // Get 'endTime' query parameter from the request
-        const data = await dataService.getDataByTimeRange(startDate, endDate);
-        console.log(startDate);
-        console.log(endDate);
-        
-        console.log(data);
+        const data = await dataService.getDataByTimeRange(startDate, endDate); 
         return data; // Respond with the filtered data
     } catch (error) {
         res.status(500).send(error.message);

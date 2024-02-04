@@ -2,7 +2,7 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const math = require("mathjs");
 
-const { connectDB, DataReading } = require("../db");
+const db = require("../db");
 
 const dataCount = process.env.dataCount;
 const filePath = process.env.FILE_PATH;
@@ -113,11 +113,11 @@ const calculateWQIFromArray = (values) => {
 };
 
 const getAllDataFromReadings = async () => {
-  await connectDB(); // Connect to MongoDB
+  await db.connectDB(); // Connect to MongoDB
 
   try {
     // Retrieve data from the readings collection
-    const data = await DataReading.find({}).sort({ "value.location.name": 1 });
+    const data = await db.DataReading.find({}).sort({ "value.location.name": 1 });
     return data;
   } catch (error) {
     console.error("Error retrieving data from readings collection:", error);
@@ -126,10 +126,10 @@ const getAllDataFromReadings = async () => {
 };
 
 const getUniqueLocations = async () => {
-  await connectDB(); // Connect to MongoDB
+  await db.connectDB(); // Connect to MongoDB
   try {
     // Fetch all data
-    const allData = await DataReading.find({}, "value.location.name -_id"); // Fetch only the location names
+    const allData = await db.DataReading.find({}, "value.location.name -_id"); // Fetch only the location names
 
     // Create a set to store unique location names
     const uniqueLocations = new Set();
@@ -153,7 +153,7 @@ const getUniqueLocations = async () => {
 const getSortedData = async (sortBy, sortOrder) => {
   try {
     // Use the sortBy and sortOrder parameters to customize your query
-    const data = await DataReading.find({}).sort({ [sortBy]: sortOrder });
+    const data = await db.DataReading.find({}).sort({ [sortBy]: sortOrder });
     console.log(sortBy);
     console.log(sortOrder);
     //console.log(data)
@@ -168,9 +168,9 @@ const getSortedData = async (sortBy, sortOrder) => {
 const getAverageWQI = async () => {
   try {
     // Ensure connection to the database
-    await connectDB(); // Connect to MongoDB
+    await db.connectDB(); // Connect to MongoDB
     // Group data by location and calculate average WQI
-    const averageWQI = await DataReading.aggregate([
+    const averageWQI = await db.DataReading.aggregate([
       {
         $group: {
           _id: "$value.location.name",
@@ -188,9 +188,9 @@ const getAverageWQI = async () => {
 
 // Function to get data by location
 const getDataByLocation = async (locationName) => {
-  await connectDB(); // Connect to MongoDB
+  await db.connectDB(); // Connect to MongoDB
   try {
-    const data = await DataReading.find({
+    const data = await db.DataReading.find({
       "value.location.name": locationName,
     });
     return data;
@@ -205,29 +205,70 @@ const getDataByTimeRange = async (startDate, endDate) => {
 
   // Convert the start and end dates to date objects
   const startDateObj = new Date(startDate);
-  const endDateObj = new Date(endDate);
+  const endDateObj = new Date(endDate); 
 
-  // Extract the date part (YYYY-MM-DD) from the start and end date objects
-  const startDateString = startDateObj.toISOString().split("T")[0];
-  const endDateString = endDateObj.toISOString().split("T")[0];
-
-  // Convert the date strings back to date objects (without time and milliseconds)
-  const isoStartDate = new Date(startDateString);
-  const isoEndDate = new Date(endDateString);
-
-  await connectDB(); // Connect to MongoDB
-  try {
-    const data = await DataReading.find({
-      key: { $gt: new Date('2024-01-04')},
-    });  
-
-    console.log(data);
+  await db.connectDB(); // Connect to MongoDB  
+  try { 
+    const data = await db.DataReading.find({
+      key : { $gte: startDateObj, $lte: endDateObj },
+    });   
     return data;
   } catch (error) {
     console.error("Error retrieving data by time range:", error);
     throw error;
   }
 };
+
+const mongoose = require('mongoose');
+
+async function migrateData() {
+  try {
+    // Fetch all documents from the old collection
+    const documents = await db.DataReading.find().lean();
+
+    // Update each document's key field from string to date type
+    const updatedDocuments = documents.map((doc) => {
+      // Convert key string to Date
+      const keyDate = new Date(doc.key);
+      // Update the key field in the document
+      return { ...doc, key: keyDate };
+    });
+
+    // Define the new model schema with the updated key field
+    const NewModelSchema = new mongoose.Schema({
+      key: Date,
+      value: {
+        location: {
+          name: String,
+          lat: Number,
+          lon: Number,
+        },
+        data: {
+          ph: Number,
+          Organic_carbon: Number,
+          Turbidity: Number,
+          Solids: Number,
+          Trihalomethanes: Number,
+        },
+        wqi: Number,
+      },
+    });
+
+    // Create a new model using the updated schema
+    const NewModel = mongoose.model('NewModel', NewModelSchema);
+
+    // Insert the updated documents into the new collection
+    await NewModel.insertMany(updatedDocuments);
+
+    console.log('Migration completed successfully');
+  } catch (error) {
+    console.error('Migration failed:', error);
+  } finally {
+    await mongoose.connection.close();
+  }
+}
+
+
 
 // Function to get aggregated data for line chart
 /*const getAggregatedDataForChart = async (locationName, parameter, startTime, endTime) => {
@@ -260,4 +301,5 @@ module.exports = {
   getAverageWQI,
   getDataByLocation,
   getDataByTimeRange,
+  migrateData
 };
