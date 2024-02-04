@@ -10,21 +10,21 @@ router.get('/', async function(req, res, next) {
   const allDataReadings = await dataController.getAlldDataReadings();
   const allUniqueReadings = await dataController.getUniqueLocations();
   //console.log(allDataReadings)
-  res.render('visulisation', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, uniqueLocations:allUniqueReadings}); 
+  res.render('visulisation', { title: 'Index', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, uniqueLocations:allUniqueReadings, user:req.session.user}); 
 }); 
 
 router.get('/data-table', async function(req, res, next) { 
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
   const allDataReadings = await dataController.getAlldDataReadings();
   //console.log(allDataReadings)
-  res.render('visualisation_table', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
+  res.render('visualisation_table', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, user:req.session.user}); 
 }); 
 
 router.get('/visualisation_test_d3', async function(req, res, next) { 
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
   const allDataReadings = await dataController.getAlldDataReadings();
   //console.log(allDataReadings)
-  res.render('visualisation_test_d3', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
+  res.render('visualisation_test_d3', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, user:req.session.user}); 
 }); 
 
 
@@ -32,7 +32,7 @@ router.get('/chart', async function(req, res, next) {
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
   const allDataReadings = await dataController.getAlldDataReadings();
   //console.log(allDataReadings)
-  res.render('visulisation', { title: 'Chart', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings}); 
+  res.render('visulisation', { title: 'Chart', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, user:req.session.user}); 
 }); 
 // Server-side route
 router.get('/sort-data', async function(req, res, next) {

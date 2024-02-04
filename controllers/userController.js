@@ -6,6 +6,25 @@ const jwt = require("jsonwebtoken");
 const axios = require("axios");
 
 // Middleware to verify the token and attach user details to the request object
+async function verifyUserSession(req, res, next) {
+  try {
+    // Connect to the 'userDB' database
+    if (req.session.user_id) {
+      const user = await getUserByID(req.session.user_id);
+      console.log(req.session.user_id);
+      console.log("logged user");
+      // Attach the user information to the request object
+      req.session.user = user;
+      console.log(user);
+      next();
+    } else res.render("login", { title: "Login", currentPage: "Login" });
+  } catch (error) {
+    console.error("Error in verifyToken middleware:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+// Middleware to verify the token and attach user details to the request object
 async function verifyToken(req, res, next) {
   try {
     // Verify the token using the session secret
@@ -59,7 +78,6 @@ async function loginUser(req, res) {
   const { username, password } = req.body;
   try {
     const user = await userService.loginUser(username, password);
-    console.log(user);
     // Combine first and last names into a single property
     const fullName = `${user.firstname} ${user.lastname}`;
     // Create an object of props to send in the response
@@ -68,16 +86,17 @@ async function loginUser(req, res) {
       username: user.username,
       role: user.role,
     };
-
-    const sessionSecret = req.session.sessionSecret;
-    // Create and sign JWT token
-    const token = jwt.sign({ userId: user._id }, sessionSecret, {
-      expiresIn: "1h",
-    });
+    // set the session.
+    req.session.user_id = user._id;
+    // const sessionSecret = req.session.sessionSecret;
+    // // Create and sign JWT token
+    // const token = jwt.sign({ userId: user._id }, sessionSecret, {
+    //   expiresIn: "1h",
+    // });
     console.log("Login successful");
-    console.log("Your token:", token); 
-    res.redirect('/'); 
-      
+    req.session.user = user;
+    console.log(req.session.user);
+    res.redirect("/");
   } catch (error) {
     console.error("Error in login route:", error);
     res
@@ -90,6 +109,10 @@ async function loginUser(req, res) {
 
 //CRUD
 
+const getUserByID = async function (userID) {
+  const user = await userService.getSpecificUser(userID);
+  return user;
+};
 async function registerUser(req, res) {
   const userInfo = req.body;
   console.log(userInfo);
@@ -163,36 +186,40 @@ async function getSpecificUser(req, res) {
 }
 
 async function updateUserData(req, res) {
-  console.log("POST //updateData route accessed");
-  console.log("req.body:", req.body);
-
-  const {
-    userId,
-    updateFirstname,
-    updateLastname,
-    updateUsername,
-    updatePassword,
-  } = req.body;
-
   try {
-    console.log("Updating user with userId:", userId);
-    const result = await userService.updateUserData(
-      userId,
-      updateFirstname,
-      updateLastname,
-      updateUsername,
-      updatePassword
+    const updatedUserData = req.body;
+    const userId = req.session.userId; // Assuming userId is stored in session
+
+    // Conditionally construct the update object
+    const updateObject = {};
+    if (updatedUserData.password) {
+      // Include password field only if it's not empty
+      updateObject.password = updatedUserData.password;
+    }
+    // Include other fields for update
+    if (updatedUserData.firstname) {
+      updateObject.firstname = updatedUserData.firstname;
+    }
+    if (updatedUserData.lastname) {
+      updateObject.lastname = updatedUserData.lastname;
+    } 
+
+    // Update the user in the database
+    const updatedUser = await db.User.findOneAndUpdate(
+      { userId: userId },
+      updateObject,
+      { new: true }
     );
 
-    console.log("MongoDB update result:", result);
-    if (result.modifiedCount > 0) {
-      res.status(200).send("Data updated successfully");
-    } else {
-      res.status(404).send("User not found");
-    }
+    // Update req.session.user with the updated data
+    req.session.user = updatedUser;
+
+    // Redirect to some other route after updating the user data
+    res.redirect("/user/profile");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Error updating data");
+    // Handle error
+    console.error("Error updating user data:", error);
+    res.status(500).send("Internal Server Error");
   }
 }
 
@@ -223,4 +250,6 @@ module.exports = {
   getSpecificUser,
   updateUserData,
   deleteUser,
+  getUserByID,
+  verifyUserSession,
 };

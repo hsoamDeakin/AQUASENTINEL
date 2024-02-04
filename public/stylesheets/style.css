@@ -34,10 +34,10 @@ main {
 
 /* Styling for buttons */
 button {
-  font-size: 20px;
+  font-size: 30px;
   padding: 10px 20px;
   margin: 10px;
-  width: 120px; 
+  width: 200px; 
   background-color: rgba(63, 105, 127, 0.589); 
   border:2px solid rgba(63, 105, 127, 0.589); 
   color:white;
@@ -105,7 +105,6 @@ button#startConsumerButton {
     }
 
     #registrationbutton{
-      width: 120px; 
       margin-left: 300px; 
       margin-top:40px; 
       margin-bottom: 30px; 
@@ -115,7 +114,6 @@ button#startConsumerButton {
     }
 
     #myProfileButton{
-      width: 140px; 
       margin-left: 200px; 
       margin-top:40px; 
       margin-bottom: 30px; 
@@ -125,7 +123,6 @@ button#startConsumerButton {
     }
 
     #resetbutton{
-      width: 120px; 
       margin-top:40px; 
       margin-bottom: 30px; 
       background-color: rgba(63, 105, 127, 0.589); 
@@ -142,7 +139,6 @@ button#startConsumerButton {
     }
 
     #loginbutton{
-      width: 120px; 
       margin-left: 225px; 
       margin-top:20px; 
       margin-bottom: 20px; 
@@ -152,7 +148,6 @@ button#startConsumerButton {
     }
 
     #submitFilters{
-      width: 120px; 
       margin-left: 125px; 
       margin-top:20px; 
       margin-bottom: 20px; 
@@ -209,21 +204,18 @@ button#startConsumerButton {
     }
 
     #storeData{
-      width: 130px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
     }
 
     #collectData{
-      width: 130px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
     }
 
     #loginButtonMain{
-      width: 130px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
@@ -231,7 +223,6 @@ button#startConsumerButton {
     }
 
     #registerButtonMain{
-      width: 130px; 
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;

@@ -93,7 +93,7 @@ async function loginUser(inputUsername, inputPassword) {
 async function getSpecificUser(userId) {
   await db.connectDB();
   try {
-    const user = await db.User.findOne({ userId });
+    const user = await db.User.findById(userId);
     return user;
   } catch (error) {
     console.error("Error retrieving user:", error);

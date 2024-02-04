@@ -8,14 +8,13 @@ const session = require('express-session');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
+const userController = require('./controllers/userController');
 
 // Load environment variables from .env file
 require('dotenv').config();
 
 // Connect to MongoDB
-db.connectDB('AQUASENTINEL');
-db.connectDB('userDB');
-
+db.connectDB();
 
 var indexRouter = require('./routes/index');
 var userRoutes = require('./routes/user');
@@ -44,21 +43,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware to initialize session
 app.use(session({
   secret: 'key', // Change this to your actual secret key
-  resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  resave: true, 
+  cookie:{
+      // Session max age in milliseconds. (1 min)
+      // Calculates the Expires Set-Cookie attribute
+      maxAge:6000000
+  } 
 }));
 
-// Middleware to set session secret
+// Custom middleware to add user data to locals
 app.use((req, res, next) => {
-  req.session.sessionSecret = 'key'; // Set your actual secret key here
+  res.locals.user = req.session.user;
   next();
 });
+
 
 
 app.use('/', indexRouter);
 app.use('/user', userRoutes); //Mount user routes
 app.use('/streaming', streamingRouter);
-app.use('/visulisation', visulisationRouter);
+app.use('/visulisation', userController.verifyUserSession, visulisationRouter);
 app.use('/api', apiRouter);
 
  const setSessionSecret = (req, res, next) => {
