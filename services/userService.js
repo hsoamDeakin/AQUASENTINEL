@@ -1,4 +1,5 @@
 // services/userService.js
+const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const db = require("../db");
@@ -174,6 +175,49 @@ async function deleteUser(userId) {
   }
 }
 
+// Function to add a notification for a user
+const addNotification = async (userId, message) => {
+  try { 
+
+    // Create a new notification object
+    const notification = new db.Notification({
+      userId: userId, // ID of the user for whom the notification is intended
+      message: message // Notification message
+    });
+
+    // Save the notification to the database
+    await notification.save();
+
+    console.log('Notification added successfully:', notification);
+    return notification; // Return the newly created notification object
+  } catch (error) {
+    console.error('Error adding notification:', error);
+    throw error;
+  }
+};
+ 
+
+// Function to get unread notifications for a user
+const getUnreadNotifications = async (userId) => {
+  try {
+    console.log('user id')
+    console.log(userId);
+
+    // Find unread notifications for the specified user
+    const unreadNotifications = await db.Notification.find({
+      userId: userId,
+      readStatus: false // Filter by unread notifications
+    });
+
+    console.log('Unread notifications:', unreadNotifications);
+    return unreadNotifications; // Return the array of unread notifications
+  } catch (error) {
+    console.error('Error fetching unread notifications:', error);
+    throw error;
+  }
+};
+
+
 module.exports = {
   registerUser,
   loginUser,
@@ -181,4 +225,6 @@ module.exports = {
   updateUserData,
   deleteUser,
   hashPassword,
+  addNotification,
+  getUnreadNotifications
 };

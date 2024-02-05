@@ -51,5 +51,10 @@ router.post('/updateUser', userController.verifyUserSession, userController.upda
 
 router.post('/deleteUser', userController.verifyUserSession, userController.deleteUser);
 
+// Server-side route
+router.get('/unread-user-notifications', async function(req, res, next) {  
+  res.json( await userController.getUnreadNotifications(req, res));
+});
+
 module.exports = router;
 

@@ -1,5 +1,18 @@
 // main.js
 
+function displayMessages(messages) {
+  const messageList = document.getElementById('messageList');
+  messageList.innerHTML = ''; // Clear previous messages
+
+  messages.forEach(message => {
+    const li = document.createElement('li');
+    const timestamp = new Date(message.timestamp).toLocaleString(); // Convert timestamp to local date/time format
+    li.textContent = `${timestamp}: ${message.message}`; // Display timestamp and message
+    messageList.appendChild(li);
+  });
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
   var elems = document.querySelectorAll(".dropdown-trigger");
   var instances = M.Dropdown.init(elems);
@@ -11,6 +24,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 $(function () {
+  // Trigger AJAX request when the page loads
+  $.ajax({
+    url: "/user/unread-user-notifications",
+    method: "GET",
+    success: function(messages) {
+      // Handle the response here, such as displaying notifications in a list
+      console.log("Unread notifications:", messages);
+      // Example: Assuming response is an array of notification objects
+      if (messages.length > 0) {
+        // Add class to change color 
+        $("#notificationListItem").text("You have " + messages.length + " messages");
+        $("#notificationListItem").addClass("unread-notifications"); 
+
+        displayMessages(messages);
+      } 
+    },
+    error: function(xhr, status, error) {
+      console.error("Error fetching notifications:", error);
+      // Handle error
+    }
+  }); 
+
+  $("#notificationListItem").on("click", function () {
+    $("#messages").toggle();
+  });
+
   $("#show_chart").on("click", function () {
     // Function to update the chart
     function updateChart() {

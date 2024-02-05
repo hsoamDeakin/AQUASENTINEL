@@ -33,6 +33,7 @@
             </ul>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="/user/profile">Profile</a></li>
+              <li><span id="notificationListItem">messages</span></li>
               <li><a href="/user/logout">Logout</a></li>
             </ul>
           </div>
@@ -50,6 +51,9 @@
           </div>
         </nav>   
       <% } %>
+      <div id="messages"> 
+        <ul id="messageList"></ul>
+      </div>
     <%- body %>
     <footer class="text-white text-center">
       <strong><i><br>© 2024 Aquasentinel</i></strong><br>

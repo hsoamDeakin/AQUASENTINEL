@@ -43,6 +43,16 @@ const userCollectionName = 'users'; // Specify the desired collection name for u
 // Create model for user collection
 const User = mongoose.model('User', userSchema, userCollectionName);
 
+const notificationSchema = new mongoose.Schema({
+  userId: { type: String, ref: 'User', required: true }, // Reference to the User model
+  message: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now },
+  readStatus: { type: Boolean, default: false } // Indicates whether the notification has been read by the user
+});
+
+const Notification = mongoose.model('Notification', notificationSchema);
+
+
 const connectDB = async () => {
   try {
     const dbURI = process.env.DB_URI;
@@ -57,4 +67,6 @@ const connectDB = async () => {
   }
 };
 
-module.exports = { connectDB, DataReading, User };
+module.exports = { connectDB, DataReading, User, Notification };
+
+ 
