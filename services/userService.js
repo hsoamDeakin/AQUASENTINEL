@@ -186,9 +186,8 @@ const addNotification = async (userId, message) => {
     });
 
     // Save the notification to the database
-    await notification.save();
-
-    console.log('Notification added successfully:', notification);
+    await notification.save(); 
+    //console.log('Notification added successfully:', notification);
     return notification; // Return the newly created notification object
   } catch (error) {
     console.error('Error adding notification:', error);

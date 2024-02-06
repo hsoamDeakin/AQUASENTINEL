@@ -365,3 +365,4 @@ module.exports = {
   getDataByLocationAvgWQI,
   getAverageWQIStats
 };
+ 
