@@ -86,6 +86,8 @@ async function loginUser(req, res) {
     req.session.user_id = user._id;
     console.log("Login successful");
     req.session.user = user; 
+    console.log(req.session.user);
+    
     // Send notifications for max and min locations
     if (req.session.user) {
       const userId = req.session.user.userId;

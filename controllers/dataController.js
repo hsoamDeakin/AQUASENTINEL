@@ -77,7 +77,7 @@ const getSortedData = async (sortBy, sortOrder) => {
 }  
 
 const getAverageWQI = async (req, res) => { 
-    const groupLocationByWQI = await dataService.getAverageWQI(req, res); 
+    const groupLocationByWQI = await dataService.getAverageWQI(req, res);   
     return groupLocationByWQI;
 }  
  

@@ -183,6 +183,7 @@ const getAverageWQI = async (req, res) => {
         $sort: { averageWQI: 1 } // Sort by averageWQI in ascending order
       }
     ]); 
+    console.log('averageWQI');
     return averageWQI;
   } catch (error) {
     console.error("Error calculating average WQI:", error);
