@@ -234,12 +234,14 @@ button#startConsumerButton {
     }
      /* Styles for the SVG element */
      #shape1 {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+      border: 2px solid #e56f73;
+      border-radius: 20px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       width: 100%;
       height: 100%;
+      padding: 30px;
+      background-color: #e56f73;
+      
     }
 
    #show_chart {
@@ -270,4 +272,61 @@ button#startConsumerButton {
 /* Show the submenu when hovering over the parent item */
 .nav-wrapper .left > li:hover .submenu {
   display: block;
+}
+
+#messages {
+  max-width: 600px;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1000;
+
+}
+
+
+h1 {
+  margin-top: 0;
+}
+
+ul#messageList {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul#messageList li {
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.unread-notifications{
+  color: blue;
+}
+
+#notificationListItem {
+  display: block;
+  padding:0 15px;
+  text-decoration: none;
+  color: lightskyblue; /* Text color */
+  font-size: 1.2rem;
+}
+
+#notificationListItem:hover {
+  background-color: antiquewhite; /* Background color on hover */
+  color: #000; /* Text color on hover */
+}
+
+#chart-container {
+  width: 600px;
+  height: 400px;
+}
+
+#avgWQI{
+  display: none;
 }

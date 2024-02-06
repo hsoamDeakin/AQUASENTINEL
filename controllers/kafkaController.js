@@ -1,6 +1,8 @@
 const ip = require("ip");
 const { Kafka, CompressionTypes, logLevel } = require("kafkajs");
+
 const dataController = require("../controllers/dataController");
+const userController  = require('../controllers/userController');  
 
 const { connectDB, DataReading } = require('../db');
 
@@ -17,7 +19,7 @@ const topic = "data-readings";
 const producer = kafka.producer();
 const consumer = kafka.consumer({ groupId: "data-group" });
 
-const startProducer = async () => {
+const startProducer = async (req, res) => {
   await producer.connect();
   await generateData();
 };
@@ -87,7 +89,7 @@ const generateData = async () => {
 
 const receivedData = []; // Array to store received messages
 
-const startConsumer = async () => {
+const startConsumer = async (req, res) => {
   await connectDB(); // Connect to MongoDB
 
   await consumer.connect();
@@ -104,8 +106,7 @@ const startConsumer = async () => {
 
       // Store the received message
       receivedData.push(receivedMessage);
-    },
-  });
+    },}); 
 };
 
 const stopConsumer = async () => {

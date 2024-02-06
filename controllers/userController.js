@@ -1,5 +1,7 @@
 // controllers/userController.js
 const userService = require("../services/userService");
+
+
 const path = require("path");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
@@ -15,11 +17,9 @@ async function verifyUserSession(req, res, next) {
       console.log("logged user");
       // Attach the user information to the request object
       req.session.user = user;
-      console.log(user); 
+      console.log(user);
       next();
-    } 
-    else 
-      res.render("login", { title: "Login", currentPage: "Login" });
+    } else res.render("login", { title: "Login", currentPage: "Login" });
   } catch (error) {
     console.error("Error in verifyToken middleware:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -98,6 +98,11 @@ async function loginUser(req, res) {
     console.log("Login successful");
     req.session.user = user;
     console.log(req.session.user);
+    // Send notifications for max and min locations
+    if (req.session.user) {
+      const userId = req.session.user.userId;
+      await addUserdNotifications(userId, `Logged to system.`);
+    }
     res.redirect("/");
   } catch (error) {
     console.error("Error in login route:", error);
@@ -118,15 +123,14 @@ const getUserByID = async function (userID) {
 async function registerUser(req, res) {
   const userInfo = req.body;
   console.log(userInfo);
-  try { 
-    
+  try {
     const insertedUser = await userService.registerUser(
       userInfo.firstname,
       userInfo.lastname,
       userInfo.username,
       userInfo.password,
       userInfo.role
-    ); 
+    );
 
     console.log("Registration successful.");
     // Combine first and last names into a single property
@@ -141,11 +145,11 @@ async function registerUser(req, res) {
       role: insertedUser.role,
     };
 
-    req.session.user_id = insertedUser._id; 
+    req.session.user_id = insertedUser._id;
     console.log("Login successful");
     req.session.user = insertedUser;
-    res.redirect("/"); 
-     
+    res.redirect("/");
+
     // res.status(200).send({firstname: insertedUser.firstname, lastname: insertedUser.lastname,
     //                       username: insertedUser.username, role: insertedUser.role,});
   } catch (err) {
@@ -185,14 +189,16 @@ async function updateUserData(req, res) {
     const updatedUserData = req.body;
     const userId = req.session.user_id; // Assuming userId is stored in session
     // Find the user by userId
-    await db.connectDB(); 
-    const user = await db.User.findById(userId); 
-    console.log('saving...')
-    console.log(updatedUserData); 
+    await db.connectDB();
+    const user = await db.User.findById(userId);
+    console.log("saving...");
+    console.log(updatedUserData);
     // Conditionally construct the update object
     if (updatedUserData.password) {
       // Include password field only if it's not empty
-      const hashedPassword = await userService.hashPassword(updatedUserData.password);
+      const hashedPassword = await userService.hashPassword(
+        updatedUserData.password
+      );
       user.password = hashedPassword;
     }
     // Include other fields for update
@@ -201,13 +207,17 @@ async function updateUserData(req, res) {
     }
     if (updatedUserData.lastname) {
       user.lastname = updatedUserData.lastname;
-    } 
+    }
 
     // Save the updated user
-    await user.save();   
-    
+    await user.save();
+
     // Update req.session.user with the updated data
     req.session.user = user;
+    if (req.session.user) {
+      const userId = req.session.user.userId;
+      await addUserdNotifications(userId, `Profile updated.`);
+    }
 
     // Redirect to some other route after updating the user data
     res.redirect("/user/profile");
@@ -223,24 +233,59 @@ async function deleteUser(req, res) {
     const updatedUserData = req.body;
     const userId = req.session.user_id; // Assuming userId is stored in session
     // Find the user by userId
-    await db.connectDB(); 
-    const user = await db.User.findById(userId);   
+    await db.connectDB();
+    const user = await db.User.findById(userId);
     // Include other fields for update
-    if (updatedUserData.username && updatedUserData.username == user.username) {  
-      // Remove the user document 
+    if (updatedUserData.username && updatedUserData.username == user.username) {
+      // Remove the user document
       // Redirect to some other route after updating the user data
       await db.User.deleteOne({ _id: userId });
       res.redirect("/user/logout");
-    }
-    else 
-      res.redirect("/user/profile");
-
+    } else res.redirect("/user/profile");
   } catch (error) {
     // Handle error
     console.error("Error updating user data:", error);
     res.status(500).send("Internal Server Error");
   }
 }
+
+// Function to get unread notifications for a user
+const addUserdNotifications = async (userId, message) => {
+  try {
+    const notification = await userService.addNotification (userId, message);
+    return notification; // Respond with the filtered data
+  } catch (error) {
+    console.log(error);
+    //res.status(500).send(error.message);
+  }
+};
+
+// Function to get unread notifications for a user
+const getUnreadNotifications = async (req, res) => {
+  try {
+    if(req.session.user) {
+      console.log(req.session.user)
+      const userId = req.session.user.userId;
+      const data = await userService.getUnreadNotifications(userId);
+      return data; // Respond with the filtered data
+    }
+    else
+      return [];
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const setUnreadNotifications = async (req, res) => {
+  try {
+    if(req.session.user) { 
+      await userService.setUnreadNotifications(req.session.user.userId, req, res); 
+    } 
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   verifyToken,
   requireLogin,
@@ -252,4 +297,7 @@ module.exports = {
   deleteUser,
   getUserByID,
   verifyUserSession,
+  getUnreadNotifications,
+  addUserdNotifications,
+  setUnreadNotifications
 };

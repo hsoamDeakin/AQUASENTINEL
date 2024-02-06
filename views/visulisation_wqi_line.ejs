@@ -14,29 +14,33 @@
           <% }); %>
         </select>
        </div>
-       </div>  
-       
+       </div>         
         <div class="row justify-content-center"> 
-            <div id="chart-container" viewBox="0 0 800 500"></div> 
+          <div class="col-md-6">
+          <div>   
+            <div class="row">
+               <div id="avgWQI">
+                <table border="1">
+                  <thead id="borderHeaderSection">
+                    <tr>
+                      <th><a href="#" class="sortable" data-column="date">Date</a></th>
+                      <th><a href="#" class="sortable" data-column="averageWQI">Average WQI</a></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     
+                  </tbody>
+                </table>            
+               </div>
+           </div>
+           </div>
+         </div>
+         <div class="col-md-6">
+            <div id="chart-container"></div> 
+          </div>
         </div>
   
     </div>
-    <div id="borderLine">   
-      <div class="row">
-         <div id="visualisation1">
-          <table border="1">
-            <thead id="borderHeaderSection">
-              <tr>
-                <th><a href="#" class="sortable" data-column="date">Date</a></th>
-                <th><a href="#" class="sortable" data-column="averageWQI">Average WQI</a></th>
-              </tr>
-            </thead>
-            <tbody>
-               
-            </tbody>
-          </table>            
-         </div>
-     </div>
-   </div>
+    
  
 </main>  

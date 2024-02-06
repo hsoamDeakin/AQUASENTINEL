@@ -1,4 +1,5 @@
 // services/userService.js
+const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const db = require("../db");
@@ -174,6 +175,59 @@ async function deleteUser(userId) {
   }
 }
 
+// Function to add a notification for a user
+const addNotification = async (userId, message) => {
+  try { 
+
+    // Create a new notification object
+    const notification = new db.Notification({
+      userId: userId, // ID of the user for whom the notification is intended
+      message: message // Notification message
+    });
+
+    // Save the notification to the database
+    await notification.save();
+
+    console.log('Notification added successfully:', notification);
+    return notification; // Return the newly created notification object
+  } catch (error) {
+    console.error('Error adding notification:', error);
+    throw error;
+  }
+};
+ 
+
+const getUnreadNotifications = async (userId) => {
+  try {
+    // Find unread notifications for the specified user and sort by timestamp in descending order
+    let unreadNotifications = await db.Notification.find({
+      userId: userId,
+      readStatus: false // Filter by unread notifications
+    }).sort({ timestamp: -1 }); 
+
+    return unreadNotifications; // Return the array of unread notifications
+  } catch (error) {
+    console.error('Error fetching unread notifications:', error);
+    throw error;
+  }
+};
+
+const setUnreadNotifications = async (userId, req, res) => {
+  try {
+   
+    // Mark all unread notifications as read
+    await db.Notification.updateMany(
+      { userId: userId, readStatus: false }, // Filter by unread notifications
+      { $set: { readStatus: true } } // Set readStatus to true
+    ); 
+  } catch (error) {
+    console.error('Error fetching unread notifications:', error);
+    throw error;
+  }
+};
+
+
+
 module.exports = {
   registerUser,
   loginUser,
@@ -181,4 +235,7 @@ module.exports = {
   updateUserData,
   deleteUser,
   hashPassword,
+  addNotification,
+  getUnreadNotifications,
+  setUnreadNotifications
 };

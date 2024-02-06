@@ -26,13 +26,14 @@
                   <li><a href="/visulisation/data-table">All Data</a></li>
                   <li><a href="/visulisation">Data Table - Filters</a></li>     
                   <li><a href="/visulisation/visulisation_wqi_line">WQI - Time vs Location</a></li>               
-                  <li><a href="/visulisation/visualisation_test_d3">Visualisation - Test d3js</a></li>
+                  <li><a id="wqi_bar" href="/visulisation/visualisation_wqi_bar">Compare WQI</a></li>
                 </ul>
               </li>
               <li><a href="/streaming">Streaming</a></li> 
             </ul>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="/user/profile">Profile</a></li>
+              <li><span id="notificationListItem">messages</span></li>
               <li><a href="/user/logout">Logout</a></li>
             </ul>
           </div>
@@ -50,6 +51,9 @@
           </div>
         </nav>   
       <% } %>
+      <div id="messages"> 
+        <ul id="messageList"></ul>
+      </div>
     <%- body %>
     <footer class="text-white text-center">
       <strong><i><br>© 2024 Aquasentinel</i></strong><br>

@@ -25,11 +25,11 @@ router.get('/visulisation_wqi_line', async function(req, res, next) {
   res.render('visulisation_wqi_line', { title: 'Line chart', currentPage: 'Line chart', message: 'Starting App...', uniqueLocations:allUniqueReadings, user:req.session.user}); 
 }); 
 
-router.get('/visualisation_test_d3', async function(req, res, next) { 
+router.get('/visualisation_wqi_bar', async function(req, res, next) { 
   // Assuming getAlldDataReadings returns a Promise that resolves with the data
   const allDataReadings = await dataController.getAlldDataReadings();
   //console.log(allDataReadings)
-  res.render('visualisation_test_d3', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, user:req.session.user}); 
+  res.render('visualisation_wqi_bar', { title: 'Data Table', currentPage: 'Home', message: 'Starting App...', receivedData:allDataReadings, user:req.session.user}); 
 }); 
 
 
@@ -54,7 +54,7 @@ router.get('/sort-data', async function(req, res, next) {
 
 // Server-side route
 router.get('/data-by-location-avg', async function(req, res, next) {  
-  res.json( await dataController.getAverageWQI());
+  res.json( await dataController.getAverageWQI(req, res));
 });
 
 // Server-side route
@@ -69,9 +69,7 @@ router.get('/data-by-date-range', async function(req, res, next) {
 
 router.get('/data-by-location-avg-wqi', async function(req, res, next) {  
   res.json( await dataController.getDataByLocationAvgWQI(req, res));
-});
-
-
+}); 
 
 
 module.exports = router;
