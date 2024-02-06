@@ -38,7 +38,35 @@ function displayMessages(messages) {
     li.textContent = `${timestamp}: ${message.message}`; // Display timestamp and message
     messageList.appendChild(li);
   });
+  // Add a button to clear messages
+  const clearButton = document.createElement('button');
+  clearButton.textContent = 'Clear Messages';
+  clearButton.id = 'clearButton'; // Set the ID of the button
+  clearButton.style.width = '100%'; // Set the width of the button
+  clearButton.addEventListener('click', clearMessages);
+  const lastLi = document.createElement('li');
+  lastLi.appendChild(clearButton);
+  messageList.appendChild(lastLi); 
 }
+
+// Function to clear messages
+function clearMessages() {
+ // Call the startProducer API
+     $.get("/user/set-unread-user-notifications")
+     .done(function (data) {
+       console.log("Resetting messages successfully", data);
+     })
+     .fail(function (error) {
+       console.error("Error Resetting messages:", error.responseText);
+     });
+  console.log('Messages cleared!');
+  $("#messages").toggle();
+  // Example: You can remove all messages from the UI
+ }
+
+
+   
+
 function updateWQIBarChart() {
   $.ajax({
     url: "/visulisation/data-by-location-avg",
@@ -132,20 +160,18 @@ $(function () {
 
    updateNotification();
    // Update the chart every second
-   setInterval(updateNotification, 5000);
- 
-   
+   setInterval(updateNotification, 10000); 
 
   $("#notificationListItem").on("click", function () {
     $("#messages").toggle();
      // Call the startProducer API
-     $.get("/user/set-unread-user-notifications")
-     .done(function (data) {
-       console.log("Resetting messages successfully", data);
-     })
-     .fail(function (error) {
-       console.error("Error Resetting messages:", error.responseText);
-     });
+    //  $.get("/user/set-unread-user-notifications")
+    //  .done(function (data) {
+    //    console.log("Resetting messages successfully", data);
+    //  })
+    //  .fail(function (error) {
+    //    console.error("Error Resetting messages:", error.responseText);
+    //  });
  });  
  
 

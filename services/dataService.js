@@ -79,11 +79,11 @@ const generateRandomData = async () => {
 };
 const calculateWQIFromArray = (values) => {
   const parameterWeights = {
-    ph: 0.7,
+    ph: 0.2,
     Organic_carbon: 0.1,
     Turbidity: 0.1,
-    Solids: 0.05,
-    Trihalomethanes: 0.05,
+    Solids: 0.2,
+    Trihalomethanes: 0.4,
   };
 
   const normalizedValues = {};
