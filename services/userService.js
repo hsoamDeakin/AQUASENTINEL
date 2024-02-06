@@ -197,25 +197,35 @@ const addNotification = async (userId, message) => {
 };
  
 
-// Function to get unread notifications for a user
 const getUnreadNotifications = async (userId) => {
   try {
-    console.log('user id')
-    console.log(userId);
-
-    // Find unread notifications for the specified user
-    const unreadNotifications = await db.Notification.find({
+    // Find unread notifications for the specified user and sort by timestamp in descending order
+    let unreadNotifications = await db.Notification.find({
       userId: userId,
       readStatus: false // Filter by unread notifications
-    });
+    }).sort({ timestamp: -1 }); 
 
-    console.log('Unread notifications:', unreadNotifications);
     return unreadNotifications; // Return the array of unread notifications
   } catch (error) {
     console.error('Error fetching unread notifications:', error);
     throw error;
   }
 };
+
+const setUnreadNotifications = async (userId, req, res) => {
+  try {
+   
+    // Mark all unread notifications as read
+    await db.Notification.updateMany(
+      { userId: userId, readStatus: false }, // Filter by unread notifications
+      { $set: { readStatus: true } } // Set readStatus to true
+    ); 
+  } catch (error) {
+    console.error('Error fetching unread notifications:', error);
+    throw error;
+  }
+};
+
 
 
 module.exports = {
@@ -226,5 +236,6 @@ module.exports = {
   deleteUser,
   hashPassword,
   addNotification,
-  getUnreadNotifications
+  getUnreadNotifications,
+  setUnreadNotifications
 };

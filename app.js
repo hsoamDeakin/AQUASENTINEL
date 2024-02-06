@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/user', userRoutes); //Mount user routes
-app.use('/streaming', streamingRouter);
+app.use('/streaming',userController.verifyUserSession, streamingRouter);
 app.use('/visulisation', userController.verifyUserSession, visulisationRouter);
 app.use('/api', apiRouter);
 

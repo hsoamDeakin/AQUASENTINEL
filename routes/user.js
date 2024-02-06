@@ -29,6 +29,7 @@ router.post('/login', userController.loginUser);
 // Route for logging out
 router.get('/logout', (req, res) => {
   // Clear the user session
+
   req.session.destroy((err) => {
     if (err) {
       console.error('Error destroying session:', err);
@@ -55,6 +56,12 @@ router.post('/deleteUser', userController.verifyUserSession, userController.dele
 router.get('/unread-user-notifications', async function(req, res, next) {  
   res.json( await userController.getUnreadNotifications(req, res));
 });
+
+router.get('/set-unread-user-notifications', async function(req, res, next) {  
+  await userController.setUnreadNotifications(req, res);
+  res.json([]);
+});
+
 
 module.exports = router;
 

@@ -1,29 +1,6 @@
 // main.js
 
-function displayMessages(messages) {
-  const messageList = document.getElementById('messageList');
-  messageList.innerHTML = ''; // Clear previous messages
-
-  messages.forEach(message => {
-    const li = document.createElement('li');
-    const timestamp = new Date(message.timestamp).toLocaleString(); // Convert timestamp to local date/time format
-    li.textContent = `${timestamp}: ${message.message}`; // Display timestamp and message
-    messageList.appendChild(li);
-  });
-}
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  var elems = document.querySelectorAll(".dropdown-trigger");
-  var instances = M.Dropdown.init(elems);
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  var elems = document.querySelectorAll("select");
-  var instances = M.FormSelect.init(elems);
-});
-
-$(function () {
+function updateNotification() {
   // Trigger AJAX request when the page loads
   $.ajax({
     url: "/user/unread-user-notifications",
@@ -39,87 +16,144 @@ $(function () {
 
         displayMessages(messages);
       } 
+      else {
+        $("#notificationListItem").css("display", "none");
+        $("#messages").css("display", "none");
+
+      }
     },
     error: function(xhr, status, error) {
       console.error("Error fetching notifications:", error);
       // Handle error
     }
   }); 
+} 
+function displayMessages(messages) {
+  const messageList = document.getElementById('messageList');
+  messageList.innerHTML = ''; // Clear previous messages
+
+  messages.forEach(message => {
+    const li = document.createElement('li');
+    const timestamp = new Date(message.timestamp).toLocaleString(); // Convert timestamp to local date/time format
+    li.textContent = `${timestamp}: ${message.message}`; // Display timestamp and message
+    messageList.appendChild(li);
+  });
+}
+function updateWQIBarChart() {
+  $.ajax({
+    url: "/visulisation/data-by-location-avg",
+    method: "GET",
+    timeout: 10000, // Timeout in milliseconds (e.g., 5 seconds)
+    success: function (data) {
+      console.log("AVG WQI location", data);
+
+      // Clear previous chart if exists
+      d3.select("#shape1").selectAll("*").remove();
+
+      // Set up the SVG container with adjusted margin for the title
+      const margin = { top: 40, right: 20, bottom: 60, left: 80 }; // Adjusted top margin for title
+      const width = 800 - margin.left - margin.right;
+      const height = 450 - margin.top - margin.bottom;
+
+      const svg = d3.select("#shape1")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      // Define color scale
+      const colorScale = d3.scaleSequential(d3.interpolateViridis) // Change the color scale as needed
+        .domain([0, d3.max(data, (d) => d.averageWQI)]);
+
+      // Set up the scales
+      const xScale = d3
+        .scaleBand()
+        .domain(data.map((d) => d._id))
+        .range([0, width])
+        .padding(0.1);
+
+      const yScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(data, (d) => d.averageWQI)])
+        .range([height, 0]);
+
+      // Draw the bars with color scale
+      svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", (d) => xScale(d._id))
+        .attr("y", (d) => yScale(d.averageWQI))
+        .attr("width", xScale.bandwidth())
+        .attr("height", (d) => height - yScale(d.averageWQI))
+        .attr("fill", (d) => colorScale(d.averageWQI)); // Assign color based on value
+
+      // Add x-axis labels
+      svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale))
+        .selectAll("text")
+        .attr("transform", "rotate(-45)")
+        .style("text-anchor", "end");
+
+      // Add y-axis
+      svg.append("g")
+        .call(d3.axisLeft(yScale));
+
+      // Add chart title
+      svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2) // Adjusted y position to accommodate the title
+        .attr("text-anchor", "middle")
+        .style("font-size", "20px")
+        .text("Average WQI by Location");
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching data:", error);
+      // Handle error
+    },
+  });
+} 
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.querySelectorAll(".dropdown-trigger");
+  var instances = M.Dropdown.init(elems);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.querySelectorAll("select");
+  var instances = M.FormSelect.init(elems);
+});
+
+$(function () {
+
+   // Call the updateChart function initially
+   updateWQIBarChart();  
+
+   updateNotification();
+   // Update the chart every second
+   setInterval(updateNotification, 5000);
+ 
+   
 
   $("#notificationListItem").on("click", function () {
     $("#messages").toggle();
-  });
+     // Call the startProducer API
+     $.get("/user/set-unread-user-notifications")
+     .done(function (data) {
+       console.log("Resetting messages successfully", data);
+     })
+     .fail(function (error) {
+       console.error("Error Resetting messages:", error.responseText);
+     });
+ });  
+ 
 
-  $("#show_chart").on("click", function () {
-    // Function to update the chart
-    function updateChart() {
-      $.ajax({
-        url: "/visulisation/data-by-location-avg",
-        method: "GET",
-        timeout: 10000, // Timeout in milliseconds (e.g., 5 seconds)
-        success: function (data) {
-          console.log("AVG WQI location", data);
-
-          // Clear previous chart if exists
-          d3.select("#shape1").selectAll("*").remove();
-
-          // Set up the SVG container
-          const svg = d3.select("#shape1");
-          const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-          const width = 800 - margin.left - margin.right;
-          const height = 400 - margin.top - margin.bottom;
-
-          // Create a group element and translate it to leave space for margins
-          const g = svg
-            .append("g")
-            .attr(
-              "transform",
-              "translate(" + margin.left + "," + margin.top + ")"
-            );
-
-          // Set up the scales
-          const xScale = d3
-            .scaleBand()
-            .domain(data.map((d) => d._id))
-            .range([0, width])
-            .padding(0.1);
-
-          const yScale = d3
-            .scaleLinear()
-            .domain([0, d3.max(data, (d) => d.averageWQI)])
-            .range([height, 0]);
-
-          // Draw the bars
-          g.selectAll(".bar")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d) => xScale(d._id))
-            .attr("y", (d) => yScale(d.averageWQI))
-            .attr("width", xScale.bandwidth())
-            .attr("height", (d) => height - yScale(d.averageWQI));
-
-          // Add x-axis labels
-          g.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(xScale))
-            .selectAll("text")
-            .attr("transform", "rotate(-45)")
-            .style("text-anchor", "end");
-        },
-        error: function (xhr, status, error) {
-          console.error("Error fetching data:", error);
-          // Handle error
-        },
-      });
-    }
-
+  $("#show_chart").on("click", function () { 
     // Call the updateChart function initially
-    updateChart();
-
+    updateWQIBarChart(); 
     // Update the chart every second
-    setInterval(updateChart, 5000);
+    setInterval(updateWQIBarChart, 5000);
   });
 
   // Sortable column and direction
@@ -201,6 +235,7 @@ $(function () {
     console.log("Selected location:", selectedLocation);
     e.preventDefault(); // Prevent the default link behavior
 
+    $("#avgWQI").css("display", "inline-block"); 
     // Make an AJAX request to get sorted data
     $.get(
       "/visulisation/data-by-location-avg-wqi",
@@ -213,8 +248,8 @@ $(function () {
 
         // Set up the SVG container dimensions
         const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-        const width = 800 - margin.left - margin.right;
-        const height = 600 - margin.top - margin.bottom;
+        const width = 600 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
 
         // Set up scales for x and y axes
         const xScale = d3

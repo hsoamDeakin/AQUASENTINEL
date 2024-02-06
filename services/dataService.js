@@ -3,6 +3,8 @@ const csv = require("csv-parser");
 const math = require("mathjs");
 
 const db = require("../db");
+const userController = require('../controllers/userController');
+
 
 const dataCount = process.env.dataCount;
 const filePath = process.env.FILE_PATH;
@@ -165,7 +167,7 @@ const getSortedData = async (sortBy, sortOrder) => {
 };
 
 // Function to calculate the average WQI for each location
-const getAverageWQI = async () => {
+const getAverageWQI = async (req, res) => {
   try {
     // Ensure connection to the database
     await db.connectDB(); // Connect to MongoDB
@@ -177,8 +179,10 @@ const getAverageWQI = async () => {
           averageWQI: { $avg: "$value.wqi" },
         },
       },
-    ]);
-
+      {
+        $sort: { averageWQI: 1 } // Sort by averageWQI in ascending order
+      }
+    ]); 
     return averageWQI;
   } catch (error) {
     console.error("Error calculating average WQI:", error);
@@ -186,22 +190,58 @@ const getAverageWQI = async () => {
   }
 };
 
-// Function to get data by location
+// Function to calculate the average WQI for each location
+const getAverageWQIStats = async (req, res) => {
+  try {
+    // Ensure connection to the database
+    await db.connectDB(); // Connect to MongoDB
+    // Group data by location and calculate average WQI
+    const averageWQI = await db.DataReading.aggregate([
+      {
+        $group: {
+          _id: "$value.location.name",
+          averageWQI: { $avg: "$value.wqi" },
+        },
+      },
+      {
+        $sort: { averageWQI: 1 } // Sort by averageWQI in ascending order
+      }
+    ]);
+     // Find location with maximum average WQI
+     const maxLocation = averageWQI.reduce((max, current) => current.averageWQI > max.averageWQI ? current : max, averageWQI[0]);
+  
+     // Find location with minimum average WQI
+     const minLocation = averageWQI.reduce((min, current) => current.averageWQI < min.averageWQI ? current : min, averageWQI[0]);
+   
+     // Send notifications for max and min locations
+     if (req.session.user) {
+       const userId = req.session.user.userId;
+       await userController.addUserdNotifications(userId, `Location with max average WQI: ${maxLocation._id}, Average WQI: ${maxLocation.averageWQI}`);
+       await userController.addUserdNotifications(userId, `Location with min average WQI: ${minLocation._id}, Average WQI: ${minLocation.averageWQI}`);
+     }
+    return averageWQI;
+  } catch (error) {
+    console.error("Error calculating average WQI:", error);
+    throw error;
+  }
+};
+// Function to get data by location sorted by WQI in descending order
 const getDataByLocation = async (locationName) => {
   await db.connectDB(); // Connect to MongoDB
   try {
-    const data = await db.DataReading.find({
-      "value.location.name": locationName,
-    });
+    const data = await db.DataReading.find({ "value.location.name": locationName })
+                                     .sort({ "value.wqi": -1 }); // Sort by WQI in descending order
     return data;
   } catch (error) {
     console.error("Error retrieving data by location:", error);
     throw error;
   }
 };
+
 // Function to get data by location and calculate average WQI per year, month, and day
 const getDataByLocationAvgWQI = async (locationName) => {
   await db.connectDB(); // Connect to MongoDB
+  
   try {
     const data = await db.DataReading.aggregate([
       {
@@ -235,6 +275,7 @@ const getDataByLocationAvgWQI = async (locationName) => {
         }
       }
     ]);
+    
     return data;
   } catch (error) {
     console.error("Error retrieving data by location:", error);
@@ -321,5 +362,6 @@ module.exports = {
   getDataByLocation,
   getDataByTimeRange,
   migrateData,
-  getDataByLocationAvgWQI
+  getDataByLocationAvgWQI,
+  getAverageWQIStats
 };

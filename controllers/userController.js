@@ -1,5 +1,7 @@
 // controllers/userController.js
 const userService = require("../services/userService");
+
+
 const path = require("path");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
@@ -96,6 +98,11 @@ async function loginUser(req, res) {
     console.log("Login successful");
     req.session.user = user;
     console.log(req.session.user);
+    // Send notifications for max and min locations
+    if (req.session.user) {
+      const userId = req.session.user.userId;
+      await addUserdNotifications(userId, `Logged to system.`);
+    }
     res.redirect("/");
   } catch (error) {
     console.error("Error in login route:", error);
@@ -207,6 +214,10 @@ async function updateUserData(req, res) {
 
     // Update req.session.user with the updated data
     req.session.user = user;
+    if (req.session.user) {
+      const userId = req.session.user.userId;
+      await addUserdNotifications(userId, `Profile updated.`);
+    }
 
     // Redirect to some other route after updating the user data
     res.redirect("/user/profile");
@@ -264,6 +275,17 @@ const getUnreadNotifications = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+const setUnreadNotifications = async (req, res) => {
+  try {
+    if(req.session.user) { 
+      await userService.setUnreadNotifications(req.session.user.userId, req, res); 
+    } 
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 module.exports = {
   verifyToken,
   requireLogin,
@@ -276,5 +298,6 @@ module.exports = {
   getUserByID,
   verifyUserSession,
   getUnreadNotifications,
-  addUserdNotifications
+  addUserdNotifications,
+  setUnreadNotifications
 };

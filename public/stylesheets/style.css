@@ -234,12 +234,14 @@ button#startConsumerButton {
     }
      /* Styles for the SVG element */
      #shape1 {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 5px;
+      border: 2px solid #e56f73;
+      border-radius: 20px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       width: 100%;
       height: 100%;
+      padding: 30px;
+      background-color: #e56f73;
+      
     }
 
    #show_chart {
@@ -282,6 +284,8 @@ button#startConsumerButton {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: none;
+  z-index: 1000;
+
 }
 
 
@@ -299,6 +303,7 @@ ul#messageList li {
   padding: 5px;
   background-color: #f9f9f9;
   border-radius: 4px;
+  font-size: 14px;
 }
 .unread-notifications{
   color: blue;
@@ -317,3 +322,11 @@ ul#messageList li {
   color: #000; /* Text color on hover */
 }
 
+#chart-container {
+  width: 600px;
+  height: 400px;
+}
+
+#avgWQI{
+  display: none;
+}
