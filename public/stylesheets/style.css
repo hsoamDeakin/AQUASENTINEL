@@ -258,7 +258,7 @@ button#startConsumerButton {
     cursor: pointer;
     }
 
-<<<<<<< HEAD
+
     /* Style for the submenu */
 .submenu {
   display: none;
@@ -276,7 +276,7 @@ button#startConsumerButton {
 .nav-wrapper .left > li:hover .submenu {
   display: block;
 }
-=======
+
    #aboveTheFooter{
     margin-bottom: 200px;
     }
@@ -285,4 +285,4 @@ button#startConsumerButton {
     margin-bottom: 80px;
    }
 
->>>>>>> 9e12b7d (changes)
+

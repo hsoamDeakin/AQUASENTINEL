@@ -5,26 +5,30 @@ const db = require("../db");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 
-// Middleware to verify the token and attach user details to the request object
-async function verifyUserSession(req, res, next) {
+// controllers/userController.js
+
+ async function verifyUserSession(req, res, next) {
   try {
-    // Connect to the 'userDB' database
-    if (req.session.user_id) {
-      const user = await getUserByID(req.session.user_id);
-      console.log(req.session.user_id);
-      console.log("logged user");
-      // Attach the user information to the request object
-      req.session.user = user;
-      console.log(user); 
-      next();
-    } 
-    else 
-      res.render("login", { title: "Login", currentPage: "Login" });
+      if (req.session && req.session.user_id) {
+          // Assuming you have a function to get user data
+          const user = await userService.getUserByID(req.session.user_id);
+
+          if (user) {
+              req.session.user = user; // Attach user data to the session
+              next();
+          } else {
+              res.status(401).json({ error: 'Unauthorized' });
+          }
+      } else {
+          // Redirect to the login page or handle the case where user_id is not present
+          res.status(401).json({ error: 'Unauthorized' });
+      }
   } catch (error) {
-    console.error("Error in verifyToken middleware:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+
 
 // Middleware to verify the token and attach user details to the request object
 async function verifyToken(req, res, next) {
