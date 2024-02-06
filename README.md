@@ -7,13 +7,7 @@ Our web app contains numerous pages, including a home page, a registration page,
 
 ## To run AQUASENTINEL:
 
-### Copy the below contents into a .env file and add to project. A .env file is required to connect to the database and enable the app to run. 
-```
-DB_URI="mongodb+srv://s213067525:Xq2BY9gMGb72lyyL@cluster0.ryplpya.mongodb.net/"
-dataCount=1000
-FILE_PATH=./dataset/water_potability.csv
-COLUMN_NAMES=ph,Organic_carbon,Turbidity,Solids,Trihalomethanes
-```
+### A .env file is required to connect to the database and enable the app to run. Contact repository owners for the contents. and paste into folder with project.
 
 ### In console, run:
 ```
