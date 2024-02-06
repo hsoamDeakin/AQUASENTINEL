@@ -4,6 +4,7 @@ Our project AQUASENTINEL is a web application that provides users with water qua
 
 Our web app contains numerous pages, including a home page, a registration page, a login page, a visualisation page, and a real-time streaming page.
 
+Our app pulls the data from a mongodb database, and then processes the data which is separated into MVC architecture confirming with industry standards.
 
 ## To run AQUASENTINEL:
 
