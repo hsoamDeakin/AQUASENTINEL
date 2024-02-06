@@ -34,7 +34,7 @@ router.get("/start-producer", async function (req, res, next) {
     await stopProducer();
     // Send a completion message after stopping the producer
     res.send('Producer completed...' );
-  }, 50000);
+  }, 180000);
 });
 
 router.get("/start-consumer", async function (req, res, next) {
@@ -54,7 +54,7 @@ router.get("/start-consumer", async function (req, res, next) {
     }
     
     res.send('Consumer completed...' );
-  }, 50000); 
+  }, 180000); 
 });
 
 /* GET home page. */
