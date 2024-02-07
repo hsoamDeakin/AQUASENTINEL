@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "type": "commonjs",
-  "scripts": {
-    "start": "nodemon ./bin/www",
+  "scripts": {    
+    "start": "nodemon ./server.js",
     "test": "mocha --reporter spec",
     "test-data": "mocha --inspect --recursive ./test/testDataController.test.js"
   },

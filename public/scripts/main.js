@@ -1,5 +1,17 @@
 // main.js
 
+const socket = io(); // Connect to the server
+
+// Listen for 'number' event emitted from the server
+socket.on('number', (msg) => {
+  console.log('Random number: ' + msg);
+});
+
+// Listen for 'disconnect' event (optional)
+socket.on('disconnect', () => {
+  console.log('Disconnected from server');
+}); 
+
 function updateNotification() {
   // Trigger AJAX request when the page loads
   $.ajax({
@@ -151,16 +163,13 @@ document.addEventListener("DOMContentLoaded", function () {
   var instances = M.FormSelect.init(elems);
 });
 
-$(function () {
-
-  const socket = io(); // Connect to the server
-  
+$(function () { 
    // Call the updateChart function initially
    updateWQIBarChart();  
 
    updateNotification();
    // Update the chart every second
-   setInterval(updateNotification, 10000); 
+   setInterval(updateNotification, 1000000); 
 
   $("#notificationListItem").on("click", function () {
     $("#messages").toggle();

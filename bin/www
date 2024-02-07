@@ -19,11 +19,38 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app); 
+const io = require('socket.io')(server); 
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+
+// Handle socket connections
+io.on('connection', (socket) => {
+  //console.log('A client connected ....');
+
+  setInterval(() => {
+    socket.emit("number", parseInt(Math.random() * 10));
+  }, 1000);
+  
+  // Listen for custom events (e.g., notifications)
+  socket.on('notification', (data) => {
+    console.log('Received notification:', data);
+
+    // Broadcast the notification to all connected clients
+    io.emit('notification', data);
+  });
+
+  // Handle disconnections
+  socket.on('disconnect', () => {
+    //console.log('A client disconnected');
+  });
+});
+
+app.set('io', io); // Set the io object in app.locals to make it accessible
+
+io.emit('notification', 'test...emitting');
+
+//app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
+// Initialize Socket.io 
 
 server.listen(port);
 server.on('error', onError);
@@ -88,3 +115,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+module.exports = io; // Export the Socket.IO instance

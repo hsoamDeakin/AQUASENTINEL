@@ -13,11 +13,11 @@ async function verifyUserSession(req, res, next) {
     // Connect to the 'userDB' database
     if (req.session.user_id) {
       const user = await getUserByID(req.session.user_id);
-      console.log(req.session.user_id);
-      console.log("logged user");
+      //(req.session.user_id);
+      //console.log("logged user");
       // Attach the user information to the request object
       req.session.user = user;
-      console.log(user);
+      //console.log(user);
       next();
     } else res.render("login", { title: "Login", currentPage: "Login" });
   } catch (error) {
@@ -84,9 +84,9 @@ async function loginUser(req, res) {
     const fullName = `${user.firstname} ${user.lastname}`; 
     // set the session.
     req.session.user_id = user._id;
-    console.log("Login successful");
+    //console.log("Login successful");
     req.session.user = user; 
-    console.log(req.session.user);
+    //console.log(req.session.user);
     
     // Send notifications for max and min locations
     if (req.session.user) {
@@ -113,7 +113,7 @@ const getUserByID = async function (userID) {
 };
 async function registerUser(req, res) {
   const userInfo = req.body;
-  console.log(userInfo);
+  //console.log(userInfo);
   try {
     const insertedUser = await userService.registerUser(
       userInfo.firstname,
@@ -123,11 +123,11 @@ async function registerUser(req, res) {
       userInfo.role
     );
 
-    console.log("Registration successful.");
+    //console.log("Registration successful.");
     // Combine first and last names into a single property
     const fullName = `${insertedUser.firstname} ${insertedUser.lastname}`;
-    console.log("Your name is:", fullName);
-    console.log("Your user id is:", insertedUser.userId);
+    // console.log("Your name is:", fullName);
+    // console.log("Your user id is:", insertedUser.userId);
 
     // Create an object of props to send in the response
     const responseObj = {
@@ -137,7 +137,7 @@ async function registerUser(req, res) {
     };
 
     req.session.user_id = insertedUser._id;
-    console.log("Login successful");
+    //console.log("Login successful");
     req.session.user = insertedUser;
     res.redirect("/");
 
@@ -182,8 +182,8 @@ async function updateUserData(req, res) {
     // Find the user by userId
     await db.connectDB();
     const user = await db.User.findById(userId);
-    console.log("saving...");
-    console.log(updatedUserData);
+    //console.log("saving...");
+    //console.log(updatedUserData);
     // Conditionally construct the update object
     if (updatedUserData.password) {
       // Include password field only if it's not empty
@@ -246,7 +246,7 @@ const addUserdNotifications = async (userId, message) => {
     const notification = await userService.addNotification (userId, message);
     return notification; // Respond with the filtered data
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     //res.status(500).send(error.message);
   }
 };
@@ -255,7 +255,7 @@ const addUserdNotifications = async (userId, message) => {
 const getUnreadNotifications = async (req, res) => {
   try {
     if(req.session.user) {
-      console.log(req.session.user)
+      //console.log(req.session.user)
       const userId = req.session.user.userId;
       const data = await userService.getUnreadNotifications(userId);
       return data; // Respond with the filtered data

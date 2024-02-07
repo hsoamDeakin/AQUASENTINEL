@@ -144,7 +144,7 @@ async function updateUserData(
       throw new Error("User not found");
     }
 
-    console.log("User updated successfully:", updatedUser);
+    //("User updated successfully:", updatedUser);
     return updatedUser;
   } catch (error) {
     console.error("Error updating user:", error);
@@ -167,7 +167,7 @@ async function deleteUser(userId) {
     if (!deletedUser) {
       throw new Error("User not found");
     }
-    console.log("User deleted successfully:", deletedUser);
+    //console.log("User deleted successfully:", deletedUser);
     return deletedUser;
   } catch (error) {
     console.error("Error deleting user:", error);

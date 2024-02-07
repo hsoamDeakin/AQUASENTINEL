@@ -57,7 +57,7 @@ const generateRandomData = async () => {
     const dataEntry = [];
 
     Object.keys(columnValues).forEach((columnName) => {
-      console.log(columnName);
+      //console.log(columnName);
       const values = columnValues[columnName];
 
       // Calculate mean and standard deviation for each column
@@ -156,7 +156,7 @@ const getSortedData = async (sortBy, sortOrder) => {
   try {
     // Use the sortBy and sortOrder parameters to customize your query
     const data = await db.DataReading.find({}).sort({ [sortBy]: sortOrder });
-    console.log(sortBy);
+    //console.log(sortBy);
     console.log(sortOrder);
     //console.log(data)
     return data;
@@ -183,7 +183,7 @@ const getAverageWQI = async (req, res) => {
         $sort: { averageWQI: 1 } // Sort by averageWQI in ascending order
       }
     ]); 
-    console.log('averageWQI');
+    //console.log('averageWQI');
     return averageWQI;
   } catch (error) {
     console.error("Error calculating average WQI:", error);
