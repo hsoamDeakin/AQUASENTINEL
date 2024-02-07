@@ -18,6 +18,7 @@ describe('User Controller', () => {
   // });
 
   // Test loginUser route
+  
   describe('POST /user/login', function() { // Use regular function instead of arrow function
     it('should return status 200 on successful login', async () => {
       this.timeout(5000); // Increase timeout to 5000 milliseconds
@@ -37,3 +38,4 @@ describe('User Controller', () => {
     });
   });
 });
+

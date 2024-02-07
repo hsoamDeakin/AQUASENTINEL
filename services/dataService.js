@@ -77,6 +77,7 @@ const generateRandomData = async () => {
   }
   return generatedData;
 };
+
 const calculateWQIFromArray = (values) => {
   const parameterWeights = {
     ph: 0.2,
@@ -354,8 +355,10 @@ async function migrateData() {
 
  
 module.exports = {
+  generateRandomNormal,
   generateRandomData,
   calculateWQIFromArray,
+  getColumnValues,
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
