@@ -73,6 +73,7 @@ button#startConsumerButton {
 }
 
     #borderLine {
+      margin-top: 80px;
       border:solid 2px rgba(63, 105, 127, 0.589);
       padding: 20px;
       margin-right: 70px;
@@ -86,7 +87,8 @@ button#startConsumerButton {
       background-color: rgba(63, 105, 127, 0.589);
       margin-top: -20px;
       margin-right: -20px;
-      margin-left: -20px; 
+      margin-left: -20px;
+      margin-bottom: 80px;
       color: white;
       font-weight: bold;
     }
@@ -138,7 +140,8 @@ button#startConsumerButton {
     }
 
     #loginbutton{
-      margin-left: 225px; 
+      width:min-content;
+      margin-left: 150px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -147,6 +150,7 @@ button#startConsumerButton {
     }
 
     #submitFilters{ 
+      margin-left: 125px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -166,6 +170,8 @@ button#startConsumerButton {
     }
 
     .fsize {
+      margin-top: 30px;
+      margin-bottom: 30px;
       font-size: 20px;
     }
 
@@ -330,3 +336,11 @@ ul#messageList li {
 #avgWQI{
   display: none;
 }
+
+#aboveTheFooter{
+  margin-bottom: 200px;
+  }
+
+ #logoMain{
+  margin-bottom: 80px;
+ }
