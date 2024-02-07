@@ -69,7 +69,7 @@ button#startConsumerButton {
 }
 
 #headerBelowNav{
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
     #borderLine {
@@ -115,7 +115,7 @@ button#startConsumerButton {
     }
 
     #myProfileButton{
-      margin-left: 200px; 
+      
       margin-top:40px; 
       margin-bottom: 30px; 
       background-color: rgba(63, 105, 127, 0.589); 
@@ -150,7 +150,8 @@ button#startConsumerButton {
     }
 
     #submitFilters{ 
-      margin-left: 125px; 
+      width: min-content;
+      margin-left: 320px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -170,8 +171,8 @@ button#startConsumerButton {
     }
 
     .fsize {
-      margin-top: 30px;
-      margin-bottom: 30px;
+      margin-top: 20px;
+      margin-bottom: 20px;
       font-size: 20px;
     }
 
@@ -211,12 +212,16 @@ button#startConsumerButton {
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
+      width: 800px;
+      margin-left: 100px;
     }
 
     #collectData{
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
+      width: 800px;
+      margin-left: 100px;
     }
 
     #loginButtonMain{
@@ -247,7 +252,8 @@ button#startConsumerButton {
       height: 100%;
       padding: 30px;
       background-color: #e56f73;
-      
+      margin-top: 40px;
+      margin-bottom: 300px;
     }
 
    #show_chart {
@@ -338,9 +344,13 @@ ul#messageList li {
 }
 
 #aboveTheFooter{
-  margin-bottom: 200px;
+  margin-bottom: 280px;
   }
 
  #logoMain{
   margin-bottom: 80px;
+ }
+
+ #belowDataTable{
+  margin-bottom: 60px;
  }
