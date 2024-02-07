@@ -8,6 +8,8 @@ const session = require('express-session');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
+
+
 const userController = require('./controllers/userController');
 
 // Load environment variables from .env file
@@ -50,8 +52,7 @@ app.use(session({
       // Calculates the Expires Set-Cookie attribute
       maxAge:6000000
   } 
-}));
-
+})); 
 // Custom middleware to add user data to locals
 app.use((req, res, next) => {
   res.locals.user = req.session.user;
@@ -98,4 +99,31 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+//let io = require("socket.io")(http, { /* options */ });
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+//app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
+// Initialize Socket.io
+
+// Handle socket connections
+io.on('connection', (socket) => {
+  console.log('A client connected');
+
+  // Listen for custom events (e.g., notifications)
+  socket.on('notification', (data) => {
+    console.log('Received notification:', data);
+
+    // Broadcast the notification to all connected clients
+    io.emit('notification', data);
+  });
+
+  // Handle disconnections
+  socket.on('disconnect', () => {
+    console.log('A client disconnected');
+  });
+});
+ 
 module.exports = app;

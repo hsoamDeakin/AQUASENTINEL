@@ -50,7 +50,6 @@ function displayMessages(messages) {
   });
   
 }
-
 // Function to clear messages
 function clearMessages() {
  // Call the startProducer API
@@ -65,9 +64,6 @@ function clearMessages() {
   $("#messages").toggle();
   // Example: You can remove all messages from the UI
  }
-
-
-   
 
 function updateWQIBarChart() {
   $.ajax({
@@ -157,6 +153,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 $(function () {
 
+  const socket = io(); // Connect to the server
+  
    // Call the updateChart function initially
    updateWQIBarChart();  
 
