@@ -32,21 +32,23 @@ function displayMessages(messages) {
   const messageList = document.getElementById('messageList');
   messageList.innerHTML = ''; // Clear previous messages
 
+    // Add a button to clear messages
+    const clearButton = document.createElement('button');
+    clearButton.textContent = 'Clear Messages';
+    clearButton.id = 'clearButton'; // Set the ID of the button
+    clearButton.style.width = '100%'; // Set the width of the button
+    clearButton.addEventListener('click', clearMessages);
+    const lastLi = document.createElement('li');
+    lastLi.appendChild(clearButton);
+    messageList.appendChild(lastLi); 
+    
   messages.forEach(message => {
     const li = document.createElement('li');
     const timestamp = new Date(message.timestamp).toLocaleString(); // Convert timestamp to local date/time format
     li.textContent = `${timestamp}: ${message.message}`; // Display timestamp and message
     messageList.appendChild(li);
   });
-  // Add a button to clear messages
-  const clearButton = document.createElement('button');
-  clearButton.textContent = 'Clear Messages';
-  clearButton.id = 'clearButton'; // Set the ID of the button
-  clearButton.style.width = '100%'; // Set the width of the button
-  clearButton.addEventListener('click', clearMessages);
-  const lastLi = document.createElement('li');
-  lastLi.appendChild(clearButton);
-  messageList.appendChild(lastLi); 
+  
 }
 
 // Function to clear messages
