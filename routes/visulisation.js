@@ -54,11 +54,28 @@ router.get('/sort-data', async function(req, res, next) {
 
 // Server-side route
 router.get('/data-by-location-avg', async function(req, res, next) {  
-  res.json( await dataController.getAverageWQI(req, res));
+  console.log('retrieving average WQI:'); 
+  try {
+    // Check if user is authenticated
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }    
+    const data = await dataController.getAverageWQI(req, res);     
+    // Check if data is empty
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: 'No data found' });
+    }
+    // Data retrieval successful, return the data
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error retrieving average WQI:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // Server-side route
 router.get('/data-by-location', async function(req, res, next) {  
+
   res.json( await dataController.getDataByLocation(req, res));
 });
 

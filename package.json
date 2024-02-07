@@ -2,15 +2,18 @@
   "name": "aquasentinel",
   "version": "0.0.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+    "test-data": "mocha --inspect --recursive ./test/testDataController.test.js"
+
   },
   "dependencies": {
     "axios": "^1.6.5",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^3.4.1",
-    "chai": "^5.0.3",
+    "chai-http": "^4.4.0",
     "cookie-parser": "~1.4.4",
     "csv-parser": "^3.0.0",
     "d3": "^7.8.5",
@@ -29,7 +32,6 @@
     "materialize-css": "^1.0.0-rc.2",
     "math-random": "^2.0.1",
     "mathjs": "^12.2.1",
-    "mocha": "^10.2.0",
     "mongoose": "^8.0.3",
     "morgan": "~1.9.1",
     "normal-distribution": "^1.1.1",
@@ -39,6 +41,8 @@
     "sinon": "^17.0.1"
   },
   "devDependencies": {
+    "chai": "^4.4.1",
+    "mocha": "^10.2.0",
     "nodemon": "^3.0.2"
   }
 }

@@ -77,6 +77,7 @@ const generateRandomData = async () => {
   }
   return generatedData;
 };
+
 const calculateWQIFromArray = (values) => {
   const parameterWeights = {
     ph: 0.2,
@@ -91,7 +92,6 @@ const calculateWQIFromArray = (values) => {
     const value = values[i];
 
     // Specific normalization logic for each parameter
-    // You may need to adjust this based on the characteristics of your data
     let normalizedValue;
     if (i === 3) {
       // Solids parameter, special treatment
@@ -183,6 +183,7 @@ const getAverageWQI = async (req, res) => {
         $sort: { averageWQI: 1 } // Sort by averageWQI in ascending order
       }
     ]); 
+    console.log('averageWQI');
     return averageWQI;
   } catch (error) {
     console.error("Error calculating average WQI:", error);
@@ -353,8 +354,10 @@ async function migrateData() {
 
  
 module.exports = {
+  generateRandomNormal,
   generateRandomData,
   calculateWQIFromArray,
+  getColumnValues,
   getAllDataFromReadings,
   getUniqueLocations,
   getSortedData,
@@ -365,3 +368,4 @@ module.exports = {
   getDataByLocationAvgWQI,
   getAverageWQIStats
 };
+ 

@@ -81,29 +81,20 @@ async function loginUser(req, res) {
   try {
     const user = await userService.loginUser(username, password);
     // Combine first and last names into a single property
-    const fullName = `${user.firstname} ${user.lastname}`;
-    // Create an object of props to send in the response
-    const responseObj = {
-      fullName: fullName,
-      username: user.username,
-      role: user.role,
-    };
+    const fullName = `${user.firstname} ${user.lastname}`; 
     // set the session.
     req.session.user_id = user._id;
-    // const sessionSecret = req.session.sessionSecret;
-    // // Create and sign JWT token
-    // const token = jwt.sign({ userId: user._id }, sessionSecret, {
-    //   expiresIn: "1h",
-    // });
     console.log("Login successful");
-    req.session.user = user;
+    req.session.user = user; 
     console.log(req.session.user);
+    
     // Send notifications for max and min locations
     if (req.session.user) {
       const userId = req.session.user.userId;
       await addUserdNotifications(userId, `Logged to system.`);
     }
-    res.redirect("/");
+    res.status(200).redirect("/");
+    
   } catch (error) {
     console.error("Error in login route:", error);
     res
