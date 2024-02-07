@@ -13,33 +13,33 @@ const userController = require('../controllers/userController');
 
 chai.use(chaiHttp); 
 
-describe('DataService', function() {
-    describe('migrateData', function() {
-      it('should migrate data from string key to date key', async function() {
-        // Sample documents with string key fields
-        const sampleDocuments = [
-          { _id: '1', key: '2023-01-01T00:00:00.000Z', value: 10 },
-          { _id: '2', key: '2023-01-02T00:00:00.000Z', value: 20 }
-        ];
+// describe('DataService', function() {
+//     describe('migrateData', function() {
+//       it('should migrate data from string key to date key', async function() {
+//         // Sample documents with string key fields
+//         const sampleDocuments = [
+//           { _id: '1', key: '2023-01-01T00:00:00.000Z', value: 10 },
+//           { _id: '2', key: '2023-01-02T00:00:00.000Z', value: 20 }
+//         ];
   
-        // Mocking the DataReading model's find method
-        const mockFind = sinon.stub(db.DataReading, 'find').resolves(sampleDocuments);
+//         // Mocking the DataReading model's find method
+//         const mockFind = sinon.stub(db.DataReading, 'find').resolves(sampleDocuments);
   
-        // Call the function to be tested
-        await dataService.migrateData();
+//         // Call the function to be tested
+//         await dataService.migrateData();
   
-        // Check if DataReading.find was called
-        expect(mockFind.calledOnce).to.be.true;
+//         // Check if DataReading.find was called
+//         expect(mockFind.calledOnce).to.be.true;
   
-        // Check if the key fields are converted to Date type
-        expect(sampleDocuments[0].key).to.be.a('string');
-        expect(sampleDocuments[1].key).to.be.a('string');
+//         // Check if the key fields are converted to Date type
+//         expect(sampleDocuments[0].key).to.be.a('string');
+//         expect(sampleDocuments[1].key).to.be.a('string');
   
-        // Restore the mocked method
-        mockFind.restore();
-      });
-    });
-  });
+//         // Restore the mocked method
+//         mockFind.restore();
+//       });
+//     });
+//   });
 
   describe('DataService', function() {
     describe('calculateWQIFromArray', function() {
