@@ -92,7 +92,6 @@ const calculateWQIFromArray = (values) => {
     const value = values[i];
 
     // Specific normalization logic for each parameter
-    // You may need to adjust this based on the characteristics of your data
     let normalizedValue;
     if (i === 3) {
       // Solids parameter, special treatment

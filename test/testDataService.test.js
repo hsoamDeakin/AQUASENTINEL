@@ -65,8 +65,6 @@ describe('DataService', function() {
         // Check if calculated WQI is within expected range (depends on normalization and weights)
         expect(calculatedWQI).to.be.within(0, 100);
       });
-  
-      // Add more test cases as needed to cover different scenarios
     });
   });
 

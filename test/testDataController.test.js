@@ -1,8 +1,8 @@
 const chai = require("chai");
 const expect = require("chai").expect;
 const chaiHttp = require("chai-http");
-const app = require("../app"); // Replace '../your-app' with the correct path to your Express app
-const db = require("../db"); // Replace '../your-db' with the correct path to your database module
+const app = require("../app"); 
+const db = require("../db"); 
 const userService = require('../services/userService');
 const dataService = require('../services/dataService');
 const dataController = require('../controllers/dataController');
@@ -12,11 +12,11 @@ chai.use(chaiHttp);
 
 describe('Data Controller getAverageWQI function', () => {
   it('should return an array of average WQI grouped by location in ascending order', async () => {
-    // Assuming db.DataReading.aggregate is a mock function that returns data for testing
+   
     const mockAggregateResult = [
       { _id: 'Location1', averageWQI: 30 },
       { _id: 'Location2', averageWQI: 35 },
-      // Add more mock data as needed
+
     ];
 
     // Mock the behavior of db.DataReading.aggregate to return the mock result
@@ -28,10 +28,7 @@ describe('Data Controller getAverageWQI function', () => {
     // Assertions
     expect(result).to.be.an('array');
     expect(result).to.deep.equal(mockAggregateResult);
-    // Add more assertions as needed based on the expected behavior of the function
   });
-
-  // Add more test cases as needed to cover different scenarios
 });
 
 describe('getUniqueLocations function', () => {
@@ -41,7 +38,6 @@ describe('getUniqueLocations function', () => {
       { value: { location: { name: 'Location1' } } },
       { value: { location: { name: 'Location2' } } },
       { value: { location: { name: 'Location1' } } }, // Duplicate location
-      // Add more mock data as needed
     ];
 
     // Mock the behavior of db.DataReading.find to return the mock data
@@ -53,10 +49,7 @@ describe('getUniqueLocations function', () => {
     // Assertions
     expect(result).to.be.an('array');
     expect(result).to.deep.equal(['Location1', 'Location2']); // Expected unique locations sorted alphabetically
-    // Add more assertions as needed based on the expected behavior of the function
   });
-
-  // Add more test cases as needed to cover different scenarios
 });
 
 describe('Data Service generateRandomData function', () => {
@@ -74,7 +67,6 @@ describe('Data Service generateRandomData function', () => {
         reading5: 6.81,
         reading6: 13.50
       }
-      // Add more mock data as needed
     ];
 
     // Mock the behavior of dataService.generateRandomData to return the mock generated data
@@ -131,7 +123,6 @@ describe('Data Controller calculateWQI function', () => {
         reading5: 6.81,
         reading6: 13.50
       }
-      // Add more mock values as needed
     ];
 
     // Mock the behavior of dataService.calculateWQIFromArray to return the calculated WQI
@@ -142,10 +133,7 @@ describe('Data Controller calculateWQI function', () => {
 
     // Assertions
     expect(result).to.equal(50); // Example WQI value
-    // Add more assertions as needed based on the expected behavior of the function
   });
-
-  // Add more test cases as needed to cover different scenarios
 });
 
 describe('Data Controller getUniqueLocations function', () => {
@@ -161,10 +149,7 @@ describe('Data Controller getUniqueLocations function', () => {
 
     // Assertions
     expect(result).to.deep.equal(mockResponse);
-    // Add more assertions as needed based on the expected behavior of the function
   });
-
-  // Add more test cases as needed to cover different scenarios
 });
 describe('getDataByLocation controller', () => {
   let req;
@@ -290,8 +275,6 @@ describe('getDataByLocationAvgWQI function', () => {
   });
 });
 
-
-
 describe('Data Controller - getSortedData', function () {
   
   it('should get sorted data successfully', async function () {
@@ -304,7 +287,6 @@ describe('Data Controller - getSortedData', function () {
       // Assertions
       expect(result).to.deep.equal(['mockData']);
 
-      // Ensure that the dataService.getSortedData method was called with the correct arguments
       sinon.assert.calledWithExactly(
           dataServiceStub,
           'columnName',
@@ -323,12 +305,10 @@ describe('Data Controller - getSortedData', function () {
       // Call the getSortedData function
       try {
           const result = await getSortedData('columnName', 'asc');
-          console.log('Result:', result); // Log the result for further inspection
+          console.log('Result:', result);
       } catch (error) {
-          console.error('Error:', error.message); // Log the error message for further inspection
-          // If you want the test to pass, do not throw the error here
+          console.error('Error:', error.message); 
       }
-  
       // Restore the original method
       dataServiceStub.restore();
   });
@@ -351,7 +331,6 @@ describe('getAverageWQI function', () => {
     const mockData = [
       { _id: 'Location1', averageWQI: 50 },
       { _id: 'Location2', averageWQI: 60 },
-      // Add more mock data as needed
     ];
     // Stubbing db.DataReading.aggregate to return mock data
     const aggregateStub = sinon.stub(db.DataReading, 'aggregate').resolves(mockData);
