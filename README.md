@@ -4,7 +4,7 @@ Aquasentinel is a loT-based web application designed to provide users with water
 
 ## To run AQUASENTINEL:
 
-**A .env file is required to connect to the database and enable the app to run.**
+**A .env file is required to connect to the database and enable the app to run. Paste the file into the project folder.**
 
 ### .env
 ```
@@ -13,6 +13,7 @@ dataCount=1000
 FILE_PATH= your_dataset.csv
 COLUMN_NAMES=ph,Organic_carbon,Turbidity,Solids,Trihalomethanes
 ```
+
 
 ### In console, run:
 ```
