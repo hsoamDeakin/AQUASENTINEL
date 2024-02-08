@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "commonjs",
-  "scripts": {    
+  "scripts": {
     "start": "nodemon ./server.js",
     "test": "mocha --reporter spec",
     "test-data": "mocha --inspect --recursive ./test/testDataController.test.js"
@@ -39,7 +39,7 @@
     "request": "^2.88.2",
     "sinon": "^17.0.1",
     "socket.io": "^2.5.0",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
     "chai": "^4.4.1",

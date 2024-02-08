@@ -1,17 +1,11 @@
 // main.js
-
-const socket = io(); // Connect to the server
-
-// Listen for 'number' event emitted from the server
-socket.on('number', (msg) => {
-  console.log('Random number: ' + msg);
-});
-
-// Listen for 'disconnect' event (optional)
-socket.on('disconnect', () => {
-  console.log('Disconnected from server');
-}); 
-
+function getSocketData() {
+  const socket = io(); // Connect to the server
+  // Listen for 'number' event emitted from the server
+  socket.on('notification', (msg) => {
+    console.log('notification: ' + msg);
+  }); 
+}
 function updateNotification() {
   // Trigger AJAX request when the page loads
   $.ajax({
@@ -170,6 +164,10 @@ $(function () {
    updateNotification();
    // Update the chart every second
    setInterval(updateNotification, 1000000); 
+
+   getSocketData();
+   setInterval(getSocketData, 1000); 
+
 
   $("#notificationListItem").on("click", function () {
     $("#messages").toggle();

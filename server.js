@@ -103,50 +103,32 @@ app.use(function(err, req, res, next) {
   res.render('error');
 }); 
 
-var debug = require('debug')('aquasentinel:server');
-var http = require('http');
+const http = require("http").createServer(app);
+const io = require("socket.io")(http); 
+//Listen for a client connection 
+io.on("connection", (socket) => {
+    //Socket is a Link to the Client 
+    //console.log("New Client is Connected!");
+    //Here the client is connected and we can exchanged   
+     // Listen for custom events (e.g., notifications) 
+    io.emit('notification', 'test..'); 
+    // Handle disconnections
+    socket.on('disconnect', () => {
+      //console.log('A client disconnected');
+    });
+    
+});
 
-/**
- * Get port from environment and store in Express.
- */
 
+
+//Listen the HTTP Server 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
-
-let server = require("http").createServer(app);
-let io = require("socket.io")(server, { /* options */ });
-
-// var server = http.createServer(app); 
-// const io = require('socket.io')(server);   
-
-// Handle socket connections
-io.on("connection", (socket) => {
-  console.log("a user connected");
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-
-  setInterval(() => {
-    socket.emit("number", parseInt(Math.random() * 10));
-  }, 1000);
-
+const server = http.listen(port, () => {
+  console.log("Server Is Running Port: " + port);
 });
-//app.use('/socket.io', express.static(__dirname + '/node_modules/socket.io/client-dist'));
-// Initialize Socket.io 
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
+   
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
@@ -163,43 +145,5 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+ 
 
