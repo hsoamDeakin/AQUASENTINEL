@@ -16,17 +16,17 @@ const dataService = require('../services/dataService')
 /* Kafka services*/
 /* Kafka services */
 router.get("/start-producer", async function (req, res, next) {
-  console.log('Starting producer...' );
+  //console.log('Starting producer...' );
   // Start producer
   await startProducer(req, res);
 
    if (req.session.user) 
     {
-        console.log('user Id');
-        console.log(req.session.user.userId);
+        //console.log('user Id');
+        //console.log(req.session.user.userId);
         const notification = await userController.addUserdNotifications (req.session.user.userId, 'Data streaming started ');
-        console.log('added notfication');
-        console.log(notification);
+        //console.log('added notfication');
+        //console.log(notification);
     }
   
   // Stop producer after some time (e.g., 10 seconds)
@@ -45,11 +45,11 @@ router.get("/start-consumer", async function (req, res, next) {
     await stopConsumer(); 
     if (req.session.user) 
     {
-        console.log('user Id');
-        console.log(req.session.user.userId);
+        //console.log('user Id');
+        //console.log(req.session.user.userId);
         const notification = await userController.addUserdNotifications (req.session.user.userId, 'Data collection finished. #messages = ' + receivedData.length );
-        console.log('added notfication');
-        console.log(notification);
+        //console.log('added notfication');
+        //console.log(notification);
         dataService.getAverageWQIStats(req, res);  
     }
     

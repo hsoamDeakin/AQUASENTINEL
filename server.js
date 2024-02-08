@@ -1,3 +1,9 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
 var createError = require('http-errors');
 var express = require('express');
 const expressLayouts = require('express-ejs-layouts')
@@ -97,4 +103,47 @@ app.use(function(err, req, res, next) {
   res.render('error');
 }); 
 
-module.exports = app;
+const http = require("http").createServer(app);
+const io = require("socket.io")(http); 
+//Listen for a client connection 
+io.on("connection", (socket) => {
+    //Socket is a Link to the Client 
+    //console.log("New Client is Connected!");
+    //Here the client is connected and we can exchanged   
+     // Listen for custom events (e.g., notifications) 
+    io.emit('notification', 'test..'); 
+    // Handle disconnections
+    socket.on('disconnect', () => {
+      //console.log('A client disconnected');
+    });
+    
+});
+
+
+
+//Listen the HTTP Server 
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+const server = http.listen(port, () => {
+  console.log("Server Is Running Port: " + port);
+});
+   
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+ 
+

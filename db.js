@@ -52,16 +52,20 @@ const notificationSchema = new mongoose.Schema({
 
 const Notification = mongoose.model('Notification', notificationSchema);
 
+let isConnected = false; // Flag to track connection status
 
 const connectDB = async () => {
   try {
+    if (!isConnected) {
     const dbURI = process.env.DB_URI;
     await mongoose.connect(dbURI, {
       useNewUrlParser: true,
       dbName: dbName,
     });
 
+    isConnected = true; // Update connection status
     console.log(`Connected to MongoDB - Database: ${dbName}`);
+  }
   } catch (error) {
     console.error('MongoDB connection error:', error);
   }
@@ -70,6 +74,7 @@ const connectDB = async () => {
 const disconnectDB = async () => {
   try {
     await mongoose.disconnect();
+    isConnected = false; // Update connection status
     console.log('Disconnected from MongoDB');
   } catch (error) {
     console.error('Error disconnecting from MongoDB:', error);

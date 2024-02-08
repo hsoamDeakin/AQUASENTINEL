@@ -54,7 +54,7 @@ router.get('/sort-data', async function(req, res, next) {
 
 // Server-side route
 router.get('/data-by-location-avg', async function(req, res, next) {  
-  console.log('retrieving average WQI:'); 
+  //console.log('retrieving average WQI:'); 
   try {
     // Check if user is authenticated
     if (!req.session.user) {

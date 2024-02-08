@@ -1,5 +1,11 @@
 // main.js
-
+function getSocketData() {
+  const socket = io(); // Connect to the server
+  // Listen for 'number' event emitted from the server
+  socket.on('notification', (msg) => {
+    console.log('notification: ' + msg);
+  }); 
+}
 function updateNotification() {
   // Trigger AJAX request when the page loads
   $.ajax({
@@ -50,7 +56,6 @@ function displayMessages(messages) {
   });
   
 }
-
 // Function to clear messages
 function clearMessages() {
  // Call the startProducer API
@@ -65,9 +70,6 @@ function clearMessages() {
   $("#messages").toggle();
   // Example: You can remove all messages from the UI
  }
-
-
-   
 
 function updateWQIBarChart() {
   $.ajax({
@@ -155,14 +157,17 @@ document.addEventListener("DOMContentLoaded", function () {
   var instances = M.FormSelect.init(elems);
 });
 
-$(function () {
-
+$(function () { 
    // Call the updateChart function initially
    updateWQIBarChart();  
 
    updateNotification();
    // Update the chart every second
-   setInterval(updateNotification, 10000); 
+   setInterval(updateNotification, 1000000); 
+
+   getSocketData();
+   setInterval(getSocketData, 1000); 
+
 
   $("#notificationListItem").on("click", function () {
     $("#messages").toggle();
