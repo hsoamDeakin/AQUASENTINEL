@@ -69,10 +69,11 @@ button#startConsumerButton {
 }
 
 #headerBelowNav{
-  margin-top: 80px;
+  margin-top: 30px;
 }
 
     #borderLine {
+      margin-top: 20px;
       border:solid 2px rgba(63, 105, 127, 0.589);
       padding: 20px;
       margin-right: 70px;
@@ -86,7 +87,8 @@ button#startConsumerButton {
       background-color: rgba(63, 105, 127, 0.589);
       margin-top: -20px;
       margin-right: -20px;
-      margin-left: -20px; 
+      margin-left: -20px;
+      margin-bottom: 80px;
       color: white;
       font-weight: bold;
     }
@@ -113,7 +115,7 @@ button#startConsumerButton {
     }
 
     #myProfileButton{
-      margin-left: 200px; 
+      
       margin-top:40px; 
       margin-bottom: 30px; 
       background-color: rgba(63, 105, 127, 0.589); 
@@ -138,7 +140,8 @@ button#startConsumerButton {
     }
 
     #loginbutton{
-      margin-left: 225px; 
+      width:min-content;
+      margin-left: 150px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -147,6 +150,8 @@ button#startConsumerButton {
     }
 
     #submitFilters{ 
+      width: min-content;
+      margin-left: 320px; 
       margin-top:20px; 
       margin-bottom: 20px; 
       background-color:  rgba(63, 105, 127, 0.589); 
@@ -205,12 +210,16 @@ button#startConsumerButton {
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
+      width: 800px;
+      margin-left: 100px;
     }
 
     #collectData{
       background-color:  rgba(63, 105, 127, 0.589); 
       border:2px solid rgba(63, 105, 127, 0.589); 
       color:white;
+      width: 800px;
+      margin-left: 100px;
     }
 
     #loginButtonMain{
@@ -241,7 +250,7 @@ button#startConsumerButton {
       height: 100%;
       padding: 30px;
       background-color: #e56f73;
-      
+      margin-bottom: 300px;
     }
 
    #show_chart {
@@ -330,3 +339,19 @@ ul#messageList li {
 #avgWQI{
   display: none;
 }
+
+#aboveTheFooter{
+  margin-bottom: 360px;
+  }
+
+  #aboveTheFooterLogin{
+    margin-bottom: 150px;
+  }
+
+ #logoMain{
+  margin-bottom: 80px;
+ }
+
+ #belowDataTable{
+  margin-bottom: 60px;
+ }
