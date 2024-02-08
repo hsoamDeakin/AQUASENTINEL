@@ -4,7 +4,7 @@ Aquasentinel is a loT-based web application designed to provide users with water
 
 ## To run AQUASENTINEL:
 
-**A .env file is required to connect to the database and enable the app to run. Paste the file into the project folder.**
+** 1. A .env file is required to connect to the database and enable the app to run. Paste the file into the project folder.**
 
 ### .env
 ```
@@ -15,12 +15,12 @@ COLUMN_NAMES=ph,Organic_carbon,Turbidity,Solids,Trihalomethanes
 ```
 
 
-### In console, run:
+### 2. In console, run:
 ```
 npm start
 ```
 
-**Navigate the app in a web browser. A new user registration will be required.**
+** 3. Navigate the app in a web browser. A new user registration will be required.**
 
 ## Features
 
