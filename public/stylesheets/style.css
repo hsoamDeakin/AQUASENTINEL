@@ -69,11 +69,11 @@ button#startConsumerButton {
 }
 
 #headerBelowNav{
-  margin-top: 100px;
+  margin-top: 30px;
 }
 
     #borderLine {
-      margin-top: 80px;
+      margin-top: 20px;
       border:solid 2px rgba(63, 105, 127, 0.589);
       padding: 20px;
       margin-right: 70px;
@@ -171,8 +171,6 @@ button#startConsumerButton {
     }
 
     .fsize {
-      margin-top: 20px;
-      margin-bottom: 20px;
       font-size: 20px;
     }
 
@@ -252,7 +250,6 @@ button#startConsumerButton {
       height: 100%;
       padding: 30px;
       background-color: #e56f73;
-      margin-top: 40px;
       margin-bottom: 300px;
     }
 
@@ -344,7 +341,7 @@ ul#messageList li {
 }
 
 #aboveTheFooter{
-  margin-bottom: 280px;
+  margin-bottom: 360px;
   }
 
  #logoMain{
