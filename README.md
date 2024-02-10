@@ -24,34 +24,32 @@ npm start
 
 ## Features
 
-__Main App Features__
+|Main Features|Summary|
+|-|-|
+|*__Interactive Dashboards__*|Real-time and historical data visualisations for water quality monitoring.|
+|*__Data Filtering__*|Customizable views based on time and location filters.|
+|*__User Authentication__*|Secure login system to user-specific interaction with the platform.|
+|*__Alerts System__*|Automated notifications for critical water quality changes.|
 
-* *Interactive Dashboards*: Real-time and historical data visualisations for water quality monitoring.
-* *Data Filtering*: Customizable views based on time and location filters.
-* *User Authentication*: Secure login system to user-specific interaction with the platform.
-* *Alerts System*: Automated notifications for critical water quality changes.
-  
-__Data Functions__
+|Data Functions|Summary|
+|-|-|
+|*__Simulated Data Generations__*|Simulates realistic water quality sensor data.|
+|*__WQI Computation__*|Calculates the Water Quality Index from sensor data.|
+|*__Sorting and Aggregation__*|Offers sorting and data aggregation capabilities for analysis and reporting.|
 
-* *Simulated Data Generation*: Simulates realistic water quality sensor data.
-* *WQI Computation*: Calculates the Water Quality Index from sensor data.
-* *Sorting and Aggregation*: Offers sorting and data aggregation capabilities for analysis and reporting.
+|APIS|Summary|
+|-|-|
+|*__User Management__*|Handles user registration, login, session management, and profile updates.|
+|*__Data Retrieval__*|Provides access to real-time and historical data endpoints.|
+|*__Visualization__*|Serves data optimized for visualization, supporting real-time updates and historical analysis.|
 
-__Visualiations__
-
-__APIs__
-
-* *User Management*: Handles user registration, login, session management, and profile updates.
-* *Data Retrieval*: Provides access to real-time and historical data endpoints.
-* *Visualization*: Serves data optimized for visualization, supporting real-time updates and historical analysis.
-
-## Technologies Used
-
-* Node.js and Express for backend services;
-* MongoDB for database management;
-* D3.js and Materialize for frontend visualizations and user interface;
-* CSV parsing for data import and analytics;
-* Mongoose for object data modeling (ODM) to interact with MongoD; and
-* Kafka for handling data streams and real-time processing.
+|Technologies Used|
+|-|
+|*Node.js* and *Express* for backend services.|
+|*MongoDB* for database management.|
+|*D3.js* and *Materialize* for frontend visualizations and user interface.|
+|*CSV parsing* for data import and analytics.|
+|*Mongoose* for object data modeling (ODM) to interact with MongoDB.|
+|*Kafka* for handling data streams and real-time processing.|
 
 
