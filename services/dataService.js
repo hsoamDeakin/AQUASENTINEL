@@ -184,6 +184,7 @@ const getAverageWQI = async (req, res) => {
       }
     ]); 
     //console.log('averageWQI');
+    
     return averageWQI;
   } catch (error) {
     console.error("Error calculating average WQI:", error);

@@ -2,8 +2,8 @@
 function getSocketData() {
   const socket = io(); // Connect to the server
   // Listen for 'number' event emitted from the server
-  socket.on('notification', (msg) => {
-    console.log('notification: ' + msg);
+  socket.on('wqiAvgData', (data) => {
+    updateWQIBarChart(data);      
   }); 
 }
 function updateNotification() {
@@ -71,14 +71,18 @@ function clearMessages() {
   // Example: You can remove all messages from the UI
  }
 
-function updateWQIBarChart() {
+function updateWQIBarChartData() {
   $.ajax({
     url: "/visulisation/data-by-location-avg",
     method: "GET",
     timeout: 10000, // Timeout in milliseconds (e.g., 5 seconds)
     success: function (data) {
-      console.log("AVG WQI location", data);
-
+      updateWQIBarChart(data);       
+    },
+  });
+} 
+function updateWQIBarChart(data) {   
+      console.log("AVG WQI location", data); 
       // Clear previous chart if exists
       d3.select("#shape1").selectAll("*").remove();
 
@@ -140,13 +144,7 @@ function updateWQIBarChart() {
         .attr("text-anchor", "middle")
         .style("font-size", "20px")
         .text("Average WQI by Location");
-    },
-    error: function (xhr, status, error) {
-      console.error("Error fetching data:", error);
-      // Handle error
-    },
-  });
-} 
+    }  
 document.addEventListener("DOMContentLoaded", function () {
   var elems = document.querySelectorAll(".dropdown-trigger");
   var instances = M.Dropdown.init(elems);
@@ -159,7 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 $(function () { 
    // Call the updateChart function initially
-   updateWQIBarChart();  
+   updateWQIBarChartData();  
+   setInterval(updateWQIBarChartData, 1000);  
 
    updateNotification();
    // Update the chart every second
@@ -168,6 +167,8 @@ $(function () {
    getSocketData();
    setInterval(getSocketData, 1000); 
 
+   getSocketData();
+   setInterval(getSocketData, 1000); 
 
   $("#notificationListItem").on("click", function () {
     $("#messages").toggle();
